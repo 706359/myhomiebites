@@ -8,7 +8,7 @@ const Footer = () => {
 					<img src='logo.png' alt='HomieBites Logo' height='80' width='80' />
 				</div>
 
-				<div>
+				<div className="footerButtons">
 					<a class='btn btn-ghost' href='#rates'>
 						Rate List
 					</a>
