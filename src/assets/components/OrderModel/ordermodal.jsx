@@ -1,78 +1,103 @@
-import { useState } from 'react';
-import './Styles/style.module.css';
+import React, { useState } from 'react';
+import styles from './Styles/style.module.css';
 
 const menuItems = [
 	{
 		id: 1,
 		name: 'Full Tiffin',
-		desc: 'Gravy Sabji + Dry Sabji + 4 Rotis + Rice (4 Rotis with Rice / 6 Rotis without Rice)',
 		price: 120,
+		sub: [
+			{ id: 101, name: 'Roti', price: 10 },
+			{ id: 102, name: 'Rice', price: 20 },
+		],
 	},
-	{ id: 2, name: 'Mix & Match Tiffin', desc: '2 Sabji + 6 Rotis', price: 120 },
-	{ id: 3, name: '1 Sabji + 4 Rotis + Rice', desc: '', price: 100 },
-	{ id: 4, name: '1 Sabji + 6 Rotis', desc: '', price: 100 },
-	{ id: 5, name: '1 Sabji + 4 Rotis', desc: '', price: 80 },
-	{ id: 6, name: 'Only 1 Sabji', desc: '', price: 40 },
-	{ id: 7, name: 'Khichdi Meal', desc: 'Full Tiffin (4 bowls)', price: 120 },
-	{ id: 8, name: 'Plain Roti', desc: '', price: 10 },
-	{ id: 9, name: 'Stuffed Paratha (Aloo/Gobhi/Muli/Methi)', desc: '', price: 35 },
-	{ id: 10, name: '3 Stuffed Parathas', desc: '', price: 100 },
-	{ id: 11, name: 'Homemade Curd (1 Bowl)', desc: '', price: 25 },
-	{ id: 12, name: 'Parathas + Curd Combo', desc: '', price: 100 },
-	{ id: 13, name: 'Self-Pickup (A1 Tower)', desc: '', price: 100 },
+	{ id: 2, name: 'Roti with Ghee', price: 12 },
+	{ id: 3, name: 'Khichdi Meal', price: 120 },
 ];
 
 const OrderModal = ({ closeModal }) => {
 	const [cart, setCart] = useState({});
 
-	const updateQty = (id, qty) => {
-		setCart((prev) => ({
-			...prev,
-			[id]: qty > 0 ? qty : 0,
-		}));
+	const updateQty = (id, change) => {
+		setCart((prev) => {
+			const current = prev[id] || 0;
+			const next = current + change;
+			return { ...prev, [id]: next > 0 ? next : 0 };
+		});
 	};
 
-	const total = menuItems.reduce((sum, item) => sum + (cart[item.id] || 0) * item.price, 0);
+	const getTotal = () => {
+		let total = 0;
+		menuItems.forEach((item) => {
+			total += (cart[item.id] || 0) * item.price;
+			if (item.sub) {
+				item.sub.forEach((sub) => (total += (cart[sub.id] || 0) * sub.price));
+			}
+		});
+		return total;
+	};
 
 	const sendWhatsApp = () => {
 		let message = 'Order Details:%0A';
 		menuItems.forEach((item) => {
 			const qty = cart[item.id];
-			if (qty > 0) {
-				message += `${item.name} x ${qty} = ₹${item.price * qty}%0A`;
+			if (qty > 0) message += `${item.name} x ${qty} = ₹${qty * item.price}%0A`;
+			if (item.sub) {
+				item.sub.forEach((sub) => {
+					const sqty = cart[sub.id];
+					if (sqty > 0) message += `  ${sub.name} x ${sqty} = ₹${sqty * sub.price}%0A`;
+				});
 			}
 		});
-		message += `Total: ₹${total}`;
-		const whatsappURL = `https://wa.me/919999999999?text=${message}`;
-		window.open(whatsappURL, '_blank');
+		message += `Total: ₹${getTotal()}`;
+		window.open(`https://wa.me/919958983578?text=${message}`, '_blank');
 	};
 
 	return (
-		<div className='modal-overlay' onClick={closeModal}>
-			<div className='modal-content' onClick={(e) => e.stopPropagation()}>
-				<button className='close-btn' onClick={closeModal}>
+		<div className={styles.modalOverlay} onClick={closeModal}>
+			<div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+				<button className={styles.closeBtn} onClick={closeModal}>
 					×
 				</button>
-				<h2 className='text-xl font-bold mb-4'>Order Menu</h2>
-				<div className='order-list'>
+				<h2>Order Cart</h2>
+
+				<div className={styles.cartList}>
 					{menuItems.map((item) => (
-						<div key={item.id} className='order-item'>
-							<div className='order-info'>
-								<span className='item-name'>{item.name}</span>
-								{item.desc && <span className='item-desc'>{item.desc}</span>}
-								<span className='item-price'>₹{item.price}</span>
+						<React.Fragment key={item.id}>
+							<div className={styles.cartItem}>
+								<span>{item.name}</span>
+								<div className={styles.qtyControls}>
+									<button onClick={() => updateQty(item.id, -1)}>-</button>
+									<span>{cart[item.id] || 0}</span>
+									<button onClick={() => updateQty(item.id, 1)}>+</button>
+								</div>
+								<span>₹{item.price}</span>
+								<span>₹{(cart[item.id] || 0) * item.price}</span>
 							</div>
-							<input
-								type='number'
-								min='0'
-								value={cart[item.id] || ''}
-								onChange={(e) => updateQty(item.id, parseInt(e.target.value) || 0)}
-							/>
-						</div>
+
+							{item.sub &&
+								item.sub.map((sub) => (
+									<div className={styles.cartSubitem} key={sub.id}>
+										<span>{sub.name}</span>
+										<div className={styles.qtyControls}>
+											<button onClick={() => updateQty(sub.id, -1)}>-</button>
+											<span>{cart[sub.id] || 0}</span>
+											<button onClick={() => updateQty(sub.id, 1)}>+</button>
+										</div>
+										<span>₹{sub.price}</span>
+										<span>₹{(cart[sub.id] || 0) * sub.price}</span>
+									</div>
+								))}
+						</React.Fragment>
 					))}
 				</div>
-				<div className='order-total'>Total: ₹{total}</div>
-				<button className='btn primary mt-2' disabled={total === 0} onClick={sendWhatsApp}>
+
+				<div className={styles.grandTotal}>Grand Total: ₹{getTotal()}</div>
+				<button
+					className={`${styles.btn} ${styles.primary}`}
+					disabled={getTotal() === 0}
+					title={getTotal() === 0 ? 'Add items to enable' : 'Send via WhatsApp'}
+					onClick={sendWhatsApp}>
 					Send via WhatsApp
 				</button>
 			</div>
