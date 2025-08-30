@@ -1,21 +1,21 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 export function useReveal() {
 	useEffect(() => {
-		const elements = document.querySelectorAll("[data-animate]");
+		const elements = document.querySelectorAll('[data-animate]');
 
 		const onScroll = () => {
 			elements.forEach((el) => {
 				const rect = el.getBoundingClientRect();
 				if (rect.top < window.innerHeight - 50) {
-					el.classList.add("reveal", "in");
+					el.classList.add('reveal', 'in');
 				}
 			});
 		};
 
-		window.addEventListener("scroll", onScroll);
-		onScroll(); // run once on load
+		window.addEventListener('scroll', onScroll);
+		onScroll();
 
-		return () => window.removeEventListener("scroll", onScroll);
+		return () => window.removeEventListener('scroll', onScroll);
 	}, []);
 }

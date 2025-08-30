@@ -1,5 +1,3 @@
-import React from "react";
-
 const Rates = () => {
 	return (
 		<section id='rates'>
@@ -82,7 +80,7 @@ const Rates = () => {
 								<span>Plain Paratha</span> <b className='price'>₹20</b>
 							</li>
 							<li>
-								<span>Stuffed Paratha (Aloo/Gobhi/Muli/Methi)</span>{" "}
+								<span>Stuffed Paratha (Aloo/Gobhi/Muli/Methi)</span>{' '}
 								<b className='price'>₹35</b>
 							</li>
 							<li>
@@ -122,10 +120,10 @@ const Rates = () => {
 					<div>
 						<strong>Ready to order?</strong>
 						<br />
-						Call{" "}
+						Call{' '}
 						<a href='tel:+919958983578'>
 							<b>+91-9958983578</b>
-						</a>{" "}
+						</a>{' '}
 						or WhatsApp us. Last order 7:30 PM • Delivery by 8:30 PM
 					</div>
 					<div className='cta-row'>
