@@ -3,6 +3,7 @@ import { usePulseCTA } from './assets/hooks/usePulseCTA';
 import { useReveal } from './assets/hooks/useReveal';
 import { useSmoothScroll } from './assets/hooks/useSmoothScroll';
 
+import Banner from './assets/Banner/banner';
 import About from './assets/components/About/about';
 import Contact from './assets/components/Contact/contact';
 import FAQ from './assets/components/FAQ/faq';
@@ -27,6 +28,7 @@ function App() {
 			<Features />
 			<Rates />
 			<Gallery />
+			<Banner />
 			<Testimonials />
 			<FAQ />
 			<About />

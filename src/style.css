@@ -410,12 +410,15 @@ header {
 }
 
 section {
-	padding: 54px 18px;
+	padding: clamp(1rem, 3vw, 4rem);
+	box-sizing: border-box;
 }
 
 .container {
-	max-width: 1100px;
-	margin: auto;
+	width: clamp(320px, 90%, 1280px);
+	margin: 0 auto;
+	padding: 0 1.5rem;
+	box-sizing: border-box;
 }
 
 .section-title {
@@ -430,7 +433,7 @@ section {
 	position: relative;
 	text-align: center;
 }
-
+/*
 .section-title .icon {
 	background: var(--brand-orange);
 	color: #fff;
@@ -442,8 +445,91 @@ section {
 	border-radius: 12px;
 	font-size: 1.4rem;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+	border: 2px solid lime;
+} */
+
+.banner-content {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
 }
 
+.banner-text {
+	flex: 1;
+	min-width: 280px;
+	padding: 1rem;
+}
+
+.banner-text h1 {
+	font-size: 2rem;
+	color: #d84315;
+	margin-bottom: 0.5rem;
+}
+
+.banner-text p {
+	font-size: 1.2rem;
+	color: #5d4037;
+	margin-bottom: 1rem;
+}
+
+.banner-image {
+	flex: 1;
+	max-width: 40%;
+	text-align: center;
+}
+
+.banner-image img {
+	width: 20%;
+	height: 20%;
+	object-fit: cover;
+	transition: transform 0.5s ease;
+}
+
+.aboutSection {
+	background-color: #fff7ef;
+	padding: 80px 20px;
+	display: flex;
+	justify-content: center;
+}
+
+.aboutContainer {
+	max-width: 1280px;
+	text-align: center;
+	padding: 40px;
+	border-radius: 12px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+	background-color: #ffffff;
+}
+
+.aboutContainer h2 {
+	font-size: 2rem;
+	margin-bottom: 20px;
+	color: #333;
+	position: relative;
+	display: inline-block;
+}
+
+.aboutContainer h2 span {
+	color: #f7905d;
+}
+
+.aboutContainer h2::after {
+	content: '';
+	display: block;
+	width: 60px;
+	height: 3px;
+	background: #f7905d;
+	margin: 8px auto 0;
+	border-radius: 2px;
+}
+
+.aboutContainer p {
+	color: #555;
+	font-size: 1rem;
+	line-height: 1.8;
+	margin-bottom: 20px;
+}
 .section-title::after {
 	content: '';
 	position: absolute;
@@ -1053,15 +1139,27 @@ footer {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: rgba(0, 0, 0, 0.7);
-	color: white;
-	padding: 10px;
+	padding: 12px 16px;
+	background: rgba(0, 0, 0, 0.6);
+	color: #fff;
+	font-size: 1rem;
+	font-weight: 600;
+	text-align: center;
+	text-transform: capitalize;
+	letter-spacing: 0.5px;
+	backdrop-filter: blur(4px);
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
 	transform: translateY(100%);
-	transition: transform 0.3s ease;
+	transition:
+		transform 0.3s ease,
+		opacity 0.3s ease;
+	opacity: 0;
 }
 
 .gallery-item:hover .gallery-caption {
 	transform: translateY(0);
+	opacity: 1;
 }
 
 @keyframes pulse {

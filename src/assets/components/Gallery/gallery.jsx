@@ -1,5 +1,3 @@
-import React from "react";
-
 const Gallery = () => {
 	return (
 		<section id='gallery'>
@@ -17,7 +15,7 @@ const Gallery = () => {
 							src='https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg'
 							alt='Freshly prepared Indian thali'
 							loading='lazy'
-							data-broken-image-processed='true'
+							// data-broken-image-processed='true'
 						/>
 						<div class='gallery-caption'>Full Tiffin Meal</div>
 					</div>
