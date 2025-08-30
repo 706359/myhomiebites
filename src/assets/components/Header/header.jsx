@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import OrderButton from '../OrderButton/orderbutton';
 
 export default function Header() {
 	const [menuOpen, setMenuOpen] = useState(false);
@@ -40,13 +41,14 @@ export default function Header() {
 						</a>
 					</li>
 					<li>
-						<a
+						{/* <a
 							className='cta'
 							href='https://wa.me/919958983578'
 							target='_blank'
 							rel='noopener noreferrer'>
 							Order on WhatsApp
-						</a>
+						</a> */}
+						<OrderButton />
 					</li>
 				</ul>
 			</nav>
