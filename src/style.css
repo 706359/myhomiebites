@@ -991,8 +991,13 @@ footer {
 	grid-template-columns: 1fr auto;
 	gap: 30px;
 	align-items: center;
+	gap: 10px;
+	
 }
-
+.footerButtons{
+	display: flex;
+	gap: 10px;
+}
 .footer-brand {
 	display: flex;
 	align-items: center;
@@ -1027,9 +1032,11 @@ footer {
 
 .footer-column li {
 	margin-bottom: 10px;
+	
 }
 
 .footer-column a {
+	
 	color: #ddd;
 	opacity: 0.85;
 	text-decoration: none;

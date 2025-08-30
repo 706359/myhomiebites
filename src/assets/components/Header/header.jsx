@@ -50,6 +50,15 @@ export default function Header() {
 						</a> */}
 						<OrderButton />
 					</li>
+					<div>
+						<a	
+							style={{cursor:'pointer', backgroundColor:'var(--brand-deep)'}}
+							className='cta'
+							target='_blank'
+							rel='noopener noreferrer'>
+							Subscribe Tiffin
+						</a>
+					</div>
 				</ul>
 			</nav>
 		</header>
