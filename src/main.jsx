@@ -1,12 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-import "./style.css";
-import ContextProvider from "./store/store"
-ReactDOM.createRoot(document.getElementById("root")).render(
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import './style.css';
+import ContextProvider from './store/store';
+ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<ContextProvider>
-		<App />
+			<App />
 		</ContextProvider>
-	</React.StrictMode>
+	</React.StrictMode>,
 );

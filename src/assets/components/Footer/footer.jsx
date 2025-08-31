@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Footer = () => {
 	return (
@@ -8,7 +8,7 @@ const Footer = () => {
 					<img src='logo.png' alt='HomieBites Logo' height='80' width='80' />
 				</div>
 
-				<div className="footerButtons">
+				<div className='footerButtons'>
 					<a class='btn btn-ghost' href='#rates'>
 						Rate List
 					</a>
@@ -61,17 +61,16 @@ const Footer = () => {
 				<div class='footer-column'>
 					<h4>Service Areas</h4>
 					<ul>
-						<li>Panchsheel Greens</li>
-						<li>A1-A5 Towers</li>
-						<li>B1-B3 Towers</li>
+						<li>Panchsheel Greens-1</li>
 						<li>Nearby Societies</li>
+						<li>Delivers within a 2&nbsp;km radius</li>
 					</ul>
 				</div>
 			</div>
 
 			<div class='footer-bottom'>
 				<p>
-					© 2023 HomieBites. All rights reserved. | Home-cooked meals delivered with love
+					© 2025 HomieBites. All rights reserved. | Home-cooked meals delivered with love
 					❤️
 				</p>
 			</div>

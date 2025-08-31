@@ -11,12 +11,11 @@ const Banner = () => {
 							href='https://wa.me/919958983578'
 							target='_blank'
 							rel='noopener'>
-							<i className='fa-brands fa-whatsapp'></i> एक बार खाओगे, फिर भूल नहीं
-							पाओगे
+							<i className='fa-brands fa-whatsapp'></i> एक बार खाओगे, भूल नहीं पाओगे
 						</a>
-						<a className='btn btn-ghost' href='#rates'>
+						{/* <a className='btn btn-ghost' href='#rates'>
 							<i className='fa-solid fa-utensils'></i> Explore Menu
-						</a>
+						</a> */}
 					</div>
 				</div>
 				<div className='banner-image gallery-item'>

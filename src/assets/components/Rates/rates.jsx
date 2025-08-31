@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faUtensils, faBowlRice, faPlus } from '@fortawesome/free-solid-svg-icons';
 const Rates = () => {
 	return (
 		<section id='rates'>
@@ -10,25 +12,42 @@ const Rates = () => {
 					<div className='card reveal in' data-animate=''>
 						<span className='tag'>Best Seller</span>
 						<h3>
-							<i className='fa-solid fa-star'></i> Full Tiffin
+							<FontAwesomeIcon icon={faStar} color='#FFD700' /> Full Tiffin
 						</h3>
-						<div className='muted'>
-							Gravy Sabji + Dry Sabji + 4 Rotis + Rice
-							<br />
-							<small>(4 Rotis with Rice / 6 Rotis without Rice)</small>
-						</div>
 						<ul className='list'>
+							<ul className='list header-row'>
+								<li>
+									<span>
+										<b>Item</b>
+									</span>{' '}
+									<b className='price'>Price</b>
+								</li>
+							</ul>
 							<li>
 								<span>1 Full Tiffin</span> <b className='price'>₹120</b>
 							</li>
+							<div className='spl'>
+								Gravy Sabji + Dry Sabji + 4 Rotis + Rice
+								<br />
+								<small>(4 Rotis with Rice / 6 Rotis without Rice)</small>
+							</div>
 						</ul>
 					</div>
 
 					<div className='card reveal in' data-animate=''>
 						<h3>
-							<i className='fa-solid fa-utensils'></i> Mix &amp; Match Tiffin
+							<FontAwesomeIcon icon={faUtensils} color='orange' />
+							Mix &amp; Match Tiffin
 						</h3>
 						<ul className='list'>
+							<ul className='list header-row'>
+								<li>
+									<span>
+										<b>Item</b>
+									</span>{' '}
+									<b className='price'>Price</b>
+								</li>
+							</ul>
 							<li>
 								<span>2 Sabji + 6 Rotis</span> <b className='price'>₹120</b>
 							</li>
@@ -55,10 +74,18 @@ const Rates = () => {
 
 					<div className='card reveal in' data-animate=''>
 						<h3>
-							<i className='fa-solid fa-bowl-rice'></i> Khichdi Tiffin
+							<FontAwesomeIcon icon={faBowlRice} color='saddlebrown' /> Khichdi Tiffin
 						</h3>
-						<div className='muted'>Full Tiffin (4 bowls)</div>
+						<div className='spl'>Full Tiffin (4 bowls)</div>
 						<ul className='list'>
+							<ul className='list header-row'>
+								<li>
+									<span>
+										<b>Item</b>
+									</span>{' '}
+									<b className='price'>Price</b>
+								</li>
+							</ul>
 							<li>
 								<span>Khichdi Meal</span> <b className='price'>₹120</b>
 							</li>
@@ -70,6 +97,14 @@ const Rates = () => {
 							<i className='fa-solid fa-bread-slice'></i> Rotis &amp; Parathas
 						</h3>
 						<ul className='list'>
+							<ul className='list header-row'>
+								<li>
+									<span>
+										<b>Item</b>
+									</span>{' '}
+									<b className='price'>Price</b>
+								</li>
+							</ul>
 							<li>
 								<span>Plain Roti</span> <b className='price'>₹10</b>
 							</li>
@@ -91,28 +126,42 @@ const Rates = () => {
 
 					<div className='card reveal in' data-animate=''>
 						<h3>
-							<i className='fa-solid fa-plus'></i> Add-ons
+							<FontAwesomeIcon icon={faPlus} color='black' /> Add-ons
 						</h3>
 						<ul className='list'>
+							<ul className='list header-row'>
+								<li>
+									<span>
+										<b>Item</b>
+									</span>{' '}
+									<b className='price'>Price</b>
+								</li>
+							</ul>
 							<li>
 								<span>Homemade Curd (1 Bowl)</span> <b className='price'>₹25</b>
 							</li>
 							<li>
-								<span>Parathas + Curd Combo</span> <b className='price'>₹100</b>
+								<span>Homemade Chatni ()</span> <b className='price'>₹10</b>
 							</li>
 						</ul>
 					</div>
 
 					<div className='card reveal in' data-animate=''>
-						<h3>
-							<i className='fa-solid fa-person-walking'></i> Pickup Option
-						</h3>
+						<h3>🏠 Pickup Option</h3>
 						<ul className='list'>
+							<ul className='list header-row'>
+								<li>
+									<span>
+										<b>Item</b>
+									</span>{' '}
+									<b className='price'>Price</b>
+								</li>
+							</ul>
 							<li>
 								<span>Self-Pickup (A1 Tower)</span> <b className='price'>₹100</b>
 							</li>
 						</ul>
-						<div className='muted'>Thali &amp; Tiffin both available</div>
+						<div className='spl'>Thali &amp; Tiffin both available*</div>
 					</div>
 				</div>
 

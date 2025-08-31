@@ -12,16 +12,15 @@ const Gallery = () => {
 				<div class='gallery'>
 					<div class='gallery-item reveal in' data-animate=''>
 						<img
-							src='https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg'
+							src='/images/FullTiffin.jpg'
 							alt='Freshly prepared Indian thali'
 							loading='lazy'
-							// data-broken-image-processed='true'
 						/>
 						<div class='gallery-caption'>Full Tiffin Meal</div>
 					</div>
 					<div class='gallery-item reveal in' data-animate=''>
 						<img
-							src='https://images.pexels.com/photos/1117862/pexels-photo-1117862.jpeg'
+							src='/images/RotiSabji.webp'
 							alt='Homemade rotis and curry'
 							loading='lazy'
 							data-broken-image-processed='true'
@@ -30,7 +29,7 @@ const Gallery = () => {
 					</div>
 					<div class='gallery-item reveal in' data-animate=''>
 						<img
-							src='https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg'
+							src='/images/DeliciousAaluParatha.jpg'
 							alt='Stuffed parathas with curd'
 							loading='lazy'
 							data-broken-image-processed='true'
@@ -44,7 +43,43 @@ const Gallery = () => {
 							loading='lazy'
 							data-broken-image-processed='true'
 						/>
-						<div class='gallery-caption'>Khichdi Special</div>
+						<div class='gallery-caption'>Aaloo Mater with Rice</div>
+					</div>
+					<div class='gallery-item reveal in' data-animate=''>
+						<img
+							src='/images/AalooPuri.jpg'
+							alt='Khichdi with vegetables'
+							loading='lazy'
+							data-broken-image-processed='true'
+						/>
+						<div class='gallery-caption'>Aaloo Mater with Puri</div>
+					</div>
+					<div class='gallery-item reveal in' data-animate=''>
+						<img
+							src='/images/AalooPuri.jpg'
+							alt='Aaloo with Puri'
+							loading='lazy'
+							data-broken-image-processed='true'
+						/>
+						<div class='gallery-caption'>Aaloo Mater with Rice</div>
+					</div>
+					<div class='gallery-item reveal in' data-animate=''>
+						<img
+							src='https://images.pexels.com/photos/674574/pexels-photo-674574.jpeg'
+							alt='Khichdi with vegetables'
+							loading='lazy'
+							data-broken-image-processed='true'
+						/>
+						<div class='gallery-caption'>Aaloo Mater with Rice</div>
+					</div>
+					<div class='gallery-item reveal in' data-animate=''>
+						<img
+							src='https://images.pexels.com/photos/674574/pexels-photo-674574.jpeg'
+							alt='Khichdi with vegetables'
+							loading='lazy'
+							data-broken-image-processed='true'
+						/>
+						<div class='gallery-caption'>Aaloo Mater with Rice</div>
 					</div>
 				</div>
 			</div>

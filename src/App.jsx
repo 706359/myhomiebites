@@ -16,7 +16,6 @@ import Rates from './assets/components/Rates/rates';
 import Testimonials from './assets/components/Testimonials/testimonials';
 
 function App() {
-	
 	useMenuToggle();
 	useReveal();
 	useSmoothScroll();

@@ -34,11 +34,15 @@ const Features = () => {
 				<div className='special-offer-content'>
 					<div className='special-offer-text'>
 						<h3>
-							<FontAwesomeIcon icon={faGift} /> Weekly Subscription Offer
+							<FontAwesomeIcon icon={faGift} /> Subscription Offer for Your Convenient
 						</h3>
 						<p>
-							Subscribe for a full week (7 days) and get <strong>10% OFF</strong> on
+							Subscribe for a full week (7 days) and get <strong>5% OFF</strong> on
 							your total bill! Perfect for busy professionals and families.
+						</p>
+						<p>
+							Subscribe for a full month and get <strong>7% OFF</strong> on your total
+							bill! Perfect for busy professionals and families.
 						</p>
 					</div>
 					<div className='special-offer-action'>

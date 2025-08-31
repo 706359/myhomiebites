@@ -1,0 +1,43 @@
+.float {
+	position: absolute;
+	font-size: 2rem;
+	color: var(--clr-accent-500);
+	animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+	0% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-15px);
+	}
+	100% {
+		transform: translateY(0px);
+	}
+}
+
+.f1 {
+	top: 8%;
+	left: 10%;
+}
+.f2 {
+	top: 20%;
+	right: 15%;
+}
+.f3 {
+	top: 45%;
+	left: 20%;
+}
+.f4 {
+	bottom: 20%;
+	right: 12%;
+}
+.f5 {
+	bottom: 10%;
+	left: 15%;
+}
+.f6 {
+	top: 65%;
+	right: 25%;
+}
