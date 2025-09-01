@@ -58,6 +58,7 @@ header {
 	position: sticky;
 	top: 0;
 	z-index: 100;
+	-webkit-backdrop-filter: blur(8px) saturate(160%);
 	backdrop-filter: blur(8px) saturate(160%);
 	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 	transition: var(--transition);
@@ -1153,6 +1154,7 @@ footer {
 	text-align: center;
 	text-transform: capitalize;
 	letter-spacing: 0.5px;
+	-webkit-backdrop-filter: blur(4px);
 	backdrop-filter: blur(4px);
 	border-bottom-left-radius: 8px;
 	border-bottom-right-radius: 8px;
