@@ -48,7 +48,7 @@ const Gallery = () => {
 					<div class='gallery-item reveal in' data-animate=''>
 						<img
 							src='/images/AalooPuri.jpg'
-							alt='Khichdi with vegetables'
+							alt='Aaloo Mater with Rice'
 							loading='lazy'
 							data-broken-image-processed='true'
 						/>
@@ -56,30 +56,56 @@ const Gallery = () => {
 					</div>
 					<div class='gallery-item reveal in' data-animate=''>
 						<img
-							src='/images/AalooPuri.jpg'
+							src='/images/Curd.jpg'
 							alt='Aaloo with Puri'
 							loading='lazy'
 							data-broken-image-processed='true'
 						/>
-						<div class='gallery-caption'>Aaloo Mater with Rice</div>
+						<div class='gallery-caption'>Homemade Pure Curd</div>
 					</div>
 					<div class='gallery-item reveal in' data-animate=''>
 						<img
-							src='https://images.pexels.com/photos/674574/pexels-photo-674574.jpeg'
-							alt='Khichdi with vegetables'
+							src='/images/MoondDalKhichdi.jpg'
+							alt='Khichdi'
 							loading='lazy'
 							data-broken-image-processed='true'
 						/>
-						<div class='gallery-caption'>Aaloo Mater with Rice</div>
+						<div class='gallery-caption'>Khichdi</div>
 					</div>
-					<div class='gallery-item reveal in' data-animate=''>
-						<img
-							src='https://images.pexels.com/photos/674574/pexels-photo-674574.jpeg'
-							alt='Khichdi with vegetables'
-							loading='lazy'
-							data-broken-image-processed='true'
-						/>
-						<div class='gallery-caption'>Aaloo Mater with Rice</div>
+					<div className='gallery-item reveal in' data-animate=''>
+						<div className='gallery-grid-six'>
+							<div className='gallery-img'>
+								<img
+									src='/images/Amritsarichhole.webp'
+									alt='Amritsari Chhole'
+									loading='lazy'
+								/>
+							</div>
+							<div className='gallery-img'>
+								<img src='/images/lobhiya.jpg' alt='Lobhiya Curry' loading='lazy' />
+							</div>
+							<div className='gallery-img'>
+								<img src='/images/lokikofte.jpg' alt='Loki Kofte' loading='lazy' />
+							</div>
+							<div className='gallery-img'>
+								<img
+									src='/images/kadhipakora.jpg'
+									alt='Rajma Curry'
+									loading='lazy'
+								/>
+							</div>
+							<div className='gallery-img'>
+								<img src='/images/rajma.jpg' alt='Kadhi Pakora' loading='lazy' />
+							</div>
+							<div className='gallery-img'>
+								<img
+									src='/images/kalachana.jpg'
+									alt='Kala Chana Curry'
+									loading='lazy'
+								/>
+							</div>
+						</div>
+						<div className='gallery-caption'>Our Specials: 6-Curry Showcase</div>
 					</div>
 				</div>
 			</div>
