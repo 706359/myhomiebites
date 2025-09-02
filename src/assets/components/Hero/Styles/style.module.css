@@ -1,43 +1,38 @@
 .float {
 	position: absolute;
-	font-size: 2rem;
-	color: var(--clr-accent-500);
+	font-size: 2.5rem;
 	animation: float 6s ease-in-out infinite;
+	opacity: 0.9;
 }
 
-@keyframes float {
-	0% {
-		transform: translateY(0px);
-	}
-	50% {
-		transform: translateY(-15px);
-	}
-	100% {
-		transform: translateY(0px);
-	}
-}
-
+/* individual positions + staggered timing */
 .f1 {
-	top: 8%;
-	left: 10%;
+	top: 15%;
+	left: 5%;
+	animation-delay: 0s;
 }
 .f2 {
-	top: 20%;
-	right: 15%;
+	top: 55%;
+	left: 10%;
+	animation-delay: 1s;
 }
 .f3 {
-	top: 45%;
-	left: 20%;
+	top: 35%;
+	right: 8%;
+	animation-delay: 2s;
 }
 .f4 {
 	bottom: 20%;
-	right: 12%;
+	left: 20%;
+	animation-delay: 3s;
 }
 .f5 {
 	bottom: 10%;
-	left: 15%;
+	right: 15%;
+	animation-delay: 4s;
 }
 .f6 {
-	top: 65%;
+	top: 25%;
 	right: 25%;
+	animation-delay: 5s;
 }

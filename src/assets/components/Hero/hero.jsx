@@ -5,8 +5,7 @@ export default function Hero() {
 				<div>
 					<h1 className='reveal in'>Homely & Healthy Meals – Delivered Fresh Daily</h1>
 					<p className='muted reveal in' style={{ marginBlock: '2rem' }}>
-						Pure veg tiffins from ₹120 • Freshly cooked • Panchsheel Greens-1 & nearby
-						areas
+						Pure veg tiffins from ₹120 • Freshly cooked • Panchsheel Greens-1 & nearby areas
 					</p>
 					<div className='badges reveal in'>
 						<span className='badge'>
@@ -29,11 +28,7 @@ export default function Hero() {
 						</span>
 					</div>
 					<div className='cta-row' style={{ marginTop: '40px', justifySelf: 'center' }}>
-						<a
-							className='btn btn-primary pulse'
-							href='https://wa.me/919958983578'
-							target='_blank'
-							rel='noopener'>
+						<a className='btn btn-primary pulse' href='https://wa.me/919958983578' target='_blank' rel='noopener'>
 							<i className='fa-brands fa-whatsapp'></i> Order Now
 						</a>
 						<a className='btn btn-ghost' href='#rates'>
@@ -43,14 +38,14 @@ export default function Hero() {
 				</div>
 				<div className='hero-illustration reveal in'>
 					<div className='plate'>
-						<img
-							src='/images/VegThali1.avif'
-							alt='Homemade Indian thali meal with variety of dishes'
-						/>
+						<img src='/images/VegThali1.avif' alt='Homemade Indian thali meal with variety of dishes' />
 					</div>
-					{/* <div className='float f1'>🥗</div>
+					<div className='float f1'>🥗</div>
 					<div className='float f2'>🍛</div>
-					<div className='float f3'>🥙</div> */}
+					<div className='float f3'>🥙</div>
+					<div className='float f4'>🍱</div>
+					<div className='float f5'>🍲</div>
+					<div className='float f6'>🍜</div>
 				</div>
 			</div>
 		</section>

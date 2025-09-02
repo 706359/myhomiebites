@@ -6,7 +6,7 @@ const OrderButton = () => {
 
 	return (
 		<>
-			<button onClick={() => setShowOrder(true)} className='btn whatsapp-btn'>
+			<button onClick={() => setShowOrder(true)} className='btn btn-ghost'>
 				<i className='fa-brands fa-whatsapp'></i> WhatsApp Order
 			</button>
 
