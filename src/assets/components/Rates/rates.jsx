@@ -39,8 +39,7 @@ const Rates = () => {
 					{/* Mix & Match Tiffin */}
 					<div className='card reveal in' data-animate=''>
 						<h3>
-							<FontAwesomeIcon icon={faUtensils} color='orange' /> Mix &amp; Match
-							Tiffin
+							<FontAwesomeIcon icon={faUtensils} color='orange' /> Mix &amp; Match Tiffin
 						</h3>
 						<ul className='list'>
 							<ul className='list header-row'>
@@ -55,8 +54,7 @@ const Rates = () => {
 								<span>2 Sabji + 6 Rotis</span> <b className='price'>₹120</b>
 							</li>
 							<li>
-								<span>1 Sabji + 4 Rotis + Chawal</span>{' '}
-								<b className='price'>₹100</b>
+								<span>1 Sabji + 4 Rotis + Chawal</span> <b className='price'>₹100</b>
 							</li>
 							<li>
 								<span>2 Sabji + 4 Rotis</span> <b className='price'>₹120</b>
@@ -121,8 +119,7 @@ const Rates = () => {
 								<span>Plain Paratha</span> <b className='price'>₹20</b>
 							</li>
 							<li>
-								<span>Stuffed Paratha (Aloo/Gobhi/Muli/Methi)</span>{' '}
-								<b className='price'>₹35</b>
+								<span>Stuffed Paratha (Aloo/Gobhi/Muli/Methi)</span> <b className='price'>₹35</b>
 							</li>
 							<li>
 								<span>3 Stuffed Parathas</span> <b className='price'>₹100</b>
@@ -143,8 +140,7 @@ const Rates = () => {
 								</li>
 							</ul>
 							<li>
-								<span>Stuffed Paratha Combo (Regular)</span>{' '}
-								<b className='price'>₹120</b>
+								<span>Stuffed Paratha Combo (Regular)</span> <b className='price'>₹120</b>
 							</li>
 							<li>
 								<span>Paneer Paratha Combo</span> <b className='price'>₹130</b>
@@ -171,15 +167,13 @@ const Rates = () => {
 								<span>Full Tiffin Meal</span> <b className='price'>₹140</b>
 							</li>
 							<li>
-								<span>Stuffed Parathas with Curd</span>{' '}
-								<b className='price'>₹110</b>
+								<span>Stuffed Parathas with Curd</span> <b className='price'>₹110</b>
 							</li>
 							<li>
 								<span>Aaloo Matar with Chawal</span> <b className='price'>₹90</b>
 							</li>
 							<li>
-								<span>Aaloo Matar with Puri + Curd</span>{' '}
-								<b className='price'>₹120</b>
+								<span>Aaloo Matar with Puri + Curd</span> <b className='price'>₹120</b>
 							</li>
 							<li>
 								<span>Chhole & Lobhiya Combo</span> <b className='price'>₹100</b>
@@ -289,11 +283,7 @@ const Rates = () => {
 						or WhatsApp us. Last order 7:30 PM • Delivery by 8:30 PM
 					</div>
 					<div className='cta-row'>
-						<a
-							className='btn btn-primary pulse'
-							href='https://wa.me/919958983578'
-							target='_blank'
-							rel='noopener noreferrer'>
+						<a className='btn btn-primary pulse' href='https://wa.me/919958983578' target='_blank' rel='noopener noreferrer'>
 							<i className='fa-brands fa-whatsapp'></i> WhatsApp Order
 						</a>
 						<a className='btn btn-ghost' href='tel:+919958983578'>

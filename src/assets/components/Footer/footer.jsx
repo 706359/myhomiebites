@@ -12,11 +12,7 @@ const Footer = () => {
 					<a class='btn btn-ghost' href='#rates'>
 						Rate List
 					</a>
-					<a
-						class='btn btn-primary pulse'
-						href='https://wa.me/919958983578'
-						target='_blank'
-						rel='noopener'>
+					<a class='btn btn-primary pulse' href='https://wa.me/919958983578' target='_blank' rel='noopener'>
 						Order Now
 					</a>
 				</div>
@@ -69,10 +65,7 @@ const Footer = () => {
 			</div>
 
 			<div class='footer-bottom'>
-				<p>
-					© 2025 HomieBites. All rights reserved. | Home-cooked meals delivered with love
-					❤️
-				</p>
+				<p>© 2025 HomieBites. All rights reserved. | Home-cooked meals delivered with love ❤️</p>
 			</div>
 		</footer>
 	);

@@ -75,9 +75,7 @@ const Testimonials = () => {
 					{/* Dynamic Dots */}
 					<div className='slider-dots'>
 						{reviews.map((_, idx) => (
-							<div
-								key={idx}
-								className={`slider-dot ${idx === reviews.length - 1 ? 'active' : ''}`}></div>
+							<div key={idx} className={`slider-dot ${idx === reviews.length - 1 ? 'active' : ''}`}></div>
 						))}
 					</div>
 				</div>
