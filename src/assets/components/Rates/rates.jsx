@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faUtensils, faBowlRice, faPlus } from '@fortawesome/free-solid-svg-icons';
+
 const Rates = () => {
 	return (
 		<section id='rates'>
@@ -9,6 +10,7 @@ const Rates = () => {
 				</h2>
 
 				<div className='grid'>
+					{/* Full Tiffin */}
 					<div className='card reveal in' data-animate=''>
 						<span className='tag'>Best Seller</span>
 						<h3>
@@ -26,18 +28,19 @@ const Rates = () => {
 							<li>
 								<span>1 Full Tiffin</span> <b className='price'>₹120</b>
 							</li>
-							<div className='spl'>
-								Gravy Sabji + Dry Sabji + 4 Rotis + Rice
-								<br />
-								<small>(4 Rotis with Rice / 6 Rotis without Rice)</small>
-							</div>
 						</ul>
+						<div className='spl'>
+							Gravy Sabji + Dry Sabji + 4 Rotis + Chawal
+							<br />
+							<small>(4 Rotis with Chawal / 6 Rotis without Chawal)</small>
+						</div>
 					</div>
 
+					{/* Mix & Match Tiffin */}
 					<div className='card reveal in' data-animate=''>
 						<h3>
-							<FontAwesomeIcon icon={faUtensils} color='orange' />
-							Mix &amp; Match Tiffin
+							<FontAwesomeIcon icon={faUtensils} color='orange' /> Mix &amp; Match
+							Tiffin
 						</h3>
 						<ul className='list'>
 							<ul className='list header-row'>
@@ -52,7 +55,8 @@ const Rates = () => {
 								<span>2 Sabji + 6 Rotis</span> <b className='price'>₹120</b>
 							</li>
 							<li>
-								<span>1 Sabji + 4 Rotis + Rice</span> <b className='price'>₹100</b>
+								<span>1 Sabji + 4 Rotis + Chawal</span>{' '}
+								<b className='price'>₹100</b>
 							</li>
 							<li>
 								<span>2 Sabji + 4 Rotis</span> <b className='price'>₹120</b>
@@ -64,7 +68,7 @@ const Rates = () => {
 								<span>1 Sabji + 4 Rotis</span> <b className='price'>₹80</b>
 							</li>
 							<li>
-								<span>1 Sabji + 2 Bowls Rice</span> <b className='price'>₹100</b>
+								<span>1 Sabji + 2 Bowls Chawal</span> <b className='price'>₹100</b>
 							</li>
 							<li>
 								<span>Only 1 Sabji</span> <b className='price'>₹40</b>
@@ -72,6 +76,7 @@ const Rates = () => {
 						</ul>
 					</div>
 
+					{/* Khichdi Tiffin */}
 					<div className='card reveal in' data-animate=''>
 						<h3>
 							<FontAwesomeIcon icon={faBowlRice} color='saddlebrown' /> Khichdi Tiffin
@@ -92,6 +97,7 @@ const Rates = () => {
 						</ul>
 					</div>
 
+					{/* Rotis & Parathas */}
 					<div className='card reveal in' data-animate=''>
 						<h3>
 							<i className='fa-solid fa-bread-slice'></i> Rotis &amp; Parathas
@@ -124,6 +130,112 @@ const Rates = () => {
 						</ul>
 					</div>
 
+					{/* Breakfast Combos */}
+					<div className='card reveal in' data-animate=''>
+						<h3>🍳 Breakfast Combos</h3>
+						<ul className='list'>
+							<ul className='list header-row'>
+								<li>
+									<span>
+										<b>Item</b>
+									</span>{' '}
+									<b className='price'>Price</b>
+								</li>
+							</ul>
+							<li>
+								<span>Stuffed Paratha Combo (Regular)</span>{' '}
+								<b className='price'>₹120</b>
+							</li>
+							<li>
+								<span>Paneer Paratha Combo</span> <b className='price'>₹130</b>
+							</li>
+							<li>
+								<span>Desi Ghee Paratha Combo</span> <b className='price'>₹160</b>
+							</li>
+						</ul>
+					</div>
+
+					{/* Lunch Combos */}
+					<div className='card reveal in' data-animate=''>
+						<h3>🍛 Lunch Combos</h3>
+						<ul className='list'>
+							<ul className='list header-row'>
+								<li>
+									<span>
+										<b>Item</b>
+									</span>{' '}
+									<b className='price'>Price</b>
+								</li>
+							</ul>
+							<li>
+								<span>Full Tiffin Meal</span> <b className='price'>₹140</b>
+							</li>
+							<li>
+								<span>Stuffed Parathas with Curd</span>{' '}
+								<b className='price'>₹110</b>
+							</li>
+							<li>
+								<span>Aaloo Matar with Chawal</span> <b className='price'>₹90</b>
+							</li>
+							<li>
+								<span>Aaloo Matar with Puri + Curd</span>{' '}
+								<b className='price'>₹120</b>
+							</li>
+							<li>
+								<span>Chhole & Lobhiya Combo</span> <b className='price'>₹100</b>
+							</li>
+							<li>
+								<span>Rajma & Kala Chana Combo</span> <b className='price'>₹100</b>
+							</li>
+						</ul>
+					</div>
+
+					{/* Dinner Combos */}
+					<div className='card reveal in' data-animate=''>
+						<h3>🌙 Dinner Combos</h3>
+						<ul className='list'>
+							<ul className='list header-row'>
+								<li>
+									<span>
+										<b>Item</b>
+									</span>{' '}
+									<b className='price'>Price</b>
+								</li>
+							</ul>
+							<li>
+								<span>Mini Tiffin</span> <b className='price'>₹100</b>
+							</li>
+							<li>
+								<span>Protein Power Combo</span> <b className='price'>₹110</b>
+							</li>
+							<li>
+								<span>Desi Comfort Combo</span> <b className='price'>₹100</b>
+							</li>
+							<li>
+								<span>North Indian Classic</span> <b className='price'>₹120</b>
+							</li>
+							<li>
+								<span>Puri Bhaji Combo</span> <b className='price'>₹120</b>
+							</li>
+							<li>
+								<span>Paneer Paratha Deluxe</span> <b className='price'>₹150</b>
+							</li>
+							<li>
+								<span>Gharwala Combo</span> <b className='price'>₹120</b>
+							</li>
+							<li>
+								<span>Budget Combo</span> <b className='price'>₹90</b>
+							</li>
+							<li>
+								<span>Light Meal Combo</span> <b className='price'>₹100</b>
+							</li>
+							<li>
+								<span>Sabji Sampler</span> <b className='price'>₹110</b>
+							</li>
+						</ul>
+					</div>
+
+					{/* Add-ons */}
 					<div className='card reveal in' data-animate=''>
 						<h3>
 							<FontAwesomeIcon icon={faPlus} color='black' /> Add-ons
@@ -141,11 +253,12 @@ const Rates = () => {
 								<span>Homemade Curd (1 Bowl)</span> <b className='price'>₹25</b>
 							</li>
 							<li>
-								<span>Homemade Chatni ()</span> <b className='price'>₹10</b>
+								<span>Homemade Chatni</span> <b className='price'>₹10</b>
 							</li>
 						</ul>
 					</div>
 
+					{/* Pickup Option */}
 					<div className='card reveal in' data-animate=''>
 						<h3>🏠 Pickup Option</h3>
 						<ul className='list'>
