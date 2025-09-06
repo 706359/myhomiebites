@@ -1,57 +1,42 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import styles from './Styles/style.module.css';
-
-const menuItems = [
-	{
-		id: 1,
-		name: 'Full Tiffin',
-		price: 120,
-		sub: [
-			{ id: 101, name: 'Roti', price: 10 },
-			{ id: 102, name: 'Rice', price: 20 },
-		],
-	},
-	{ id: 2, name: 'Roti with Ghee', price: 12 },
-	{ id: 3, name: 'Khichdi Meal', price: 120 },
-];
+import { Context } from '../../../store/store';
 
 const OrderModal = ({ closeModal }) => {
-	const [cart, setCart] = useState({});
-
-	const updateQty = (id, change) => {
-		setCart((prev) => {
-			const current = prev[id] || 0;
-			const next = current + change;
-			return { ...prev, [id]: next > 0 ? next : 0 };
-		});
-	};
-
+	const { itemsSelected, setItemsSelected } = useContext(Context);
 	const getTotal = () => {
 		let total = 0;
-		menuItems.forEach((item) => {
-			total += (cart[item.id] || 0) * item.price;
-			if (item.sub) {
-				item.sub.forEach((sub) => (total += (cart[sub.id] || 0) * sub.price));
-			}
+		itemsSelected.forEach((item) => {
+			total += (item.price || 0) * item.qty;
 		});
 		return total;
 	};
 
-	const sendWhatsApp = () => {
-		let message = 'Order Details:%0A';
-		menuItems.forEach((item) => {
-			const qty = cart[item.id];
-			if (qty > 0) message += `${item.name} x ${qty} = ₹${qty * item.price}%0A`;
-			if (item.sub) {
-				item.sub.forEach((sub) => {
-					const sqty = cart[sub.id];
-					if (sqty > 0) message += `  ${sub.name} x ${sqty} = ₹${sqty * sub.price}%0A`;
-				});
+	function updateQty(name, qty, price) {
+		setItemsSelected((prev) => {
+			if (qty == 0) {
+				// Remove
+				let obj = prev.filter((item) => item.name !== name);
+				return obj;
+			} else {
+				// Add - Update
+				let old = prev.filter((item) => item.name !== name);
+				let obj = [...old, { name, qty, price }];
+				return obj;
 			}
+		});
+	}
+	const sendWhatsApp = () => {
+		if (itemsSelected.length === 0) return;
+		let message = 'Order Details:%0A';
+		itemsSelected.forEach((item) => {
+			message += `${item.name} x ${item.qty} = ₹${item.qty * item.price}%0A`;
 		});
 		message += `Total: ₹${getTotal()}`;
 		window.open(`https://wa.me/919958983578?text=${message}`, '_blank');
 	};
+
+	// const cartItems = getCartItems();
 
 	return (
 		<div className={styles.modalOverlay} onClick={closeModal}>
@@ -62,42 +47,39 @@ const OrderModal = ({ closeModal }) => {
 				<h2>Order Cart</h2>
 
 				<div className={styles.cartList}>
-					{menuItems.map((item) => (
-						<React.Fragment key={item.id}>
-							<div className={styles.cartItem}>
+					{itemsSelected.length === 0 ? (
+						<p className={styles.emptyCart}>Your cart is empty.</p>
+					) : (
+						itemsSelected.map((item) => (
+							<div className={styles.cartItem} key={item.name}>
 								<span>{item.name}</span>
 								<div className={styles.qtyControls}>
-									<button onClick={() => updateQty(item.id, -1)}>-</button>
-									<span>{cart[item.id] || 0}</span>
-									<button onClick={() => updateQty(item.id, 1)}>+</button>
+									<span>{item.qty}</span>
 								</div>
 								<span>₹{item.price}</span>
-								<span>₹{(cart[item.id] || 0) * item.price}</span>
+								<span>₹{item.qty * item.price}</span>
+								<div className='qtySelect'>
+									<select value={item.qty} onChange={(e) => updateQty(item.name, parseInt(e.target.value, 10), item.price)}>
+										{[...Array(11)].map((_, i) => (
+											<option key={i} value={i}>
+												{i}
+											</option>
+										))}
+									</select>
+								</div>
 							</div>
+						))
+					)}
+					<input type='text' id='customerName' name='customerName' placeholder='Please enter your name' className='form-input' required />
 
-							{item.sub &&
-								item.sub.map((sub) => (
-									<div className={styles.cartSubitem} key={sub.id}>
-										<span>{sub.name}</span>
-										<div className={styles.qtyControls}>
-											<button onClick={() => updateQty(sub.id, -1)}>-</button>
-											<span>{cart[sub.id] || 0}</span>
-											<button onClick={() => updateQty(sub.id, 1)}>+</button>
-										</div>
-										<span>₹{sub.price}</span>
-										<span>₹{(cart[sub.id] || 0) * sub.price}</span>
-									</div>
-								))}
-						</React.Fragment>
-					))}
+					<label htmlFor='deliveryAddress'>
+						Delivery Address <span className='required'>*</span>
+					</label>
+					<input type='text' id='deliveryAddress' name='deliveryAddress' placeholder='Please enter your delivery address' className='form-input' required />
 				</div>
 
 				<div className={styles.grandTotal}>Grand Total: ₹{getTotal()}</div>
-				<button
-					className={`${styles.btn} ${styles.primary}`}
-					disabled={getTotal() === 0}
-					title={getTotal() === 0 ? 'Add items to enable' : 'Send via WhatsApp'}
-					onClick={sendWhatsApp}>
+				<button className={`${styles.btn} ${styles.primary}`} disabled={getTotal() === 0} title={getTotal() === 0 ? 'Add items to enable' : 'Send via WhatsApp'} onClick={sendWhatsApp}>
 					Send via WhatsApp
 				</button>
 			</div>

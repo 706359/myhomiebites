@@ -40,25 +40,14 @@ export default function Header() {
 							Contact
 						</a>
 					</li>
-					<li>
-						{/* <a
-							className='cta'
-							href='https://wa.me/919958983578'
-							target='_blank'
-							rel='noopener noreferrer'>
-							Order on WhatsApp
-						</a> */}
-						<OrderButton />
-					</li>
-					<div>
-						<a	
-							style={{cursor:'pointer', backgroundColor:'var(--brand-deep)'}}
-							className='cta'
-							target='_blank'
-							rel='noopener noreferrer'>
+					{/* <div>
+						<a style={{ cursor: 'pointer', backgroundColor: 'var(--brand-deep)' }} className='cta' target='_blank' rel='noopener noreferrer'>
 							Subscribe Tiffin
 						</a>
-					</div>
+					</div> */}
+					<li>
+						<OrderButton />
+					</li>
 				</ul>
 			</nav>
 		</header>

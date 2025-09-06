@@ -9,22 +9,22 @@ export default function Hero() {
 					</p>
 					<div className='badges reveal in'>
 						<span className='badge'>
-							<i className='fa-solid fa-truck-fast'></i> 🍽 Free Delivery*
+							<i className='fa-solid fa-truck-fast'></i>Free Delivery*
 						</span>
 						<span className='badge'>
-							<i className='fa-solid fa-kitchen-set'></i> 🧼 Hygienic Kitchen
+							<i className='fa-solid fa-kitchen-set'></i>Hygienic Kitchen
 						</span>
 						<span className='badge'>
-							<i className='fa-solid fa-calendar-day'></i> 📅 Daily Menu
+							<i className='fa-solid fa-calendar-day'></i>Daily Menu
 						</span>
 						<span className='badge'>
-							<i className='fa-solid fa-calendar-day'></i> 🥗 Fresh Ingredients
+							<i className='fa-solid fa-calendar-day'></i>Fresh Ingredients
 						</span>
 						<span className='badge'>
-							<i className='fa-solid fa-calendar-day'></i> 🥘 Variety of Dishes
+							<i className='fa-solid fa-calendar-day'></i>Variety of Dishes
 						</span>
 						<span className='badge'>
-							<i className='fa-solid fa-calendar-day'></i> 🌿 Healthy & Homemade
+							<i className='fa-solid fa-calendar-day'></i>Healthy & Homemade
 						</span>
 					</div>
 					<div className='cta-row' style={{ marginTop: '40px', justifySelf: 'center' }}>

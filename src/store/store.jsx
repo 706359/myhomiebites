@@ -1,12 +1,13 @@
-import { createContext } from "react";
+import { createContext, useState } from 'react';
 
-export const Context = createContext({})
+export const Context = createContext({
+	itemsSelected: [],
+	setItemsSelected: () => {},
+});
 
 export default function ContextProvider({ children }) {
+	const [itemsSelected, setItemsSelected] = useState([]);
+	let value = { itemsSelected, setItemsSelected };
 
-    let value = {}
-
-    return <Context.Provider value={value}>
-        {children}
-    </Context.Provider>
+	return <Context.Provider value={value}>{children}</Context.Provider>;
 }
