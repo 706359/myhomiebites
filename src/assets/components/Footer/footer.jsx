@@ -3,23 +3,23 @@ import React from 'react';
 const Footer = () => {
 	return (
 		<footer>
-			<div class='footer-inner'>
-				<div class='footer-brand'>
+			<div className='footer-inner'>
+				<div className='footer-brand'>
 					<img src='logo.png' alt='HomieBites Logo' height='80' width='80' />
 				</div>
 
 				<div className='footerButtons'>
-					<a class='btn btn-ghost' href='#rates'>
+					<a className='btn btn-ghost' href='#rates' aria-label='Rate List'>
 						Rate List
 					</a>
-					<a class='btn btn-primary pulse' href='https://wa.me/919958983578' target='_blank' rel='noopener'>
+					<a className='btn btn-primary pulse' href='https://wa.me/919958983578' target='_blank' rel='noopener noreferrer' aria-label='Order Now on WhatsApp'>
 						Order Now
 					</a>
 				</div>
 			</div>
 
-			<div class='footer-links'>
-				<div class='footer-column'>
+			<div className='footer-links'>
+				<div className='footer-column'>
 					<h4>Quick Links</h4>
 					<ul>
 						<li>
@@ -37,7 +37,7 @@ const Footer = () => {
 					</ul>
 				</div>
 
-				<div class='footer-column'>
+				<div className='footer-column'>
 					<h4>Help</h4>
 					<ul>
 						<li>
@@ -47,14 +47,14 @@ const Footer = () => {
 							<a href='#contact'>Contact Us</a>
 						</li>
 						<li>
-							<a href='https://wa.me/919958983578' target='_blank' rel='noopener'>
+							<a href='https://wa.me/919958983578' target='_blank' rel='noopener noreferrer'>
 								WhatsApp Support
 							</a>
 						</li>
 					</ul>
 				</div>
 
-				<div class='footer-column'>
+				<div className='footer-column'>
 					<h4>Service Areas</h4>
 					<ul>
 						<li>Panchsheel Greens-1</li>
@@ -64,7 +64,7 @@ const Footer = () => {
 				</div>
 			</div>
 
-			<div class='footer-bottom'>
+			<div className='footer-bottom'>
 				<p>© 2025 HomieBites. All rights reserved. | Home-cooked meals delivered with love ❤️</p>
 			</div>
 		</footer>

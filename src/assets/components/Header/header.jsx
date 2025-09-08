@@ -7,7 +7,9 @@ export default function Header() {
 	return (
 		<header className={menuOpen ? 'menu-open' : ''}>
 			<nav className='nav'>
-				<img src='/logo.png' alt='HomieBites Logo' height={120} />
+				<a href='#home' className='logo'>
+					<img src='/logo.png' alt='HomieBites Logo' />
+				</a>
 				<div className='spacer'></div>
 				<button className='menu-btn' onClick={() => setMenuOpen(!menuOpen)}>
 					<i className='fa-solid fa-bars menu-icon'></i>
@@ -40,14 +42,7 @@ export default function Header() {
 							Contact
 						</a>
 					</li>
-					{/* <div>
-						<a style={{ cursor: 'pointer', backgroundColor: 'var(--brand-deep)' }} className='cta' target='_blank' rel='noopener noreferrer'>
-							Subscribe Tiffin
-						</a>
-					</div> */}
-					<li>
-						<OrderButton />
-					</li>
+					<OrderButton />
 				</ul>
 			</nav>
 		</header>

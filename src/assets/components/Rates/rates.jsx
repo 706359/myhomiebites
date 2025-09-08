@@ -56,7 +56,7 @@ const Rates = () => {
 											<b>Item</b>
 										</span>
 										<b className='price'>Price</b>
-										<b className='price'>Qty</b>
+										<b className='price '>Qty</b>
 									</li>
 								</ul>
 
@@ -66,8 +66,8 @@ const Rates = () => {
 										<li key={item.id} className={qty > 0 ? styles.hightlight : ''}>
 											<span>{item.name}</span>
 											<b className='price'>₹{item.price}</b>
-											<div className='qtySelect'>
-												<select value={qty} onChange={(e) => updateQty(item.name, parseInt(e.target.value, 10), item.price)}>
+											<div className='qtySelect '>
+												<select className='qtySelectActive' value={qty} onChange={(e) => updateQty(item.name, parseInt(e.target.value, 20), item.price)}>
 													{[...Array(11)].map((_, i) => (
 														<option key={i} value={i}>
 															{i}

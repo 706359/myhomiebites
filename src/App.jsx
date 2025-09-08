@@ -14,8 +14,16 @@ import OrderButton from './assets/components/OrderButton/orderbutton';
 
 function App() {
 	const [cart, setCart] = useState({});
-	const setQty = (id, qty) => setCart((p) => ({ ...p, [id]: Math.max(0, Number(qty) || 0) }));
-	const changeQty = (id, delta) => setCart((p) => ({ ...p, [id]: Math.max(0, (p[id] || 0) + delta) }));
+
+	const setQty = (id, qty) => setCart((prev) => ({ ...prev, [id]: Math.max(0, Number(qty) || 0) }));
+
+	// const changeQty = (id, delta) =>
+	// 	setCart((prev) => ({
+	// 		...prev,
+	// 		[id]: Math.max(0, (prev[id] || 0) + delta),
+	// 	}));
+
+	// const updateQty = setQty;
 
 	return (
 		<>
@@ -23,7 +31,7 @@ function App() {
 			<Hero />
 			<Features />
 			<Rates cart={cart} setQty={setQty} />
-			<OrderButton cart={cart} setQty={setQty} changeQty={changeQty} />
+			{/* <OrderButton cart={cart} updateQty={updateQty} changeQty={changeQty} /> */}
 			<Gallery />
 			<Banner />
 			<Testimonials />

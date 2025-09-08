@@ -1,63 +1,78 @@
+import React from 'react';
+
+const galleryItems = [
+	{
+		src: '/images/FullTiffin.jpg',
+		alt: 'Freshly prepared Indian thali',
+		caption: 'Full Tiffin Meal',
+	},
+	{
+		src: '/images/RotiSabji.webp',
+		alt: 'Homemade rotis and curry',
+		caption: 'Roti with Sabzi',
+	},
+	{
+		src: '/images/DeliciousAaluParatha.jpg',
+		alt: 'Stuffed parathas with curd',
+		caption: 'Stuffed Parathas',
+	},
+	{
+		src: 'https://images.pexels.com/photos/674574/pexels-photo-674574.jpeg',
+		alt: 'Aloo matar with rice',
+		caption: 'Aloo Matar with Rice',
+	},
+	{
+		src: '/images/AalooPuri.jpg',
+		alt: 'Aloo matar with puri',
+		caption: 'Aloo Matar with Puri',
+	},
+	{
+		src: '/images/Curd.jpg',
+		alt: 'Homemade pure curd',
+		caption: 'Homemade Pure Curd',
+	},
+	{
+		src: '/images/MoondDalKhichdi.jpg',
+		alt: 'Moong dal khichdi',
+		caption: 'Khichdi',
+	},
+];
+
+const specials = [
+	{ src: '/images/Amritsarichhole.webp', alt: 'Amritsari chhole' },
+	{ src: '/images/lobhiya.jpg', alt: 'Lobhiya curry' },
+	{ src: '/images/lokikofte.jpg', alt: 'Lauki kofte' },
+	{ src: '/images/kadhipakora.jpg', alt: 'Kadhi pakora' },
+	{ src: '/images/rajma.jpg', alt: 'Rajma curry' },
+	{ src: '/images/kalachana.jpg', alt: 'Kala chana curry' },
+];
+
 const Gallery = () => {
 	return (
 		<section id='gallery'>
-			<div class='container'>
-				<h2 class='section-title reveal in' data-animate=''>
+			<div className='container'>
+				<h2 className='section-title reveal in' data-animate=''>
 					📸 Food Gallery
 				</h2>
-				<p class='muted reveal' data-animate=''>
+				<p className='muted reveal' data-animate=''>
 					Take a look at our freshly prepared meals, made with love and care.
 				</p>
 
-				<div class='gallery'>
-					<div class='gallery-item reveal in' data-animate=''>
-						<img src='/images/FullTiffin.jpg' alt='Freshly prepared Indian thali' loading='lazy' />
-						<div class='gallery-caption'>Full Tiffin Meal</div>
-					</div>
-					<div class='gallery-item reveal in' data-animate=''>
-						<img src='/images/RotiSabji.webp' alt='Homemade rotis and curry' loading='lazy' data-broken-image-processed='true' />
-						<div class='gallery-caption'>Roti with Sabji</div>
-					</div>
-					<div class='gallery-item reveal in' data-animate=''>
-						<img src='/images/DeliciousAaluParatha.jpg' alt='Stuffed parathas with curd' loading='lazy' data-broken-image-processed='true' />
-						<div class='gallery-caption'>Stuffed Parathas</div>
-					</div>
-					<div class='gallery-item reveal in' data-animate=''>
-						<img src='https://images.pexels.com/photos/674574/pexels-photo-674574.jpeg' alt='Khichdi with vegetables' loading='lazy' data-broken-image-processed='true' />
-						<div class='gallery-caption'>Aaloo Mater with Rice</div>
-					</div>
-					<div class='gallery-item reveal in' data-animate=''>
-						<img src='/images/AalooPuri.jpg' alt='Aaloo Mater with Rice' loading='lazy' data-broken-image-processed='true' />
-						<div class='gallery-caption'>Aaloo Mater with Puri</div>
-					</div>
-					<div class='gallery-item reveal in' data-animate=''>
-						<img src='/images/Curd.jpg' alt='Aaloo with Puri' loading='lazy' data-broken-image-processed='true' />
-						<div class='gallery-caption'>Homemade Pure Curd</div>
-					</div>
-					<div class='gallery-item reveal in' data-animate=''>
-						<img src='/images/MoondDalKhichdi.jpg' alt='Khichdi' loading='lazy' data-broken-image-processed='true' />
-						<div class='gallery-caption'>Khichdi</div>
-					</div>
+				<div className='gallery'>
+					{galleryItems.map((item, idx) => (
+						<div key={idx} className='gallery-item reveal in' data-animate=''>
+							<img src={item.src} alt={item.alt} loading='lazy' />
+							<div className='gallery-caption'>{item.caption}</div>
+						</div>
+					))}
+
 					<div className='gallery-item reveal in' data-animate=''>
 						<div className='gallery-grid-six'>
-							<div className='gallery-img'>
-								<img src='/images/Amritsarichhole.webp' alt='Amritsari Chhole' loading='lazy' />
-							</div>
-							<div className='gallery-img'>
-								<img src='/images/lobhiya.jpg' alt='Lobhiya Curry' loading='lazy' />
-							</div>
-							<div className='gallery-img'>
-								<img src='/images/lokikofte.jpg' alt='Loki Kofte' loading='lazy' />
-							</div>
-							<div className='gallery-img'>
-								<img src='/images/kadhipakora.jpg' alt='Rajma Curry' loading='lazy' />
-							</div>
-							<div className='gallery-img'>
-								<img src='/images/rajma.jpg' alt='Kadhi Pakora' loading='lazy' />
-							</div>
-							<div className='gallery-img'>
-								<img src='/images/kalachana.jpg' alt='Kala Chana Curry' loading='lazy' />
-							</div>
+							{specials.map((sp, idx) => (
+								<div key={idx} className='gallery-img'>
+									<img src={sp.src} alt={sp.alt} loading='lazy' />
+								</div>
+							))}
 						</div>
 						<div className='gallery-caption'>Our Specials: 6-Curry Showcase</div>
 					</div>
