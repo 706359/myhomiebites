@@ -41,7 +41,7 @@
   margin: 0;
 
   font-weight: 800;
-  color: #843501;
+  color: #9e4002;
 }
 
 .heroSub {
@@ -97,9 +97,19 @@
 }
 
 .heroIllustration {
-  position: relative;
-  display: grid;
-  place-items: center;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 420px; /* limit illustration size */
+  margin: 0 auto;
+}
+
+.heroIllustration img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
 }
 
 .plate {
@@ -156,5 +166,10 @@
   }
   .badges {
     justify-content: center;
+  }
+}
+@media (max-width: 768px) {
+  .heroIllustration {
+    max-width: 280px;
   }
 }
