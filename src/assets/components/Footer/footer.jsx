@@ -9,7 +9,7 @@ const Footer = () => {
 				</div>
 
 				<div className='footerButtons'>
-					<a className='btn btn-ghost' href='#rates' aria-label='Rate List'>
+					<a className='btn btnGhost' href='#rates' aria-label='Rate List'>
 						Rate List
 					</a>
 					<a className='btn btn-primary pulse' href='https://wa.me/919958983578' target='_blank' rel='noopener noreferrer' aria-label='Order Now on WhatsApp'>

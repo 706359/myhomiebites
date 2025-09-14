@@ -24,7 +24,7 @@ export const menuItems = {
 		{ id: 'rotisParathas_0', name: 'Plain Roti', price: 10 },
 		{ id: 'rotisParathas_1', name: 'Roti with Ghee', price: 12 },
 		{ id: 'rotisParathas_2', name: 'Plain Paratha', price: 20 },
-		{ id: 'rotisParathas_3', name: 'Stuffed Paratha (Aloo/Gobhi/Mooli/Methi)', price: 35 },
+		{ id: 'rotisParathas_3', name: 'Stuffed Paratha', price: 35 },
 		{ id: 'rotisParathas_4', name: '3 Stuffed Parathas', price: 100 },
 	],
 

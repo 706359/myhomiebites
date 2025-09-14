@@ -1,9 +1,9 @@
+import { faBowlRice, faBox, faHome, faPlus, faStar, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faUtensils, faBowlRice, faPlus, faHome, faBox } from '@fortawesome/free-solid-svg-icons';
-import styles from './style.module.css';
-import { menuItems } from '../../../data/menu';
 import { useContext } from 'react';
+import { menuItems } from '../../../data/menu';
 import { Context } from '../../../store/store';
+import styles from './style.module.css';
 
 const iconMap = {
 	fullTiffin: faStar,
@@ -65,6 +65,7 @@ const Rates = () => {
 									return (
 										<li key={item.id} className={qty > 0 ? styles.hightlight : ''}>
 											<span>{item.name}</span>
+
 											<b className='price'>₹{item.price}</b>
 											<div className='qtySelect '>
 												<select className='qtySelectActive' value={qty} onChange={(e) => updateQty(item.name, parseInt(e.target.value, 20), item.price)}>
