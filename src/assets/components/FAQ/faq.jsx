@@ -24,7 +24,7 @@ export default function FAQ() {
     },
     {
       q: 'How can I place an order?',
-      a: 'You can place an order via WhatsApp or call us at +91-9958983578. We recommend placing orders at least 1 hour in advance.',
+      a: 'You can place an order via WhatsApp or call us at +91-6395559255. We recommend placing orders at least 1 hour in advance.',
     },
   ];
 

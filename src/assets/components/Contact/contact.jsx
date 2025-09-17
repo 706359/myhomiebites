@@ -18,8 +18,8 @@ const Contact = () => {
             <h3>Phone</h3>
             <p className={styles.muted}>
               Call/WhatsApp:{' '}
-              <a href='tel:+919958983578'>
-                <b>+91-9958983578</b>
+              <a href='tel:+916395559255'>
+                <b>+91-6395559255</b>
               </a>
             </p>
           </div>
@@ -29,11 +29,7 @@ const Contact = () => {
               <FontAwesomeIcon icon={faLocationDot} />
             </div>
             <h3>Address</h3>
-            <p className={styles.muted}>
-              A1-405, Panchsheel Greens
-              <br />
-              Self-pickup available (₹100 tiffin)
-            </p>
+            <p className={styles.muted}>A1-405, Panchsheel Greens-1</p>
           </div>
 
           <div className={`${styles.card} reveal in`} data-animate=''>
@@ -43,7 +39,7 @@ const Contact = () => {
             <h3>Timings</h3>
 
             <p className={styles.muted}>
-              Breakfat • Lunch • Dinner <br />
+              Breakfast • Lunch • Dinner <br />
               Last order 7:30 PM • Delivery by 8:30 PM
             </p>
           </div>

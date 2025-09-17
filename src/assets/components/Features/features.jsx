@@ -14,7 +14,7 @@ const Features = () => {
       <div className='container features'>
         <div className='feature reveal in' data-animate=''>
           <FontAwesomeIcon icon={faLeaf} />
-          <div>Pure Vegetarian</div>
+          <div>Pure & Fresh</div>
         </div>
         <div className='feature reveal in' data-animate=''>
           <FontAwesomeIcon icon={faDroplet} />
@@ -48,7 +48,7 @@ const Features = () => {
           <div className='special-offer-action'>
             <a
               className='btn btn-primary pulse'
-              href="https://wa.me/919958983578?text=I'm%20interested%20in%20the%20weekly%20subscription%20offer"
+              href="https://wa.me/916395559255?text=I'm%20interested%20in%20the%20weekly%20subscription%20offer"
               target='_blank'
               rel='noopener noreferrer'>
               <FontAwesomeIcon icon={faCheck} /> Get This Deal

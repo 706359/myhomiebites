@@ -46,7 +46,7 @@ export default function Hero() {
           <div className={styles.ctaRow}>
             <a
               className='btn btn-primary pulse'
-              href='https://wa.me/919958983578'
+              href='https://wa.me/916395559255'
               target='_blank'
               rel='noopener noreferrer'
               aria-label='Order now on WhatsApp'>
@@ -59,10 +59,10 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className={styles.heroIllustration} role='img' aria-label='HomieBites Thali'>
+        <div className={styles.heroIllustration} role='img' aria-label='RAAVITO Thali'>
           <div className={styles.plate}>
             <img
-              src='/images/VegThali1.avif'
+              src='/images/VegThali.avif'
               alt='Homemade Indian thali meal with variety of dishes'
               loading='lazy'
             />

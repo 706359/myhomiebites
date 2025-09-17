@@ -1,9 +1,10 @@
 .hero {
   padding: 72px 18px;
   background:
-    radial-gradient(1200px 400px at 70% -10%, #ffe1cf 0%, transparent 60%),
-    radial-gradient(1000px 400px at 20% 0%, #e6ffe7 0%, transparent 60%),
-    linear-gradient(#fff7ef, #ffffff);
+    radial-gradient(800px 300px at 20% 0%, #e6ffe7 0%, transparent 60%),
+    radial-gradient(900px 320px at 70% -10%, #ffe1cf 0%, transparent 60%),
+    linear-gradient(#ffffff, #fff7ef);
+
   color: var(--ink);
   position: relative;
   overflow: hidden;
@@ -66,7 +67,7 @@
   border-radius: 25px;
   font-weight: 600;
   font-size: 0.95rem;
-  color: #111827;
+  color: var(--ink);
   background:
     radial-gradient(1200px 400px at 70% 10%, #ffe1cf 0%, transparent -60%),
     radial-gradient(1000px 400px at 20% 0%, #e6ffe7 0%, transparent -60%),
@@ -120,7 +121,6 @@
   transform: rotate(-2deg);
   position: relative;
   z-index: 1;
-  max-width: 380px;
   width: 100%;
 }
 

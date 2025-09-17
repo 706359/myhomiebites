@@ -73,7 +73,7 @@ const OrderModal = ({ closeModal }) => {
     message += `*Grand Total:* ₹${total}%0A`;
     message += `%0A✅ Thank you for your order!`;
 
-    window.open(`https://wa.me/919958983578?text=${message}`, '_blank');
+    window.open(`https://wa.me/916395559255?text=${message}`, '_blank');
   };
 
   const canSend =

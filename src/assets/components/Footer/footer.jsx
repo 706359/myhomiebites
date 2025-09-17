@@ -3,7 +3,7 @@ const Footer = () => {
     <footer>
       <div className='footer-inner'>
         <a href='#home' className='footer-brand'>
-          <img src='/logo.png' alt='HomieBites Logo' height='80' width='80' loading='lazy' />
+          <img src='/logo.png' alt='RAAVITO Logo' height='80' width='80' loading='lazy' />
         </a>
 
         <div className='footerButtons'>
@@ -12,7 +12,7 @@ const Footer = () => {
           </a>
           <a
             className='btn btn-primary pulse'
-            href='https://wa.me/919958983578'
+            href='https://wa.me/916395559255'
             target='_blank'
             rel='noopener noreferrer'
             aria-label='Order Now on WhatsApp'>
@@ -50,7 +50,7 @@ const Footer = () => {
               <a href='#contact'>Contact Us</a>
             </li>
             <li>
-              <a href='https://wa.me/919958983578' target='_blank' rel='noopener noreferrer'>
+              <a href='https://wa.me/916395559255' target='_blank' rel='noopener noreferrer'>
                 WhatsApp Support
               </a>
             </li>
@@ -69,8 +69,8 @@ const Footer = () => {
 
       <div className='footer-bottom'>
         <p>
-          © {new Date().getFullYear()} HomieBites. All rights reserved. | Home-cooked meals
-          delivered with love ❤️
+          © {new Date().getFullYear()} RAAVITO. All rights reserved. | Home-cooked meals delivered
+          with love ❤️
         </p>
       </div>
     </footer>

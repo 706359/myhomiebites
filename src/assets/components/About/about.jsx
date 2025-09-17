@@ -3,7 +3,7 @@ const About = () => {
     <section className='aboutSection' id='about'>
       <div className='aboutContainer'>
         <h2>
-          About <span>HomieBites</span>
+          About <span>RAAVITO</span>
         </h2>
 
         <p>
@@ -13,7 +13,7 @@ const About = () => {
         </p>
 
         <p>
-          At HomieBites, we believe good food should taste like home. Our meals are prepared in a
+          At RAAVITO, we believe good food should taste like home. Our meals are prepared in a
           clean, hygienic kitchen, using quality ingredients and traditional recipes. We focus on
           balanced nutrition with less oil and the perfect amount of spices to suit every palate.
         </p>
