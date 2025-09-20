@@ -10,19 +10,17 @@ export default function RaavitoPartnerPage() {
 
 	return (
 		<div className={styles.page}>
-			{/* Header */}
 			<header className={styles.topbar}>
 				<img src='logo.png' alt='RAAVITO' className={styles.logo} />
 				<nav className={styles.nav}>
 					<a href='#how'>How it works</a>
 					<a href='#support'>Support</a>
-					<a href='#login' className={`${styles.cta} ${styles.pulse}`}>
+					<span href='#login' className={`${styles.cta} ${styles.pulse}`}>
 						Partner Login
-					</a>
+					</span>
 				</nav>
 			</header>
 
-			{/* Hero */}
 			<section className={styles.hero} id='login'>
 				<div className={styles.heroGrid}>
 					<div className={styles.formPanel}>
@@ -30,7 +28,7 @@ export default function RaavitoPartnerPage() {
 						<p>Enter mobile number to continue</p>
 						<div className={styles.inputGroup}>
 							<input type='text' placeholder='Restaurant ID or Mobile' value={input} onChange={(e) => setInput(e.target.value)} />
-							<button disabled={!isValid} onClick={() => alert("Proceeding with: " + input)} className={isValid ? styles.enabled : ""}>
+							<button disabled={!isValid} className={isValid ? styles.enabled : ""} onClick={() => isValid && alert("Proceeding with: " + input)}>
 								Proceed
 							</button>
 						</div>
@@ -60,46 +58,47 @@ export default function RaavitoPartnerPage() {
 				</div>
 			</section>
 
-			<section className={styles.stepsWrapper}>
-				<h2 className={styles.heading}>
-					In just 3 easy steps <br />
-					<span>Get your restaurant delivery-ready in 24hrs!</span>
-				</h2>
+			<section className={styles.onboard}>
+				<div className={styles.stepsWrapper}>
+					<h2 className={styles.heading}>
+						In just 3 easy steps <br />
+						<span>Get your restaurant delivery-ready in 24hrs!</span>
+					</h2>
 
-				<div className={styles.stepsBox}>
-					<div className={styles.step}>
-						<div className={styles.icon}>
-							<Smartphone size={22} />
+					<div className={styles.stepsBox}>
+						<div className={styles.step}>
+							<div className={styles.icon}>
+								<Smartphone size={22} />
+							</div>
+							<div className={styles.text}>
+								<small>STEP 1</small>
+								<h3>Install the RAAVITO Partner App</h3>
+							</div>
 						</div>
-						<div className={styles.text}>
-							<small>STEP 1</small>
-							<h3>Install the RAAVITO Partner App</h3>
-						</div>
-					</div>
 
-					<div className={styles.step}>
-						<div className={styles.icon}>
-							<CheckCircle size={22} />
+						<div className={styles.step}>
+							<div className={styles.icon}>
+								<CheckCircle size={22} />
+							</div>
+							<div className={styles.text}>
+								<small>STEP 2</small>
+								<h3>Login/Register using your phone number</h3>
+							</div>
 						</div>
-						<div className={styles.text}>
-							<small>STEP 2</small>
-							<h3>Login/Register using your phone number</h3>
-						</div>
-					</div>
 
-					<div className={styles.step}>
-						<div className={styles.icon}>
-							<FileText size={22} />
-						</div>
-						<div className={styles.text}>
-							<small>STEP 3</small>
-							<h3>Enter restaurant details</h3>
+						<div className={styles.step}>
+							<div className={styles.icon}>
+								<FileText size={22} />
+							</div>
+							<div className={styles.text}>
+								<small>STEP 3</small>
+								<h3>Enter restaurant details</h3>
+							</div>
 						</div>
 					</div>
 				</div>
-			</section>
-			<section className={styles.onboard}>
-				<aside className={`${styles.docs} ${styles.banner}`}>
+
+				<div className={`${styles.docs} ${styles.banner}`}>
 					<h4>Keep these ready</h4>
 					<ul>
 						<li>
@@ -111,8 +110,9 @@ export default function RaavitoPartnerPage() {
 							GST info <a href='#'>Apply</a>
 						</li>
 					</ul>
-				</aside>
+				</div>
 			</section>
+
 			{/* Footer */}
 			<footer className={styles.footer}>© {year} RAAVITO — Partner platform</footer>
 		</div>

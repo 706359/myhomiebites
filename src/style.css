@@ -7,9 +7,9 @@
   --brand-cream: #fff7ef;
   --brand-yellow: #f6d76b; */
 
-	--brand-orange: #f7941d;
-	--brand-green: #39b86f;
-	--brand-deep: #d35400;
+	--brand-orange: rgb(222, 140, 69);
+	--brand-green: rgb(54, 109, 89);
+	--brand-deep: rgb(162, 82, 40);
 	--brand-cream: #ffffff;
 	--brand-yellow: #f6d76b;
 	--brand-dark-green: #1d6541;
@@ -1009,7 +1009,6 @@ section {
 	left: 18px;
 	color: var(--brand-orange, #fd7302);
 	opacity: 0.06;
-	font-family: serif;
 	pointer-events: none;
 }
 .testimonial-content p {
