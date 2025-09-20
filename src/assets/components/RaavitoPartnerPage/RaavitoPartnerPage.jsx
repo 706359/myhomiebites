@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Smartphone, CheckCircle, FileText } from "lucide-react";
 import styles from "./RaavitoPartnerPage.module.css";
 
 export default function RaavitoPartnerPage() {
@@ -9,25 +10,24 @@ export default function RaavitoPartnerPage() {
 
 	return (
 		<div className={styles.page}>
-			{/* Topbar */}
+			{/* Header */}
 			<header className={styles.topbar}>
 				<img src='logo.png' alt='RAAVITO' className={styles.logo} />
 				<nav className={styles.nav}>
-					<a href='#'>How it works</a>
-					<a href='#'>Support</a>
-					<a href='#' className={styles.cta}>
+					<a href='#how'>How it works</a>
+					<a href='#support'>Support</a>
+					<a href='#login' className={`${styles.cta} ${styles.pulse}`}>
 						Partner Login
 					</a>
 				</nav>
 			</header>
 
 			{/* Hero */}
-			<section className={styles.hero}>
+			<section className={styles.hero} id='login'>
 				<div className={styles.heroGrid}>
-					{/* Form Panel */}
 					<div className={styles.formPanel}>
 						<h3>Start on RAAVITO</h3>
-						<p>Enter Restaurant ID or mobile number to continue</p>
+						<p>Enter mobile number to continue</p>
 						<div className={styles.inputGroup}>
 							<input type='text' placeholder='Restaurant ID or Mobile' value={input} onChange={(e) => setInput(e.target.value)} />
 							<button disabled={!isValid} onClick={() => alert("Proceeding with: " + input)} className={isValid ? styles.enabled : ""}>
@@ -39,7 +39,6 @@ export default function RaavitoPartnerPage() {
 						</p>
 					</div>
 
-					{/* Hero Copy */}
 					<div className={styles.heroCopy}>
 						<h1>Bring your kitchen to more doors</h1>
 						<p>Sign up. Get listed. Start receiving delivery orders in under 24 hours.</p>
@@ -61,30 +60,46 @@ export default function RaavitoPartnerPage() {
 				</div>
 			</section>
 
-			{/* Onboarding */}
-			<section className={styles.onboard}>
-				<div className={styles.steps}>
-					<h3>Quick onboarding</h3>
-					<ol>
-						<li>
-							<strong>Install RAAVITO Partner App</strong>
-							<br />
-							<span>Available on Play & App Store</span>
-						</li>
-						<li>
-							<strong>Verify phone</strong>
-							<br />
-							<span>OTP based</span>
-						</li>
-						<li>
-							<strong>Setup menu & bank</strong>
-							<br />
-							<span>Start receiving orders</span>
-						</li>
-					</ol>
-				</div>
+			<section className={styles.stepsWrapper}>
+				<h2 className={styles.heading}>
+					In just 3 easy steps <br />
+					<span>Get your restaurant delivery-ready in 24hrs!</span>
+				</h2>
 
-				<aside className={styles.docs}>
+				<div className={styles.stepsBox}>
+					<div className={styles.step}>
+						<div className={styles.icon}>
+							<Smartphone size={22} />
+						</div>
+						<div className={styles.text}>
+							<small>STEP 1</small>
+							<h3>Install the RAAVITO Partner App</h3>
+						</div>
+					</div>
+
+					<div className={styles.step}>
+						<div className={styles.icon}>
+							<CheckCircle size={22} />
+						</div>
+						<div className={styles.text}>
+							<small>STEP 2</small>
+							<h3>Login/Register using your phone number</h3>
+						</div>
+					</div>
+
+					<div className={styles.step}>
+						<div className={styles.icon}>
+							<FileText size={22} />
+						</div>
+						<div className={styles.text}>
+							<small>STEP 3</small>
+							<h3>Enter restaurant details</h3>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section className={styles.onboard}>
+				<aside className={`${styles.docs} ${styles.banner}`}>
 					<h4>Keep these ready</h4>
 					<ul>
 						<li>
@@ -98,7 +113,6 @@ export default function RaavitoPartnerPage() {
 					</ul>
 				</aside>
 			</section>
-
 			{/* Footer */}
 			<footer className={styles.footer}>© {year} RAAVITO — Partner platform</footer>
 		</div>
