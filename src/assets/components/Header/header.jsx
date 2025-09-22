@@ -12,12 +12,7 @@ export default function Header({ onRegisterClick, onLoginClick }) {
 			<nav className='hb-nav'>
 				<div className='hb-left'>
 					<div href='#home' className='hb-logo' aria-label='Home'>
-						<img src='/logo.png' alt='RAAVITO Logo' />
-					</div>
-
-					<div className='hb-search' role='search' aria-label='Site search'>
-						<Icon>{`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`}</Icon>
-						<input type='search' placeholder='Search' aria-label='Search' />
+						<img src='/raavitologo.png' alt='RAAVITO Logo' />
 					</div>
 				</div>
 
@@ -60,14 +55,14 @@ export default function Header({ onRegisterClick, onLoginClick }) {
 
 				<div className='hb-right'>
 					<div className='hb-ctas'>
-						<button className='hb-btn primary' onClick={onLoginClick}>
-							User Login
+						<button className='btn btn-primary' onClick={onLoginClick}>
+							Login
 						</button>
-						<button className='hb-btn ghost' onClick={onRegisterClick}>
-							User Signup
+						<button className='btn btnGhost' onClick={onRegisterClick}>
+							Signup
 						</button>
 						<button
-							className='hb-btn ghost'
+							className='hb-btn ghost pulse'
 							onClick={() => {
 								navigation("/chef-registration");
 							}}>

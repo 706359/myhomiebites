@@ -11,7 +11,7 @@ export default function RaavitoPartnerPage() {
 	return (
 		<div className={styles.page}>
 			<header className={styles.topbar}>
-				<img src='logo.png' alt='RAAVITO' className={styles.logo} />
+				<img src='raavitologo.png' alt='RAAVITO' className={styles.logo} />
 				<nav className={styles.nav}>
 					<a href='#how'>How it works</a>
 					<a href='#support'>Support</a>
