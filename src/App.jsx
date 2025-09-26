@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import Banner from './assets/Banner/banner';
 import About from './assets/components/About/about';
@@ -23,7 +23,7 @@ function App() {
   const setQty = (id, qty) => setCart((prev) => ({ ...prev, [id]: Math.max(0, Number(qty) || 0) }));
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       {modal === 'register' && <RegisterForm onClose={() => setModal(null)} />}
       {modal === 'login' && <LoginForm onClose={() => setModal(null)} />}
 
@@ -51,7 +51,7 @@ function App() {
         />
         <Route path='/chef-registration' element={<ChefRegistration />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
