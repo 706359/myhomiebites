@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { useState } from "react";
+import { HashRouter, Route, Routes } from "react-router-dom";
 
-import Banner from './assets/Banner/banner';
-import About from './assets/components/About/about';
-import Contact from './assets/components/Contact/contact';
-import FAQ from './assets/components/FAQ/faq';
-import Features from './assets/components/Features/features';
-import Footer from './assets/components/Footer/footer';
-import Gallery from './assets/components/Gallery/gallery';
-import Header from './assets/components/Header/header';
-import Hero from './assets/components/Hero/hero';
-import LoginForm from './assets/components/LoginForm/LoginForm';
-import ChefRegistration from './assets/components/RaavitoPartnerPage/RaavitoPartnerPage'; // new page
-import Rates from './assets/components/Rates/rates';
-import RegisterForm from './assets/components/RegisterForm/RegisterForm';
-import Testimonials from './assets/components/Testimonials/testimonials';
+import Banner from "./assets/Banner/banner";
+import About from "./assets/components/About/about";
+import Contact from "./assets/components/Contact/contact";
+import FAQ from "./assets/components/FAQ/faq";
+import Features from "./assets/components/Features/features";
+import Footer from "./assets/components/Footer/footer";
+import Gallery from "./assets/components/Gallery/gallery";
+import Header from "./assets/components/Header/header";
+import Hero from "./assets/components/Hero/hero";
+import LoginForm from "./assets/components/LoginForm/LoginForm";
+import ChefRegistration from "./assets/components/RaavitoPartnerPage/RaavitoPartnerPage"; // new page
+import Rates from "./assets/components/Rates/rates";
+import RegisterForm from "./assets/components/RegisterForm/RegisterForm";
+import Testimonials from "./assets/components/Testimonials/testimonials";
 
 function App() {
   const [cart, setCart] = useState({});
@@ -24,8 +24,8 @@ function App() {
 
   return (
     <HashRouter>
-      {modal === 'register' && <RegisterForm onClose={() => setModal(null)} />}
-      {modal === 'login' && <LoginForm onClose={() => setModal(null)} />}
+      {modal === "register" && <RegisterForm onClose={() => setModal(null)} />}
+      {modal === "login" && <LoginForm onClose={() => setModal(null)} />}
 
       <Routes>
         <Route
@@ -33,8 +33,8 @@ function App() {
           element={
             <>
               <Header
-                onRegisterClick={() => setModal('register')}
-                onLoginClick={() => setModal('login')}
+                onRegisterClick={() => setModal("register")}
+                onLoginClick={() => setModal("login")}
               />
               <Hero />
               <Features />
