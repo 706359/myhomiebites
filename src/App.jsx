@@ -15,12 +15,13 @@ import ChefRegistration from "./assets/components/RaavitoPartnerPage/RaavitoPart
 import Rates from "./assets/components/Rates/rates";
 import RegisterForm from "./assets/components/RegisterForm/RegisterForm";
 import Testimonials from "./assets/components/Testimonials/testimonials";
+import HowItWorks from "./assets/components/HowItWorks/HowItWorks";
+import WhyChooseUs from "./assets/components/WhyChooseUs/WhyChooseUs";
+import AppFeatures from "./assets/components/AppFeatures/AppFeatures";
+import PartnerWithUs from "./assets/components/PartnerWithUs/PartnerWithUs";
 
 function App() {
-  const [cart, setCart] = useState({});
   const [modal, setModal] = useState(null); // 'login' | 'register' | null
-
-  const setQty = (id, qty) => setCart((prev) => ({ ...prev, [id]: Math.max(0, Number(qty) || 0) }));
 
   return (
     <HashRouter>
@@ -32,18 +33,22 @@ function App() {
           path='/'
           element={
             <>
-              <Header
+              {/* <Header
                 onRegisterClick={() => setModal("register")}
                 onLoginClick={() => setModal("login")}
-              />
+              /> */}
               <Hero />
+              <About />
               <Features />
-              <Rates cart={cart} setQty={setQty} />
+              <AppFeatures />
+              {/* <Rates cart={cart} setQty={setQty} /> */}
               <Gallery />
               <Banner />
+              <HowItWorks />
+              <WhyChooseUs />
+              <PartnerWithUs />
               <Testimonials />
               <FAQ />
-              <About />
               <Contact />
               <Footer />
             </>

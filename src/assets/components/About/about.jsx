@@ -1,30 +1,107 @@
-const About = () => {
+import styles from "./About.module.css";
+
+export default function About() {
   return (
-    <section className='aboutSection' id='about'>
-      <div className='aboutContainer'>
-        <h2>
-          About <span>RAAVITO</span>
-        </h2>
+    <section id='about' className={styles.about}>
+      <div className={styles.bgAccent} aria-hidden='true' />
+      <div className={styles.wrap}>
+        {/* LEFT */}
+        <div className={styles.left}>
+          <p className={styles.kicker}>About Raavito</p>
 
-        <p>
-          We serve fresh, homemade vegetarian meals prepared with care. Based at{' '}
-          <strong>A1-405, Panchsheel Greens</strong>, we deliver daily tiffins throughout the
-          neighborhood.
-        </p>
+          <h2 className={styles.title}>
+            Homely meals. Local chefs.
+            <span className={styles.titleEm}> Honest delivery.</span>
+          </h2>
 
-        <p>
-          At RAAVITO, we believe good food should taste like home. Our meals are prepared in a
-          clean, hygienic kitchen, using quality ingredients and traditional recipes. We focus on
-          balanced nutrition with less oil and the perfect amount of spices to suit every palate.
-        </p>
+          <p className={styles.subtitle}>
+            Authentic, home-cooked vegetarian food from verified neighbourhood kitchens. App-only
+            ordering. The website builds trust and discovery.
+          </p>
 
-        <p>
-          Founded in <strong>Feb 2024</strong>, our mission is to provide busy professionals and
-          families with convenient access to healthy, home-style meals at affordable prices.
-        </p>
+          <div className={styles.copy}>
+            <p>
+              Started in <strong>Feb 2024</strong> from <strong>A1-405, Panchsheel Greens</strong>.
+              Daily meals that taste like home. Lower oil, fresh produce, balanced spice.
+            </p>
+            <p>
+              Kitchens are verified. Menus rotate daily. Hyperlocal delivery for speed and
+              consistency. No cloud factories. Real kitchens run by real people.
+            </p>
+          </div>
+
+          <div className={styles.values}>
+            <div className={styles.card}>
+              <h4>Homemade & Hygienic</h4>
+              <p>Verified kitchens. Clean prep. Transparent sourcing.</p>
+            </div>
+            <div className={styles.card}>
+              <h4>Affordable & Honest</h4>
+              <p>Clear rates. No surge gimmicks. Real portions.</p>
+            </div>
+            <div className={styles.card}>
+              <h4>Local & Fast</h4>
+              <p>Hyperlocal delivery for fresh, hot meals.</p>
+            </div>
+            <div className={styles.card}>
+              <h4>Chef-First</h4>
+              <p>Tools and support for neighbourhood cooks.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT */}
+        <div className={styles.right}>
+          <figure className={styles.heroMedia}>
+            <img
+              src='/images/homechef.png'
+              alt='Home chef preparing a fresh vegetarian meal'
+              loading='lazy'
+            />
+            <figcaption className={styles.heroTag}>From local home kitchens</figcaption>
+          </figure>
+
+          <div className={styles.infoGrid}>
+            <div className={`${styles.card} ${styles.soft}`}>
+              <h4 className={styles.hGreen}>Hygiene & Safety</h4>
+              <ul className={styles.list}>
+                <li>Gloves, hairnets, sanitized stations</li>
+                <li>Fresh produce. No artificial colours</li>
+                <li>Temperature-safe packing</li>
+              </ul>
+            </div>
+
+            <div className={`${styles.card} ${styles.soft}`}>
+              <h4 className={styles.hDeep}>Journey</h4>
+              <ul className={styles.list}>
+                <li>
+                  <strong>Feb 2024</strong> — First kitchen in Panchsheel Greens
+                </li>
+                <li>
+                  <strong>2024–2025</strong> — Daily rotating menu, hyperlocal delivery
+                </li>
+                <li>
+                  <strong>Next</strong> — More neighbourhood chefs. App-only ordering
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className={styles.stats}>
+            <div className={styles.stat}>
+              <span className={styles.num}>100% Veg</span>
+              <span className={styles.lbl}>Pure Veg Kitchens</span>
+            </div>
+            <div className={styles.stat}>
+              <span className={styles.num}>~30 mins</span>
+              <span className={styles.lbl}>Typical Delivery</span>
+            </div>
+            <div className={styles.stat}>
+              <span className={styles.num}>Daily Menu</span>
+              <span className={styles.lbl}>Fresh Rotation</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
-};
-
-export default About;
+}

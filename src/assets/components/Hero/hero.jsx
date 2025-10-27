@@ -1,38 +1,54 @@
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { faGooglePlay, faApple } from "@fortawesome/free-brands-svg-icons";
 import {
-  faCalendarDay,
-  faHeart,
   faLeaf,
+  faHeart,
   faTruckFast,
   faUtensils,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './Styles/style.module.css';
+  faBowlRice,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./Styles/style.module.css";
 
 const badges = [
-  { id: 'b1', icon: faTruckFast, text: 'Free Delivery*' },
-  { id: 'b2', icon: faLeaf, text: 'Fresh Ingredients' },
-  { id: 'b3', icon: faUtensils, text: 'Daily Home-style Menu' },
-  { id: 'b4', icon: faCalendarDay, text: 'Delivered Daily' },
-  { id: 'b5', icon: faHeart, text: 'Healthy & Homemade' },
+  { id: "b1", icon: faTruckFast, text: "Quick Local Delivery" },
+  { id: "b2", icon: faLeaf, text: "Fresh & Hygienic" },
+  { id: "b3", icon: faBowlRice, text: "Authentic Home Taste" },
+  { id: "b4", icon: faUtensils, text: "Curated Daily Menu" },
+  { id: "b5", icon: faHeart, text: "Made by Local Chefs" },
 ];
-
 export default function Hero() {
+  const navigate = useNavigate();
+
+  const onScrollNext = useCallback(() => {
+    const el = document.getElementById("home");
+    let next = el?.nextElementSibling;
+    while (next && next.tagName.toLowerCase() !== "section") next = next.nextElementSibling;
+    (next || document.body).scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   return (
-    <section id='home' className={styles.hero}>
-      <div className={styles.heroWrap}>
-        <div className={styles.heroCopy}>
-          <p className={styles.eyebrow}>Home-cooked • Pure Veg • Local</p>
+    <section
+      id='home'
+      className={styles.hero}
+      style={{ "--hero-bg": "url('/images/VegThali.avif')" }}>
+      <div className={styles.overlay} aria-hidden='true' />
+
+      <div className={styles.heroInner}>
+        <div className={styles.heroContent}>
+          <p className={styles.eyebrow}>Homemade • Pure Veg • Local Kitchens</p>
 
           <h1 className={styles.heroTitle}>
-            Homely, Healthy Meals
+            <span>Homemade Meals,</span>
             <br />
-            Delivered Fresh Every Day
+            <span>Delivered Fresh from Local Chefs</span>
           </h1>
 
           <p className={styles.heroSub}>
-            Nutritious tiffins made with real ingredients and balanced flavours. Serving Panchsheel
-            Greens-1 & nearby areas.
+            Experience the comfort of freshly cooked, wholesome food made with real ingredients in
+            trusted home kitchens near you.
           </p>
 
           <div className={styles.badges}>
@@ -44,31 +60,27 @@ export default function Hero() {
           </div>
 
           <div className={styles.ctaRow}>
-            <a
-              className='btn btn-primary pulse'
-              href='https://wa.me/916395559255'
-              target='_blank'
-              rel='noopener noreferrer'
-              aria-label='Order now on WhatsApp'>
-              <FontAwesomeIcon icon={faWhatsapp} /> Order Now
-            </a>
-
-            <a className='btn btnGhost' href='#rates' aria-label='View rate list'>
-              <FontAwesomeIcon icon={faUtensils} /> View Rate List
-            </a>
-          </div>
-        </div>
-
-        <div className={styles.heroIllustration} role='img' aria-label='RAAVITO Thali'>
-          <div className={styles.plate}>
-            <img
-              src='/images/VegThali.avif'
-              alt='Homemade Indian thali meal with variety of dishes'
-              loading='lazy'
-            />
+            <button className='btn btn-primary pulse' href='/download'>
+              <FontAwesomeIcon icon={faGooglePlay} /> Download App
+            </button>
+            <button
+              className='btn btnGhost'
+              href='/partner'
+              onClick={() => navigate("/chef-registration")}>
+              Partner with Raavito
+            </button>
           </div>
         </div>
       </div>
+
+      <button
+        type='button'
+        className={styles.scrollCue}
+        onClick={onScrollNext}
+        aria-label='Scroll to next section'>
+        <span>Scroll</span>
+        <FontAwesomeIcon icon={faChevronDown} />
+      </button>
     </section>
   );
 }

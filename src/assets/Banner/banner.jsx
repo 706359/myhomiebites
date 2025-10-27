@@ -1,26 +1,34 @@
+import styles from "./banner.module.css";
+
 const Banner = () => {
   return (
-    <section className='container'>
-      <div className='banner-content'>
-        <div className='banner-text'>
-          <h1>घर जैसा स्वाद, हर बाइट में</h1>
-          <p>गाँव की सादगी, घर जैसा प्यार और सेहत का पूरा ख़्याल।</p>
-          <div className='banner-buttons'>
-            <a
-              className='btn btn-primary pulse'
-              href='https://wa.me/916395559255'
-              target='_blank'
-              rel='noopener'>
-              <i className='fa-brands fa-whatsapp'></i> एक बार खाओगे, भूल नहीं पाओगे
+    <section
+      id='promo'
+      className={styles.heroBanner}
+      style={{ "--bg-img": "url('/images/vegthali.webp')" }}>
+      <div className={styles.heroOverlay} aria-hidden='true' />
+      <div className={styles.heroContainer}>
+        <div className={styles.heroContent}>
+          <h1 className={styles.heroTitle}>
+            घर जैसा स्वाद,
+            <br /> हर बाइट में
+          </h1>
+          <p className={styles.heroSub}>
+            गाँव की सादगी, घर जैसा प्यार और सेहत का पूरा ख़्याल। भरोसेमंद होम शेफ़ से ताज़ा बना
+            भोजन।
+          </p>
+
+          <div className={styles.heroButtons}>
+            <a className='btn btn-primary pulse'>
+              <i>एक बार खाओगे, भूल नहीं पाओगे</i>
             </a>
           </div>
-        </div>
-        <div className='banner-image gallery-item'>
-          <img
-            src='https://images.pexels.com/photos/10078270/pexels-photo-10078270.jpeg'
-            alt='RAAVITO Dish'
-          />
-          <div class='gallery-caption'>homemade veg thali</div>
+
+          <ul className={styles.heroTags}>
+            <li>ताज़ा & स्वच्छ</li>
+            <li>घरेलू स्वाद</li>
+            <li>लोकल डिलीवरी</li>
+          </ul>
         </div>
       </div>
     </section>
