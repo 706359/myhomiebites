@@ -54,7 +54,8 @@ export default function About() {
         <div className={styles.right}>
           <figure className={styles.heroMedia}>
             <img
-              src='/images/homechef.png'
+              // src='/images/homechef.png'
+              src='./images/kitchen3.png'
               alt='Home chef preparing a fresh vegetarian meal'
               loading='lazy'
             />
