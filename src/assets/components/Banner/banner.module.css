@@ -1,10 +1,12 @@
+/* ===== Raavito Banner (banner.module.css) ===== */
+
 .heroBanner {
   position: relative;
   background-image: var(--bg-img);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 90vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -37,8 +39,9 @@
   justify-content: flex-start;
 }
 
-/* floating content */
+/* floating content + scroll animation base */
 .heroContent {
+  position: relative;
   max-width: 560px;
   backdrop-filter: blur(12px) saturate(130%);
   background: rgba(255, 255, 255, 0.08);
@@ -47,9 +50,31 @@
   padding: clamp(28px, 5vw, 48px);
   box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
   z-index: 2;
-  animation: fadeIn 1.2s ease forwards;
+
+  /* initial off-screen state; becomes visible on scroll */
+  opacity: 0;
+  transform: translateX(-60px) scale(0.98);
+  transition:
+    transform 1.2s cubic-bezier(0.25, 0.8, 0.4, 1),
+    opacity 0.9s ease;
+}
+.heroContent.visible {
+  opacity: 1;
+  transform: translateX(0) scale(1);
 }
 
+/* subtle ambient glow */
+.heroContent::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: radial-gradient(circle at top left, rgba(222, 140, 69, 0.25), transparent 70%);
+  z-index: -1;
+  animation: glowPulse 5s ease-in-out infinite alternate;
+}
+
+/* text */
 .heroTitle {
   font-family: var(--font-accent);
   font-size: clamp(36px, 6vw, 64px);
@@ -57,7 +82,6 @@
   color: #fff;
   margin-bottom: 16px;
 }
-
 .heroSub {
   font-size: clamp(16px, 1.8vw, 20px);
   line-height: 1.7;
@@ -83,8 +107,10 @@
   padding: 0;
   margin: 0;
 }
-
 .heroTags li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 8px 14px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.9);
@@ -95,48 +121,87 @@
   box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.2);
   transition: transform 0.25s ease;
 }
-
 .heroTags li:hover {
   transform: translateY(-3px);
 }
+.heroTags li svg {
+  font-size: 0.95rem;
+  color: var(--brand-orange);
+}
 
-/* fade animation */
-@keyframes fadeIn {
+/* note under tags */
+.heroNote {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  color: #f0f0f0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* keyframes */
+@keyframes glowPulse {
   from {
-    opacity: 0;
-    transform: translateY(40px);
+    opacity: 0.3;
+    transform: scale(1);
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 0.7;
+    transform: scale(1.03);
+  }
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .heroContent,
+  .heroContent::before {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
 }
 
 /* responsive */
+@media (max-width: 1100px) {
+  .heroContainer {
+    padding: 0 3%;
+  }
+}
 @media (max-width: 900px) {
   .heroBanner {
     justify-content: center;
     text-align: center;
   }
-
   .heroContainer {
     justify-content: center;
     padding: 0 1rem;
   }
-
   .heroContent {
     max-width: 90%;
+    transform: translateY(40px); /* nicer on small screens */
   }
-
+  .heroContent.visible {
+    transform: translateY(0);
+  }
   .heroTitle {
     font-size: clamp(28px, 7vw, 44px);
   }
-
   .heroSub {
     font-size: 1rem;
   }
-
   .heroTags {
     justify-content: center;
+  }
+}
+@media (max-width: 560px) {
+  .heroContent {
+    border-radius: 18px;
+    padding: 20px;
+  }
+  .heroTags li {
+    font-size: 0.9rem;
+    padding: 7px 12px;
   }
 }

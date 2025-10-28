@@ -30,10 +30,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section
-      id='home'
-      className={styles.hero}
-      style={{ "--hero-bg": "url('/images/VegThali.avif')" }}>
+    <section id='home' className={styles.hero}>
       <div className={styles.overlay} aria-hidden='true' />
 
       <div className={styles.heroInner}>
@@ -43,7 +40,7 @@ export default function Hero() {
           <h1 className={styles.heroTitle}>
             <span>Homemade Meals,</span>
             <br />
-            <span>Delivered Fresh from Local Chefs</span>
+            <span>Delivered Fresh from Local Kitchens</span>
           </h1>
 
           <p className={styles.heroSub}>

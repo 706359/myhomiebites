@@ -1,0 +1,128 @@
+.footer {
+  position: relative;
+  background: linear-gradient(135deg, #fffdf9 0%, #fff7ef 100%);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  color: var(--ink);
+}
+
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 48px) 20px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: clamp(20px, 4vw, 40px);
+  align-items: start;
+}
+
+.brand {
+  display: grid;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 18px 48px -28px rgba(0, 0, 0, 0.12);
+}
+.brand img {
+  width: 70px;
+  height: auto;
+  display: block;
+}
+.brand p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 24px);
+}
+
+.col h4 {
+  margin: 0 0 10px;
+  color: var(--brand-deep);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+.col ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.col a {
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-block;
+  padding: 4px 0;
+  border-radius: 8px;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+.col a:hover {
+  color: var(--brand-orange);
+  transform: translateX(2px);
+}
+
+/* bottom bar */
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  background: #fff;
+}
+.bottom p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.top {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.15);
+  color: var(--brand-deep);
+  text-decoration: none;
+  font-weight: 700;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.top:hover {
+  transform: translateY(-2px);
+  background: var(--brand-orange);
+  color: #fff;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+  .links {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .links {
+    grid-template-columns: 1fr;
+  }
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

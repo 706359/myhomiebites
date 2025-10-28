@@ -1,6 +1,6 @@
 .gallerySection {
   position: relative;
-  padding: clamp(96px, 9vw, 160px) 20px;
+  /* padding: clamp(96px, 9vw, 160px) 20px; */
   background: var(--brand-cream);
   overflow: hidden;
 }
@@ -27,6 +27,7 @@
   letter-spacing: 1px;
 }
 .title {
+  margin-top: 0;
   font-family: var(--font-accent);
   font-size: clamp(32px, 4.8vw, 60px);
   color: var(--ink);
@@ -138,7 +139,7 @@
   font-weight: 700;
   padding: 6px 14px;
   border-radius: 999px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   box-shadow: var(--shadow);
 }
 .specialNote {
@@ -159,7 +160,7 @@
 }
 .kitchenSub {
   color: var(--muted);
-  max-width: 680px;
+  max-width: 720px;
   margin: 0 auto;
   line-height: 1.7;
 }

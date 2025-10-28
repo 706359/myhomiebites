@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 
-import Banner from "./assets/Banner/banner";
 import About from "./assets/components/About/about";
-import Contact from "./assets/components/Contact/contact";
 import FAQ from "./assets/components/FAQ/faq";
 import Features from "./assets/components/Features/features";
 import Footer from "./assets/components/Footer/footer";
@@ -19,6 +17,9 @@ import HowItWorks from "./assets/components/HowItWorks/HowItWorks";
 import WhyChooseUs from "./assets/components/WhyChooseUs/WhyChooseUs";
 import AppFeatures from "./assets/components/AppFeatures/AppFeatures";
 import PartnerWithUs from "./assets/components/PartnerWithUs/PartnerWithUs";
+import Banner from "./assets/components/Banner/banner";
+import Contact from "./assets/components/Contact/contact";
+import AppDownload from "./assets/components/AppDownload/AppDownload";
 
 function App() {
   const [modal, setModal] = useState(null); // 'login' | 'register' | null
@@ -39,13 +40,14 @@ function App() {
               /> */}
               <Hero />
               <About />
-              <Features />
+              {/* <Features /> */}
               <AppFeatures />
               {/* <Rates cart={cart} setQty={setQty} /> */}
               <Gallery />
               <Banner />
               <HowItWorks />
               <WhyChooseUs />
+              <AppDownload />
               <PartnerWithUs />
               <Testimonials />
               <FAQ />
