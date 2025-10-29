@@ -306,7 +306,6 @@ section {
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease;
-  border: 2pxæ solid red;
 }
 .card:hover {
   transform: translateY(-8px);
@@ -619,7 +618,6 @@ section {
 
 .order .btn {
   padding: 12px 16px;
-  border: 2px solid red;
 }
 
 @media (max-width: 720px) {

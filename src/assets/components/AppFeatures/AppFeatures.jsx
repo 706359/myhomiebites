@@ -52,7 +52,7 @@ export default function AppFeatures() {
           {/* Phone mockup */}
           <figure className={styles.phone}>
             <div className={styles.screen}>
-              <img src='./images/menu.jpeg' alt='Raavito app menu screen' loading='lazy' />
+              <img src='images/menu2.jpeg' alt='Raavito app menu screen' loading='lazy' />
             </div>
             <figcaption>Browse • Subscribe • Track</figcaption>
           </figure>

@@ -4,13 +4,13 @@ import styles from "./Gallery.module.css";
 
 const galleryItems = [
   {
-    src: "/images/FullTiffin.jpg",
+    src: "images/FullTiffin.jpg",
     alt: "Freshly prepared Indian thali",
     caption: "Full Tiffin Meal",
   },
-  { src: "/images/RotiSabji.webp", alt: "Homemade rotis and curry", caption: "Roti with Sabzi" },
+  { src: "images/RotiSabji.webp", alt: "Homemade rotis and curry", caption: "Roti with Sabzi" },
   {
-    src: "/images/DeliciousAaluParatha.jpg",
+    src: "images/DeliciousAaluParatha.jpg",
     alt: "Stuffed parathas with curd",
     caption: "Stuffed Parathas",
   },
@@ -19,33 +19,33 @@ const galleryItems = [
     alt: "Aloo matar with rice",
     caption: "Aloo Matar with Rice",
   },
-  { src: "/images/AalooPuri.jpg", alt: "Aloo matar with puri", caption: "Aloo Matar with Puri" },
-  { src: "/images/Curd.jpg", alt: "Homemade pure curd", caption: "Homemade Pure Curd" },
-  { src: "/images/MoondDalKhichdi.jpg", alt: "Moong dal khichdi", caption: "Khichdi" },
+  { src: "images/AalooPuri.jpg", alt: "Aloo matar with puri", caption: "Aloo Matar with Puri" },
+  { src: "images/Curd.jpg", alt: "Homemade pure curd", caption: "Homemade Pure Curd" },
+  { src: "images/MoondDalKhichdi.jpg", alt: "Moong dal khichdi", caption: "Khichdi" },
 ];
 
 const specials = [
-  { src: "/images/Amritsarichhole.webp", alt: "Amritsari Chhole" },
-  { src: "/images/lobhiya.jpg", alt: "Lobhiya Curry" },
-  { src: "/images/lokikofte.jpg", alt: "Lauki Kofte" },
-  { src: "/images/kadhipakora.jpg", alt: "Kadhi Pakora" },
-  { src: "/images/rajma.jpg", alt: "Rajma Curry" },
-  { src: "/images/kalachana.jpg", alt: "Kala Chana Curry" },
+  { src: "images/Amritsarichhole.webp", alt: "Amritsari Chhole" },
+  { src: "images/lobhiya.jpg", alt: "Lobhiya Curry" },
+  { src: "images/lokikofte.jpg", alt: "Lauki Kofte" },
+  { src: "images/kadhipakora.jpg", alt: "Kadhi Pakora" },
+  { src: "images/rajma.jpg", alt: "Rajma Curry" },
+  { src: "images/kalachana.jpg", alt: "Kala Chana Curry" },
 ];
 
 const kitchenMoments = [
   {
-    src: "./images/kitchen.png",
+    src: "images/kitchen.png",
     alt: "Home chef kneading dough",
     caption: "Handmade Rotis, Daily",
   },
   {
-    src: "./images/kitchen1.png",
+    src: "images/kitchen1.png",
     alt: "Chef mixing spices",
     caption: "Traditional Spice Blends",
   },
   {
-    src: "./images/kitchen2.png",
+    src: "images/kitchen2.png",
     alt: "Freshly cut vegetables",
     caption: "Fresh Local Produce",
   },

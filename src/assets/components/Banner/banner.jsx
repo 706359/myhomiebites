@@ -28,7 +28,7 @@ const Banner = () => {
     <section
       id='promo'
       className={styles.heroBanner}
-      style={{ "--bg-img": "url('/images/vegthali.webp')" }}>
+      style={{ "--bg-img": "url('images/vegthali.webp')" }}>
       <div className={styles.heroOverlay} aria-hidden='true' />
 
       <div className={styles.heroContainer}>
