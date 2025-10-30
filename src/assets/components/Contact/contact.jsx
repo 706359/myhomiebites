@@ -1,19 +1,44 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLocationDot,
+  faEnvelope,
+  faPhone,
+  faPaperPlane,
+  faCheckCircle,
+  faExclamationCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
 import styles from "./Contact.module.css";
 
 export default function Contact() {
   const form = useRef();
   const [status, setStatus] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const sendEmail = (e) => {
     e.preventDefault();
     setStatus("sending");
+
+    // Simulate API call
     setTimeout(() => {
       setStatus("success");
+      setFormData({ name: "", email: "", message: "" });
       form.current.reset();
-    }, 1000);
+
+      // Clear success message after 5 seconds
+      setTimeout(() => setStatus(""), 5000);
+    }, 1500);
   };
 
   return (
@@ -22,21 +47,25 @@ export default function Contact() {
 
       <div className={styles.wrap}>
         <header className={styles.head}>
-          <p className={styles.kicker}>Contact Raavito</p>
-          <h2 className={styles.title}>Let’s Connect & Collaborate</h2>
+          <p className={styles.kicker}>
+            <span>Contact Raavito</span>
+          </p>
+          <h2 className={styles.title}>Let's Connect & Collaborate</h2>
           <p className={styles.sub}>
             Have a question, feedback, or partnership idea? Fill the form below or reach us directly
-            — we’ll get back within 24 hours.
+            — we'll get back within 24 hours.
           </p>
         </header>
 
         <div className={styles.layout}>
-          {/* Left Info Section */}
+          {/* Contact Info Cards */}
           <div className={styles.info}>
             <div className={styles.card}>
-              <FontAwesomeIcon icon={faLocationDot} />
+              <div className={styles.iconWrap}>
+                <FontAwesomeIcon icon={faLocationDot} />
+              </div>
               <div>
-                <h3>Address</h3>
+                <h3>Visit Our Office</h3>
                 <p>
                   A1-405, Panchsheel Greens 1
                   <br />
@@ -46,51 +75,99 @@ export default function Contact() {
             </div>
 
             <div className={styles.card}>
-              <FontAwesomeIcon icon={faEnvelope} />
+              <div className={styles.iconWrap}>
+                <FontAwesomeIcon icon={faEnvelope} />
+              </div>
               <div>
-                <h3>Email</h3>
+                <h3>Email Us</h3>
                 <p>support@raavito.com</p>
+                <p className={styles.cardSubtext}>We respond within 24 hours</p>
               </div>
             </div>
 
             <div className={styles.card}>
-              <FontAwesomeIcon icon={faPhone} />
+              <div className={styles.iconWrap}>
+                <FontAwesomeIcon icon={faPhone} />
+              </div>
               <div>
-                <h3>Phone</h3>
+                <h3>Call Us</h3>
                 <p>+91 63955 59255</p>
+                <p className={styles.cardSubtext}>Mon-Fri, 9am-6pm IST</p>
               </div>
             </div>
           </div>
 
-          {/* Right Form Section */}
+          {/* Contact Form */}
           <form ref={form} onSubmit={sendEmail} className={styles.form}>
             <div className={styles.formHeader}>
               <h3>Send us a Message</h3>
-              <p>We’re happy to assist you with anything Raavito!</p>
+              <p>We're happy to assist you with anything Raavito!</p>
             </div>
 
-            <label>
-              <span>Name</span>
-              <input type='text' name='name' placeholder='Enter your name' required />
+            <div className={styles.formGrid}>
+              <label className={styles.formField}>
+                <span>Full Name *</span>
+                <input
+                  type='text'
+                  name='name'
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder='John Doe'
+                  required
+                />
+              </label>
+
+              <label className={styles.formField}>
+                <span>Email Address *</span>
+                <input
+                  type='email'
+                  name='email'
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder='john@example.com'
+                  required
+                />
+              </label>
+            </div>
+
+            <label className={styles.formField}>
+              <span>Your Message *</span>
+              <textarea
+                name='message'
+                rows='5'
+                value={formData.message}
+                onChange={handleChange}
+                placeholder='Tell us how we can help you...'
+                required
+              />
             </label>
 
-            <label>
-              <span>Email</span>
-              <input type='email' name='email' placeholder='Enter your email' required />
-            </label>
-
-            <label>
-              <span>Message</span>
-              <textarea name='message' rows='4' placeholder='Write your message...' required />
-            </label>
-
-            <button type='submit' className='btn btn-primary pulse'>
-              {status === "sending" ? "Sending..." : "Send Message"}
+            <button type='submit' className={styles.submitBtn} disabled={status === "sending"}>
+              {status === "sending" ? (
+                <>
+                  <span className={styles.spinner}></span>
+                  Sending Message...
+                </>
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faPaperPlane} />
+                  Send Message
+                </>
+              )}
             </button>
 
-            {status === "success" && <p className={styles.success}>Message sent successfully!</p>}
+            {status === "success" && (
+              <div className={styles.success}>
+                <FontAwesomeIcon icon={faCheckCircle} />
+                <span>Message sent successfully! We'll get back to you soon.</span>
+              </div>
+            )}
+
             {status === "error" && (
-              <p className={styles.error}>Failed to send. Please try again.</p>
+              <div className={styles.error}>
+                <FontAwesomeIcon icon={faExclamationCircle} />
+                <span>Failed to send message. Please try again.</span>
+              </div>
             )}
           </form>
         </div>

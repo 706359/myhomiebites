@@ -14,7 +14,6 @@ export default function RaavitoPartnerPage() {
 
   return (
     <div className={styles.page}>
-      {/* Hero Section */}
       <section className={styles.hero} id='login'>
         <div className={styles.heroGrid}>
           <div className={styles.formPanel}>
@@ -61,7 +60,6 @@ export default function RaavitoPartnerPage() {
         </div>
       </section>
 
-      {/* Onboarding Section */}
       <section className={styles.onboard}>
         <h2 className={styles.heading}>
           Start serving with Raavito <br />
@@ -69,7 +67,6 @@ export default function RaavitoPartnerPage() {
         </h2>
 
         <div className={styles.onboardGrid}>
-          {/* Left column (Steps) */}
           <div className={styles.stepsBox}>
             <div className={styles.step}>
               <div className={styles.icon}>
@@ -105,7 +102,6 @@ export default function RaavitoPartnerPage() {
             </div>
           </div>
 
-          {/* Right column (Docs) */}
           <div className={`${styles.docs} ${styles.banner}`}>
             <h4>What you’ll need handy</h4>
             <ul>
@@ -122,7 +118,6 @@ export default function RaavitoPartnerPage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className={styles.footer}>© {year} RAAVITO — Partner platform</footer>
     </div>
   );

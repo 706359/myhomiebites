@@ -1,12 +1,23 @@
-/* Gallery Section */
 .gallerySection {
   position: relative;
   padding: 6rem 0;
   background: rgb(254, 249, 238);
   overflow: hidden;
 }
-
-/* Animated Background */
+.gallerySection::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  background: linear-gradient(135deg, var(--brand-yellow), var(--brand-orange));
+  -webkit-mask: radial-gradient(120% 150% at 50% 100%, transparent 60%, black 61%);
+  mask: radial-gradient(120% 150% at 50% 100%, transparent 60%, black 61%);
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.08);
+  z-index: 2;
+  pointer-events: none;
+}
 .bgAnimated {
   position: absolute;
   inset: 0;
@@ -51,7 +62,6 @@
   }
 }
 
-/* Container */
 .container {
   position: relative;
   max-width: 80rem;
@@ -59,7 +69,6 @@
   padding: 0 1.5rem;
 }
 
-/* Header */
 .header {
   text-align: center;
   margin-bottom: 5rem;
@@ -110,7 +119,6 @@
   line-height: 1.6;
 }
 
-/* Main Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -208,7 +216,6 @@
   font-size: 1.125rem;
 }
 
-/* Specials Section */
 .specialsSection {
   margin-bottom: 6rem;
 }
@@ -279,7 +286,7 @@
 .specialOverlay {
   position: absolute;
   inset: 0;
-  /* background: linear-gradient(to top, #f8ccb5, rgba(230, 84, 6, 0.6), transparent); */
+
   opacity: 0;
   transition: opacity 0.5s;
 }
@@ -329,7 +336,6 @@
   margin: 0;
 }
 
-/* Kitchen Section */
 .kitchenSection {
   background: linear-gradient(to bottom right, #ffedd5, #fef3c7);
   border-radius: 3rem;
@@ -434,7 +440,6 @@
   margin: 0;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .title {
     font-size: 2.5rem;

@@ -79,7 +79,6 @@ const AppDownload = () => {
 
   return (
     <section className={styles.appDownloadSection}>
-      {/* Background Effects */}
       <div className={styles.backgroundEffects}>
         <div className={styles.bgCircle1}></div>
         <div className={styles.bgCircle2}></div>
@@ -87,7 +86,6 @@ const AppDownload = () => {
 
       <div className={styles.container}>
         <div className={styles.grid}>
-          {/* Left Content */}
           <div className={styles.content}>
             <div className={styles.badge}>
               <span>Download Now</span>
@@ -100,7 +98,6 @@ const AppDownload = () => {
               for iOS and Android devices.
             </p>
 
-            {/* Features List */}
             <div className={styles.features}>
               {features.map((feature, index) => (
                 <div key={index} className={styles.feature}>
@@ -110,7 +107,6 @@ const AppDownload = () => {
               ))}
             </div>
 
-            {/* Download Buttons */}
             <div className={styles.buttonGroup}>
               {downloadButtons.map((button, index) => (
                 <a
@@ -128,7 +124,6 @@ const AppDownload = () => {
             </div>
           </div>
 
-          {/* Right Side - Phone Mockup */}
           <div className={styles.phoneContainer}>
             <img src='images/iphone2.png' alt='phone' loading='lazy' />
           </div>

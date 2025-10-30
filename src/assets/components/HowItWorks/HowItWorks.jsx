@@ -6,7 +6,6 @@ import styles from "./HowItWorks.module.css";
 export default function HowItWorks() {
   const sectionRef = useRef(null);
 
-  // simple scroll-reveal
   useEffect(() => {
     const host = sectionRef.current;
     if (!host) return;
@@ -29,7 +28,6 @@ export default function HowItWorks() {
           <p className={styles.sub}>App-only ordering. Simple. Fast. Reliable.</p>
         </header>
 
-        {/* premium timeline grid */}
         <ol className={styles.grid}>
           <li className={styles.card}>
             <span className={styles.step}>1</span>

@@ -1,30 +1,51 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
+  const navigate = useNavigate();
   const year = new Date().getFullYear();
+
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <footer className={styles.footer}>
       <div className={styles.wrap}>
+        {/* Brand */}
         <div className={styles.brand}>
           <img src='/raavitologo.png' alt='Raavito' />
           <p>Pure-veg, home-style meals from trusted local chefs.</p>
         </div>
 
+        {/* Footer Navigation */}
         <nav className={styles.links} aria-label='Footer'>
+          {/* Quick Links */}
           <div className={styles.col}>
             <h4>Quick Links</h4>
             <ul>
               <li>
-                <a href='#home'>Home</a>
+                <button onClick={() => scrollToSection("home")} className={styles.linkButton}>
+                  Home
+                </button>
               </li>
               <li>
-                <a href='#rates'>Rate List</a>
+                <button onClick={() => scrollToSection("rates")} className={styles.linkButton}>
+                  Partner with Us
+                </button>
               </li>
               <li>
-                <a href='#about'>About Us</a>
+                <button onClick={() => scrollToSection("about")} className={styles.linkButton}>
+                  About Us
+                </button>
               </li>
               <li>
-                <a href='#gallery'>Food Gallery</a>
+                <button onClick={() => scrollToSection("gallery")} className={styles.linkButton}>
+                  Food Gallery
+                </button>
               </li>
             </ul>
           </div>
@@ -33,14 +54,19 @@ const Footer = () => {
             <h4>Help</h4>
             <ul>
               <li>
-                <a href='#faq'>FAQ</a>
+                <button onClick={() => scrollToSection("faq")} className={styles.linkButton}>
+                  FAQ
+                </button>
               </li>
               <li>
-                <a href='#contact'>Contact Us</a>
+                <button onClick={() => navigate("/contact")} className={styles.linkButton}>
+                  Help & Support
+                </button>
               </li>
             </ul>
           </div>
 
+          {/* Service Areas */}
           <div className={styles.col}>
             <h4>Service Areas</h4>
             <ul>
@@ -52,11 +78,15 @@ const Footer = () => {
         </nav>
       </div>
 
+      {/* Footer Bottom */}
       <div className={styles.bottom}>
         <p>© {year} RAAVITO. All rights reserved. Home-cooked meals delivered with care.</p>
-        <a href='#home' className={styles.top} aria-label='Back to top'>
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className={styles.top}
+          aria-label='Back to top'>
           ↑
-        </a>
+        </button>
       </div>
     </footer>
   );

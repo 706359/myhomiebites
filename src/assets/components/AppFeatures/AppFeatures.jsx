@@ -43,13 +43,14 @@ export default function AppFeatures() {
     <section id='app' className={styles.section}>
       <div className={styles.wrap}>
         <header className={styles.head}>
-          <p className={styles.kicker}>Raavito App</p>
+          <p className={styles.kicker}>
+            <span>Raavito App</span>
+          </p>
           <h2 className={styles.title}>Everything you need to eat better, daily</h2>
           <p className={styles.sub}>Order only on the app. Simple. Fast. Reliable.</p>
         </header>
 
         <div className={styles.layout}>
-          {/* Phone mockup */}
           <figure className={styles.phone}>
             <div className={styles.screen}>
               <img src='images/menu2.jpeg' alt='Raavito app menu screen' loading='lazy' />
@@ -57,7 +58,6 @@ export default function AppFeatures() {
             <figcaption>Browse • Subscribe • Track</figcaption>
           </figure>
 
-          {/* Feature grid */}
           <div className={styles.grid}>
             {features.map((f, i) => (
               <div key={i} className={styles.card}>

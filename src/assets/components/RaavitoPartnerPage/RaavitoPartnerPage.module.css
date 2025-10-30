@@ -216,7 +216,6 @@
   margin-top: 0.25rem;
 }
 
-/* Grid under heading */
 .onboardGrid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
@@ -225,7 +224,6 @@
   padding: 0 20px 0;
 }
 
-/* Steps (Left) */
 .stepsBox {
   display: flex;
   flex-direction: column;
@@ -286,7 +284,6 @@
   color: #555;
 }
 
-/* Docs (Right) */
 .banner {
   border-radius: 14px;
   padding: 28px;
@@ -324,7 +321,6 @@
   text-decoration: underline;
 }
 
-/* Responsive */
 @media (max-width: 960px) {
   .onboardGrid {
     grid-template-columns: 1fr;
@@ -332,7 +328,6 @@
   }
 }
 
-/* Footer */
 .footer {
   text-align: center;
   font-size: 0.9rem;

@@ -1,13 +1,54 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faLeaf,
+  faHeart,
+  faBolt,
+  faUsers,
+  faShieldHeart,
+  faMapMarkerAlt,
+  faClock,
+  faUtensils,
+} from "@fortawesome/free-solid-svg-icons";
 import styles from "./About.module.css";
 
 export default function About() {
+  const values = [
+    {
+      icon: faLeaf,
+      title: "Homemade & Hygienic",
+      desc: "Verified kitchens. Clean prep. Transparent sourcing.",
+      color: "green",
+    },
+    {
+      icon: faHeart,
+      title: "Affordable & Honest",
+      desc: "Clear rates. No surge gimmicks. Real portions.",
+      color: "orange",
+    },
+    {
+      icon: faBolt,
+      title: "Local & Fast",
+      desc: "Hyperlocal delivery for fresh, hot meals.",
+      color: "deep",
+    },
+    {
+      icon: faUsers,
+      title: "Chef-First",
+      desc: "Tools and support for neighbourhood cooks.",
+      color: "yellow",
+    },
+  ];
+
   return (
     <section id='about' className={styles.about}>
       <div className={styles.bgAccent} aria-hidden='true' />
+
       <div className={styles.wrap}>
-        {/* LEFT */}
         <div className={styles.left}>
-          <p className={styles.kicker}>About Raavito</p>
+          <p className={styles.kicker}>
+            <FontAwesomeIcon icon={faHeart} className={styles.kickerIcon} />
+            <span>About Raavito</span>
+          </p>
 
           <h2 className={styles.title}>
             Homely meals. Local chefs.
@@ -30,41 +71,47 @@ export default function About() {
             </p>
           </div>
 
+          {/* Values Cards */}
           <div className={styles.values}>
-            <div className={styles.card}>
-              <h4>Homemade & Hygienic</h4>
-              <p>Verified kitchens. Clean prep. Transparent sourcing.</p>
-            </div>
-            <div className={styles.card}>
-              <h4>Affordable & Honest</h4>
-              <p>Clear rates. No surge gimmicks. Real portions.</p>
-            </div>
-            <div className={styles.card}>
-              <h4>Local & Fast</h4>
-              <p>Hyperlocal delivery for fresh, hot meals.</p>
-            </div>
-            <div className={styles.card}>
-              <h4>Chef-First</h4>
-              <p>Tools and support for neighbourhood cooks.</p>
-            </div>
+            {values.map((value, index) => (
+              <div
+                key={index}
+                className={styles.card}
+                style={{ animationDelay: `${index * 0.1}s` }}>
+                <div className={`${styles.cardIcon} ${styles[value.color]}`}>
+                  <FontAwesomeIcon icon={value.icon} />
+                </div>
+                <div className={styles.cardContent}>
+                  <h4>{value.title}</h4>
+                  <p>{value.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* RIGHT */}
+        {/* Right Column */}
         <div className={styles.right}>
+          {/* Hero Image */}
           <figure className={styles.heroMedia}>
             <img
-              // src='images/homechef.png'
               src='images/kitchen3.png'
               alt='Home chef preparing a fresh vegetarian meal'
               loading='lazy'
             />
-            <figcaption className={styles.heroTag}>From local home kitchens</figcaption>
+            <figcaption className={styles.heroTag}>
+              <FontAwesomeIcon icon={faMapMarkerAlt} />
+              <span>From local home kitchens</span>
+            </figcaption>
           </figure>
 
+          {/* Info Cards */}
           <div className={styles.infoGrid}>
-            <div className={`${styles.card} ${styles.soft}`}>
-              <h4 className={styles.hGreen}>Hygiene & Safety</h4>
+            <div className={`${styles.card} ${styles.soft} ${styles.infoCard}`}>
+              <div className={styles.infoHeader}>
+                <FontAwesomeIcon icon={faShieldHeart} className={styles.infoIcon} />
+                <h4 className={styles.hGreen}>Hygiene & Safety</h4>
+              </div>
               <ul className={styles.list}>
                 <li>Gloves, hairnets, sanitized stations</li>
                 <li>Fresh produce. No artificial colours</li>
@@ -72,8 +119,11 @@ export default function About() {
               </ul>
             </div>
 
-            <div className={`${styles.card} ${styles.soft}`}>
-              <h4 className={styles.hDeep}>Journey</h4>
+            <div className={`${styles.card} ${styles.soft} ${styles.infoCard}`}>
+              <div className={styles.infoHeader}>
+                <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.infoIcon} />
+                <h4 className={styles.hDeep}>Journey</h4>
+              </div>
               <ul className={styles.list}>
                 <li>
                   <strong>Feb 2024</strong> — First kitchen in Panchsheel Greens
@@ -85,20 +135,6 @@ export default function About() {
                   <strong>Next</strong> — More neighbourhood chefs. App-only ordering
                 </li>
               </ul>
-            </div>
-          </div>
-          <div className={styles.stats}>
-            <div className={styles.stat}>
-              <span className={styles.num}>100% Veg</span>
-              <span className={styles.lbl}>Pure Veg Kitchens</span>
-            </div>
-            <div className={styles.stat}>
-              <span className={styles.num}>~30 mins</span>
-              <span className={styles.lbl}>Typical Delivery</span>
-            </div>
-            <div className={styles.stat}>
-              <span className={styles.num}>Daily Menu</span>
-              <span className={styles.lbl}>Fresh Rotation</span>
             </div>
           </div>
         </div>

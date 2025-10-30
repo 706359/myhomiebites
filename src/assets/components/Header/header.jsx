@@ -24,20 +24,17 @@ export default function Header({ onRegisterClick, onLoginClick }) {
   return (
     <header className={`hb-header ${open ? "open" : ""}`}>
       <nav className='hb-nav' aria-label='Primary'>
-        {/* Left: logo + search */}
         <div className='hb-left'>
           <a href='#home' className='hb-logo' aria-label='Home'>
             <img src='/raavitologo.png' alt='RAAVITO' />
           </a>
 
-          {/* Search */}
           <label className='hb-search' htmlFor='site-search'>
             <Icon>{`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`}</Icon>
             <input id='site-search' type='search' placeholder='Search dishes, chefs…' />
           </label>
         </div>
 
-        {/* Center links */}
         <ul className='hb-links' role='menubar'>
           <li role='none'>
             <a role='menuitem' href='#rates'>
@@ -71,7 +68,6 @@ export default function Header({ onRegisterClick, onLoginClick }) {
           </li>
         </ul>
 
-        {/* Right: original buttons kept */}
         <div className='hb-right'>
           <div className='hb-ctas'>
             <button className='btn btn-primary' onClick={onLoginClick}>
@@ -86,7 +82,6 @@ export default function Header({ onRegisterClick, onLoginClick }) {
             <OrderButton />
           </div>
 
-          {/* Mobile toggle */}
           <button
             className='hb-menu'
             onClick={() => setOpen((v) => !v)}
@@ -98,7 +93,6 @@ export default function Header({ onRegisterClick, onLoginClick }) {
         </div>
       </nav>
 
-      {/* Mobile sheet uses your .hb-mobile */}
       <ul
         id='hb-mobile'
         className='hb-mobile'

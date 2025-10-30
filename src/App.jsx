@@ -9,7 +9,7 @@ import Gallery from "./assets/components/Gallery/gallery";
 import Header from "./assets/components/Header/header";
 import Hero from "./assets/components/Hero/hero";
 import LoginForm from "./assets/components/LoginForm/LoginForm";
-import ChefRegistration from "./assets/components/RaavitoPartnerPage/RaavitoPartnerPage"; // new page
+import ChefRegistration from "./assets/components/RaavitoPartnerPage/RaavitoPartnerPage";
 import Rates from "./assets/components/Rates/rates";
 import RegisterForm from "./assets/components/RegisterForm/RegisterForm";
 import Testimonials from "./assets/components/Testimonials/testimonials";
@@ -18,11 +18,11 @@ import WhyChooseUs from "./assets/components/WhyChooseUs/WhyChooseUs";
 import AppFeatures from "./assets/components/AppFeatures/AppFeatures";
 import PartnerWithUs from "./assets/components/PartnerWithUs/PartnerWithUs";
 import Banner from "./assets/components/Banner/banner";
-import Contact from "./assets/components/Contact/contact";
 import AppDownload from "./assets/components/AppDownload/AppDownload";
+import Contact from "./assets/components/Contact/Contact";
 
 function App() {
-  const [modal, setModal] = useState(null); // 'login' | 'register' | null
+  const [modal, setModal] = useState(null);
 
   return (
     <HashRouter>
@@ -40,9 +40,7 @@ function App() {
               /> */}
               <Hero />
               <About />
-              {/* <Features /> */}
               <AppFeatures />
-              {/* <Rates cart={cart} setQty={setQty} /> */}
               <Gallery />
               <Banner />
               <HowItWorks />
@@ -51,12 +49,23 @@ function App() {
               <PartnerWithUs />
               <Testimonials />
               <FAQ />
+              {/* Removed <Contact /> from homepage */}
+              <Footer />
+            </>
+          }
+        />
+
+        <Route path='/chef-registration' element={<ChefRegistration />} />
+
+        <Route
+          path='/contact'
+          element={
+            <>
               <Contact />
               <Footer />
             </>
           }
         />
-        <Route path='/chef-registration' element={<ChefRegistration />} />
       </Routes>
     </HashRouter>
   );

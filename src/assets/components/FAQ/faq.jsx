@@ -35,6 +35,8 @@ export default function FAQ() {
 
   return (
     <section id='faq' className={styles.section}>
+      <div className={styles.sectionDivider}></div>
+
       <div className={styles.wrap}>
         <header className={styles.head}>
           <p className={styles.kicker}>Have Questions?</p>
