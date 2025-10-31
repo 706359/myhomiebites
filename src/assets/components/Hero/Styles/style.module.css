@@ -5,7 +5,7 @@
   align-items: flex-start;
   justify-content: center;
   padding-top: clamp(8px, 2vh, 16px);
-  background-image: url("images/VegThali.avif");
+  background-image: url("public/images/VegThali.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -13,7 +13,6 @@
   scroll-snap-align: start;
 }
 
-/* overlay for readability */
 .overlay {
   position: absolute;
   inset: 0;
@@ -227,7 +226,6 @@
   }
 }
 
-/* responsive */
 @media (max-width: 980px) {
   .hero {
     align-items: center;
@@ -255,9 +253,73 @@
 
   .badges {
     justify-content: center;
+    display: none;
   }
 
   .ctaRow {
     justify-content: center;
+  }
+}
+@media (max-width: 640px) {
+  .heroInner {
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 12px;
+    text-align: center;
+  }
+
+  .heroContent {
+    gap: 0.9rem;
+    padding: 0;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.8rem, 7vw, 2.6rem);
+    line-height: 1.2;
+  }
+
+  .heroSub {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .badges {
+    display: none;
+  }
+
+  .ctaRow {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 1rem;
+  }
+
+  .ctaRow a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .scrollCue {
+    bottom: 16px;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .heroTitle {
+    font-size: 1.6rem;
+  }
+
+  .heroSub {
+    font-size: 0.9rem;
+  }
+
+  .ctaRow {
+    gap: 8px;
+  }
+
+  .scrollCue {
+    font-size: 0.8rem;
+    padding: 8px 14px;
   }
 }

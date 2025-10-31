@@ -6,8 +6,6 @@ import {
   faUsers,
   faShieldHeart,
   faMapMarkerAlt,
-  faClock,
-  faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./About.module.css";
 

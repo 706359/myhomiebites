@@ -1,4 +1,4 @@
-import { faGooglePlay, faApple } from "@fortawesome/free-brands-svg-icons";
+import { faApple, faGooglePlay } from "@fortawesome/free-brands-svg-icons";
 import {
   faLeaf,
   faHeart,
@@ -58,7 +58,7 @@ export default function Hero() {
 
           <div className={styles.ctaRow}>
             <button className='btn btn-primary pulse' href='/download'>
-              <FontAwesomeIcon icon={faGooglePlay} /> Download App
+              <FontAwesomeIcon icon={(faGooglePlay, faApple)} /> Download App
             </button>
             <button
               className='btn btnGhost'

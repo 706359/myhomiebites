@@ -8,7 +8,7 @@ const galleryItems = [
     alt: "Freshly prepared Indian thali",
     caption: "Full Tiffin Meal",
   },
-  { src: "images/RotiSabji.webp", alt: "Homemade rotis and curry", caption: "Roti with Sabzi" },
+  { src: "images/RotiSabji.png", alt: "Homemade rotis and curry", caption: "Roti with Sabzi" },
   {
     src: "images/DeliciousAaluParatha.jpg",
     alt: "Stuffed parathas with curd",
@@ -25,7 +25,7 @@ const galleryItems = [
 ];
 
 const specials = [
-  { src: "images/Amritsarichhole.webp", alt: "Amritsari Chhole" },
+  { src: "images/Amritsarichhole.png", alt: "Amritsari Chhole" },
   { src: "images/lobhiya.jpg", alt: "Lobhiya Curry" },
   { src: "images/lokikofte.jpg", alt: "Lauki Kofte" },
   { src: "images/kadhipakora.jpg", alt: "Kadhi Pakora" },
