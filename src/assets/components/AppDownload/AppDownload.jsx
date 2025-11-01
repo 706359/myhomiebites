@@ -125,7 +125,7 @@ const AppDownload = () => {
           </div>
 
           <div className={styles.phoneContainer}>
-            <img src='images/iphone2.png' alt='phone' loading='lazy' />
+            <img src='images/iphoneQR.png' alt='phone' loading='lazy' />
           </div>
         </div>
       </div>

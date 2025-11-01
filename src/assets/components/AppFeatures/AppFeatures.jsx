@@ -38,44 +38,53 @@ const features = [
   },
 ];
 
+// Per-card accent pairs
+const accents = [
+  ["#de8c45", "#ffb070"],
+  ["#7c8cff", "#b7c2ff"],
+  ["#00c2a8", "#7ff0df"],
+  ["#ff6b6b", "#ffc2c2"],
+  ["#b86bff", "#e2c7ff"],
+  ["#f4c430", "#ffe58f"],
+  ["#29a3ff", "#9ed5ff"],
+  ["#ff8ccf", "#ffd3ec"],
+];
+
 export default function AppFeatures() {
   return (
-    <section id='app' className={styles.section}>
+    <section className={styles.section} aria-labelledby='af-title'>
+      <div className={styles.gridBackdrop} aria-hidden='true' />
       <div className={styles.wrap}>
         <header className={styles.head}>
-          <p className={styles.kicker}>
-            <span>Raavito App</span>
+          <span className={styles.kicker}>Premium Feature Set</span>
+          <h2 id='af-title' className={styles.title}>
+            Everything you need. Nothing you don’t.
+          </h2>
+          <p className={styles.sub}>
+            Fast flows, safe checks, crisp UI. Built for daily use at scale.
           </p>
-          <h2 className={styles.title}>Everything you need to eat better, daily</h2>
-          <p className={styles.sub}>Order only on the app. Simple. Fast. Reliable.</p>
         </header>
 
-        <div className={styles.layout}>
-          <figure className={styles.phone}>
-            <div className={styles.screen}>
-              <img src='images/menu2.jpeg' alt='Raavito app menu screen' loading='lazy' />
-            </div>
-            <figcaption>Browse • Subscribe • Track</figcaption>
-          </figure>
-
-          <div className={styles.grid}>
-            {features.map((f, i) => (
-              <div key={i} className={styles.card}>
-                <div className={styles.icon}>
-                  <FontAwesomeIcon icon={f.icon} />
+        <ul className={styles.featureGrid} role='list'>
+          {features.map((f, i) => {
+            const [a, b] = accents[i % accents.length];
+            return (
+              <li
+                key={i}
+                className={styles.card}
+                style={{ "--accent-a": a, "--accent-b": b, "--stagger": `${i * 60}ms` }}>
+                <span className={styles.ring}>
+                  <span className={styles.ringGlow} />
+                  <FontAwesomeIcon icon={f.icon} className={styles.icon} />
+                </span>
+                <div className={styles.body}>
+                  <h3 className={styles.h3}>{f.title}</h3>
+                  <p className={styles.p}>{f.text}</p>
                 </div>
-                <h3>{f.title}</h3>
-                <p>{f.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className={styles.cta}>
-          <a href='/download' className='btn btn-primary'>
-            Download App
-          </a>
-        </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

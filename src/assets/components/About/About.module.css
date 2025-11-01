@@ -236,7 +236,7 @@
 /* === Hero Media === */
 .heroMedia {
   position: relative;
-  margin: 0 0 32px;
+  margin: 35px 0 32px;
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);

@@ -5,7 +5,7 @@
   align-items: flex-start;
   justify-content: center;
   padding-top: clamp(8px, 2vh, 16px);
-  background-image: url("public/images/VegThali.png");
+  background-image: url("/images/VegThali.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

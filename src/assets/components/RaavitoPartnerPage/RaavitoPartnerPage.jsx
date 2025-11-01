@@ -103,7 +103,7 @@ export default function RaavitoPartnerPage() {
           </div>
 
           <div className={`${styles.docs} ${styles.banner}`}>
-            <h4>What you’ll need handy</h4>
+            <h4>What you'll need handy</h4>
             <ul>
               <li>
                 FSSAI or Business License <a href='#'>Apply here</a>
