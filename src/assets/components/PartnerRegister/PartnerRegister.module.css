@@ -1,0 +1,485 @@
+/* Register Page */
+.page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fef9f5 0%, var(--brand-cream) 100%);
+  font-family: var(--font-primary);
+}
+
+/* Header */
+.header {
+  background: #ffffff;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.headerContent {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--brand-orange);
+  font-weight: 800;
+  font-size: 20px;
+  font-family: var(--font-accent);
+}
+
+.logo svg {
+  font-size: 26px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.clockIcon {
+  color: var(--brand-green);
+  font-size: 16px;
+}
+
+/* Container */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* Progress Steps */
+.progressWrapper {
+  margin-bottom: 40px;
+}
+
+.progressSteps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.progressItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.progressCircle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 22px;
+  margin-bottom: 12px;
+  transition: all 0.3s;
+  position: relative;
+  z-index: 2;
+}
+
+.progressCircle.active {
+  background: linear-gradient(135deg, var(--brand-orange), var(--brand-deep));
+  border-color: var(--brand-orange);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(222, 140, 69, 0.3);
+}
+
+.progressCircle.completed {
+  background: var(--brand-green);
+  border-color: var(--brand-green);
+  color: #ffffff;
+}
+
+.progressLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: center;
+}
+
+.progressLine {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  right: -50%;
+  height: 3px;
+  background: #e8e8e8;
+  z-index: 1;
+  transition: all 0.3s;
+}
+
+.progressLine.completed {
+  background: var(--brand-green);
+}
+
+.progressItem:last-child .progressLine {
+  display: none;
+}
+
+/* Form Card */
+.formCard {
+  background: #ffffff;
+  border-radius: var(--radius);
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(222, 140, 69, 0.1);
+}
+
+/* Step Content */
+.stepContent {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stepHeader {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.stepHeader h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 8px;
+  font-family: var(--font-accent);
+}
+
+.stepHeader p {
+  font-size: 15px;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Form Grid */
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.formGroupFull {
+  grid-column: 1 / -1;
+}
+
+.formGroup,
+.formGroupFull {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label,
+.formGroupFull label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inputIcon {
+  color: var(--brand-orange);
+  font-size: 16px;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroupFull textarea {
+  padding: 14px 16px;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: var(--font-primary);
+  color: var(--ink);
+  transition: all 0.3s;
+  background: #fafafa;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroupFull textarea:focus {
+  outline: none;
+  border-color: var(--brand-orange);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(222, 140, 69, 0.08);
+}
+
+.formGroup select {
+  cursor: pointer;
+}
+
+.formGroupFull textarea {
+  resize: vertical;
+}
+
+/* Upload Area */
+.uploadArea {
+  text-align: center;
+  padding: 60px 40px;
+  border: 2px dashed #e8e8e8;
+  border-radius: 16px;
+  background: #fafafa;
+  transition: all 0.3s;
+}
+
+.uploadArea:hover {
+  border-color: var(--brand-orange);
+  background: rgba(222, 140, 69, 0.03);
+}
+
+.uploadIcon {
+  font-size: 48px;
+  color: var(--brand-orange);
+  margin-bottom: 16px;
+}
+
+.uploadArea h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 8px;
+  font-family: var(--font-accent);
+}
+
+.uploadArea p {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, var(--brand-orange), var(--brand-deep));
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 16px rgba(222, 140, 69, 0.3);
+}
+
+.uploadBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(222, 140, 69, 0.4);
+}
+
+.fileName {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--brand-green);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.fileName svg {
+  font-size: 18px;
+}
+
+/* Info Box */
+.infoBox {
+  margin-top: 32px;
+  padding: 20px;
+  background: rgba(54, 109, 89, 0.06);
+  border: 1px solid rgba(54, 109, 89, 0.15);
+  border-radius: 12px;
+  display: flex;
+  gap: 16px;
+  align-items: start;
+}
+
+.infoBox svg {
+  color: var(--brand-green);
+  font-size: 24px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.infoBox h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+
+.infoBox p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Form Actions */
+.formActions {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid #e8e8e8;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.btnPrimary,
+.btnSecondary {
+  flex: 1;
+  padding: 16px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s;
+}
+
+.btnPrimary {
+  background: linear-gradient(135deg, var(--brand-orange), var(--brand-deep));
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(222, 140, 69, 0.3);
+}
+
+.btnPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(222, 140, 69, 0.4);
+}
+
+.btnSecondary {
+  background: #ffffff;
+  color: var(--ink);
+  border: 2px solid #e8e8e8;
+}
+
+.btnSecondary:hover {
+  border-color: var(--brand-orange);
+  color: var(--brand-orange);
+  background: rgba(222, 140, 69, 0.03);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    margin: 24px auto;
+  }
+
+  .progressSteps {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .progressItem {
+    flex: 0 0 calc(50% - 10px);
+  }
+
+  .progressLine {
+    display: none;
+  }
+
+  .formCard {
+    padding: 28px 20px;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .stepHeader h2 {
+    font-size: 24px;
+  }
+
+  .uploadArea {
+    padding: 40px 24px;
+  }
+
+  .formActions {
+    flex-direction: column-reverse;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    width: 100%;
+  }
+
+  .headerRight {
+    font-size: 12px;
+  }
+
+  .progressCircle {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  .progressLabel {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 16px;
+  }
+
+  .logo svg {
+    font-size: 20px;
+  }
+
+  .headerRight {
+    display: none;
+  }
+
+  .stepHeader h2 {
+    font-size: 20px;
+  }
+
+  .progressItem {
+    flex: 0 0 100%;
+  }
+}
