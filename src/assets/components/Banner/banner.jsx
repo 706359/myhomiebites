@@ -1,6 +1,12 @@
 import { useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLeaf, faUtensils, faTruckFast } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLeaf,
+  faHeart,
+  faClock,
+  faArrowRight,
+  faCheckCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import styles from "./banner.module.css";
 
 const Banner = () => {
@@ -17,58 +23,101 @@ const Banner = () => {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.25 }
+      { threshold: 0.2 }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
+  const features = [
+    {
+      icon: faLeaf,
+      title: "100% Vegetarian",
+      desc: "Pure veg meals, no compromise",
+    },
+    {
+      icon: faHeart,
+      title: "Made with Love",
+      desc: "Home chefs cooking with care",
+    },
+    {
+      icon: faClock,
+      title: "Fresh Daily",
+      desc: "Prepared fresh every morning",
+    },
+  ];
+
   return (
-    <section
-      id='promo'
-      className={styles.heroBanner}
-      style={{ "--bg-img": "url('images/veg-thali.png')" }}>
-      <div className={styles.heroOverlay} aria-hidden='true' />
+    <section id='promo' className={styles.promoBanner}>
+      <div className={styles.container}>
+        <div ref={contentRef} className={styles.content}>
+          {/* Left Content */}
+          <div className={styles.leftContent}>
+            <span className={styles.label}>Why Choose Raavito</span>
 
-      <div className={styles.heroContainer}>
-        <div ref={contentRef} className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>
-            Pure. Fresh. <br /> Home-Cooked Every Day.
-          </h1>
+            <h2 className={styles.title}>
+              Pure. Fresh.
+              <br />
+              <span className={styles.highlight}>Home-Cooked</span> Every Day.
+            </h2>
 
-          <p className={styles.heroSub}>
-            Taste the comfort of home with <strong>Raavito</strong> — freshly cooked, 100%
-            vegetarian meals prepared by local home chefs. Balanced, hygienic, and made with love.
-            Because every bite should feel like home.
-          </p>
+            <p className={styles.description}>
+              Experience the warmth of homemade food with <strong>Raavito</strong>. Authentic
+              vegetarian meals prepared by local home chefs, delivered fresh to your doorstep with
+              love and care.
+            </p>
 
-          <div className={styles.heroButtons}>
-            <a className='btn btn-primary pulse' aria-label=''>
-              <i>Order Now on Raavito App</i>
-            </a>
-            <a className='btn btnGhost' href='#about' aria-label='Learn more about Raavito'>
-              Learn More
-            </a>
+            <ul className={styles.checkList}>
+              <li>
+                <FontAwesomeIcon icon={faCheckCircle} />
+                <span>Balanced nutrition in every meal</span>
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faCheckCircle} />
+                <span>Verified & hygienic home kitchens</span>
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faCheckCircle} />
+                <span>Same-day delivery in your area</span>
+              </li>
+            </ul>
+
+            <div className={styles.ctaGroup}>
+              <a href='#download' className={styles.primaryCta}>
+                Order Now
+                <FontAwesomeIcon icon={faArrowRight} />
+              </a>
+              <a href='#about' className={styles.secondaryCta}>
+                Learn More
+              </a>
+            </div>
           </div>
 
-          <ul className={styles.heroTags}>
-            <li>
-              <FontAwesomeIcon icon={faLeaf} /> 100% Vegetarian
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faUtensils} /> Home-Style Cooking
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faTruckFast} /> Free Daily Delivery*
-            </li>
-          </ul>
+          {/* Right Content - Feature Cards */}
+          <div className={styles.rightContent}>
+            <div className={styles.imageCard}>
+              <img
+                src='images/veg-thali.png'
+                alt='Fresh vegetarian thali'
+                className={styles.bannerImage}
+              />
+              <div className={styles.imageOverlay}>
+                <span className={styles.overlayText}>Fresh Home-Cooked Meals</span>
+              </div>
+            </div>
 
-          <div className={styles.heroNote}>
-            <p>
-              Serving <strong>Panchsheel Greens 1</strong> and nearby areas. Morning to evening —
-              fresh meals, same-day delivery.
-            </p>
+            <div className={styles.featureGrid}>
+              {features.map((feature, index) => (
+                <div key={index} className={styles.featureCard}>
+                  <div className={styles.featureIcon}>
+                    <FontAwesomeIcon icon={feature.icon} />
+                  </div>
+                  <h3 className={styles.featureTitle}>{feature.title}</h3>
+                  <p className={styles.featureDesc}>{feature.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

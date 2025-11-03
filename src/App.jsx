@@ -9,7 +9,7 @@ import Gallery from "./assets/components/Gallery/gallery";
 import Header from "./assets/components/Header/header";
 import Hero from "./assets/components/Hero/hero";
 import LoginForm from "./assets/components/LoginForm/LoginForm";
-import PartnerWithUs from "./assets/components/PartnerWithUs/PartnerWithUs";
+import RaavitoPartnerPage from "./assets/components/RaavitoPartnerPage/RaavitoPartnerPage";
 import PartnerRegister from "./assets/components/PartnerRegister/PartnerRegister";
 import PartnerDashboard from "./assets/components/PartnerDashboard/PartnerDashboard";
 import Rates from "./assets/components/Rates/rates";
@@ -18,6 +18,7 @@ import Testimonials from "./assets/components/Testimonials/testimonials";
 import HowItWorks from "./assets/components/HowItWorks/HowItWorks";
 import WhyChooseUs from "./assets/components/WhyChooseUs/WhyChooseUs";
 import AppFeatures from "./assets/components/AppFeatures/AppFeatures";
+import PartnerWithUs from "./assets/components/PartnerWithUs/PartnerWithUs";
 import Banner from "./assets/components/Banner/banner";
 import AppDownload from "./assets/components/AppDownload/AppDownload";
 import Contact from "./assets/components/Contact/Contact";
@@ -57,8 +58,8 @@ function App() {
           }
         />
 
-        {/* Partner Routes - Use PartnerWithUs as login page */}
-        <Route path='/partner' element={<PartnerWithUs />} />
+        {/* Partner Routes */}
+        <Route path='/partner' element={<RaavitoPartnerPage />} />
         <Route path='/partner/register' element={<PartnerRegister />} />
         <Route
           path='/partner/dashboard'
@@ -76,7 +77,7 @@ function App() {
           }
         />
 
-        {/* Redirect old route */}
+        {/* Redirect old route to new */}
         <Route path='/chef-registration' element={<Navigate to='/partner' replace />} />
       </Routes>
     </HashRouter>

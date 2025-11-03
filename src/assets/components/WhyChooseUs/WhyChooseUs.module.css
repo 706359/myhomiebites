@@ -32,14 +32,17 @@
 
 .kicker {
   display: inline-block;
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 14px;
   font-weight: 700;
-  background: linear-gradient(90deg, #de8c45, #ffb070);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--brand-deep);
+  background: linear-gradient(135deg, rgba(222, 140, 69, 0.1), rgba(246, 215, 107, 0.15));
+  padding: 10px 24px;
+  border-radius: 30px;
+  margin-bottom: 24px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 2px solid rgba(222, 140, 69, 0.2);
+  font-family: var(--font-primary);
 }
 
 .title {
