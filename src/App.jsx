@@ -3,16 +3,13 @@ import { HashRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import About from "./assets/components/About/about";
 import FAQ from "./assets/components/FAQ/faq";
-import Features from "./assets/components/Features/features";
 import Footer from "./assets/components/Footer/footer";
 import Gallery from "./assets/components/Gallery/gallery";
-import Header from "./assets/components/Header/header";
 import Hero from "./assets/components/Hero/hero";
 import LoginForm from "./assets/components/LoginForm/LoginForm";
 import RaavitoPartnerPage from "./assets/components/RaavitoPartnerPage/RaavitoPartnerPage";
 import PartnerRegister from "./assets/components/PartnerRegister/PartnerRegister";
 import PartnerDashboard from "./assets/components/PartnerDashboard/PartnerDashboard";
-import Rates from "./assets/components/Rates/rates";
 import RegisterForm from "./assets/components/RegisterForm/RegisterForm";
 import Testimonials from "./assets/components/Testimonials/testimonials";
 import HowItWorks from "./assets/components/HowItWorks/HowItWorks";
@@ -25,7 +22,7 @@ import Contact from "./assets/components/Contact/Contact";
 
 function App() {
   const [modal, setModal] = useState(null);
-  const [isPartnerLoggedIn, setIsPartnerLoggedIn] = useState(false);
+  const [isPartnerLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <HashRouter>
@@ -60,7 +57,10 @@ function App() {
 
         {/* Partner Routes */}
         <Route path='/partner' element={<RaavitoPartnerPage />} />
-        <Route path='/partner/register' element={<PartnerRegister />} />
+        <Route
+          path='/partner/register'
+          element={<PartnerRegister setIsLoggedIn={setIsLoggedIn} />}
+        />
         <Route
           path='/partner/dashboard'
           element={isPartnerLoggedIn ? <PartnerDashboard /> : <Navigate to='/partner' replace />}

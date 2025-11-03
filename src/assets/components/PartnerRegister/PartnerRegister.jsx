@@ -433,7 +433,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./PartnerRegister.module.css";
 
-export default function PartnerRegister({ onRegisterSuccess }) {
+export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -485,7 +485,7 @@ export default function PartnerRegister({ onRegisterSuccess }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setIsLoggedIn(true);
     // Show success modal
     setShowSuccessModal(true);
 
