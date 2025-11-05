@@ -26,17 +26,13 @@
 }
 
 .logo {
+  width: 80px;
   display: flex;
   align-items: center;
   gap: 12px;
   color: var(--brand-orange);
-  font-weight: 800;
-  font-size: 20px;
-  font-family: var(--font-accent);
-}
 
-.logo svg {
-  font-size: 26px;
+  font-family: var(--font-accent);
 }
 
 .headerRight {

@@ -17,30 +17,42 @@ import styles from "./RaavitoPartnerPage.module.css";
 export default function RaavitoPartnerPage() {
   const navigate = useNavigate();
   const [input, setInput] = useState("");
+  const [error, setError] = useState("");
   const year = new Date().getFullYear();
 
-  const phoneRegex = /^[0-9]{10}$/;
-  const altRegex = /^[A-Za-z0-9/-]{5,}$/;
+  const handleChange = (e) => {
+    let v = e.target.value.replace(/\D/g, "");
+    if (v.startsWith("91")) v = v.slice(2);
+    setInput(v.slice(0, 10));
+    if (error) setError("");
+  };
 
-  const isValid =
-    input.trim().length >= 5 && (phoneRegex.test(input.trim()) || altRegex.test(input.trim()));
+  const handleBlur = () => {
+    if (input.length !== 10) setError("Enter a valid 10-digit mobile number.");
+  };
+
+  const handlePaste = (e) => {
+    e.preventDefault();
+    let v = (e.clipboardData || window.clipboardData).getData("text");
+    v = v.replace(/\D/g, "");
+    if (v.startsWith("91")) v = v.slice(2);
+    setInput(v.slice(0, 10));
+  };
+
+  const isValid = input.length === 10;
+
+  const handleProceed = () => {
+    if (!isValid) {
+      setError("Enter a valid 10-digit mobile number.");
+      return;
+    }
+    navigate("/partner/register", { state: { phone: `+91${input}` } });
+  };
 
   const features = [
-    {
-      icon: faChartLine,
-      title: "Direct orders",
-      desc: "Keep more revenue",
-    },
-    {
-      icon: faBolt,
-      title: "Realtime updates",
-      desc: "Manage orders from app",
-    },
-    {
-      icon: faRocket,
-      title: "Simple onboarding",
-      desc: "Minimal documents",
-    },
+    { icon: faChartLine, title: "Direct orders", desc: "Keep more revenue" },
+    { icon: faBolt, title: "Realtime updates", desc: "Manage orders from app" },
+    { icon: faRocket, title: "Simple onboarding", desc: "Minimal documents" },
   ];
 
   const steps = [
@@ -65,37 +77,16 @@ export default function RaavitoPartnerPage() {
   ];
 
   const documents = [
-    {
-      text: "FSSAI or Business License",
-      link: "Apply here",
-    },
-    {
-      text: "Scanned copy of your menu (PDF/JPEG)",
-      link: null,
-    },
-    {
-      text: "Bank account & PAN card details",
-      link: null,
-    },
-    {
-      text: "GST Certificate (if applicable)",
-      link: "Apply now",
-    },
+    { text: "FSSAI or Business License", link: "Apply here" },
+    { text: "Scanned copy of your menu (PDF/JPEG)", link: null },
+    { text: "Bank account & PAN card details", link: null },
+    { text: "GST Certificate (if applicable)", link: "Apply now" },
   ];
-
-  const handleProceed = () => {
-    if (isValid) {
-      // Navigate to partner registration page
-      navigate("/partner/register");
-    }
-  };
 
   return (
     <div className={styles.page}>
-      {/* Hero Section */}
       <section className={styles.hero} id='login'>
         <div className={styles.heroGrid}>
-          {/* Form Panel */}
           <div className={styles.formPanel}>
             <div className={styles.formBadge}>
               <FontAwesomeIcon icon={faRocket} />
@@ -108,28 +99,46 @@ export default function RaavitoPartnerPage() {
             <div className={styles.inputGroup}>
               <div className={styles.inputWrapper}>
                 <FontAwesomeIcon icon={faMobileAlt} className={styles.inputIcon} />
+
+                {/* fixed prefix */}
+                <span className={styles.prefix}>+91-</span>
+
                 <input
-                  type='text'
-                  placeholder='Mobile Number'
+                  type='tel'
+                  name='phone'
+                  autoComplete='tel'
+                  placeholder='XXXXXXXXXX'
                   value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  className={styles.input}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  onPaste={handlePaste}
+                  inputMode='numeric'
+                  pattern='[0-9]*'
+                  maxLength={10}
+                  aria-invalid={!isValid && !!input}
+                  aria-describedby='phone-error'
+                  className={`${styles.input} ${styles.inputWithPrefix}`}
                 />
               </div>
+
+              {error && (
+                <p id='phone-error' className={styles.errorText}>
+                  {error}
+                </p>
+              )}
 
               <button
                 type='button'
                 disabled={!isValid}
                 className={`${styles.proceedBtn} ${isValid ? styles.enabled : ""}`}
                 onClick={handleProceed}>
-                Proceed
-                <FontAwesomeIcon icon={faArrowRight} />
+                PROCEED <FontAwesomeIcon icon={faArrowRight} />
               </button>
             </div>
 
             <p className={styles.note}>
               <FontAwesomeIcon icon={faShieldAlt} className={styles.noteIcon} />
-              We will use this to create your partner account.
+              We will use this to create your partner account.{" "}
               <a href='#' className={styles.link}>
                 Privacy
               </a>
@@ -144,8 +153,7 @@ export default function RaavitoPartnerPage() {
             </div>
 
             <h1 className={styles.heroTitle}>
-              Bring your kitchen to
-              <span className={styles.heroTitleEm}>more doors</span>
+              Bring your kitchen to <span className={styles.heroTitleEm}>more doors</span>
             </h1>
 
             <p className={styles.heroDesc}>
@@ -178,7 +186,6 @@ export default function RaavitoPartnerPage() {
           </header>
 
           <div className={styles.onboardGrid}>
-            {/* Steps */}
             <div className={styles.stepsBox}>
               {steps.map((step, index) => (
                 <div key={index} className={styles.step}>
@@ -194,7 +201,6 @@ export default function RaavitoPartnerPage() {
               ))}
             </div>
 
-            {/* Documents Banner */}
             <div className={styles.docs}>
               <div className={styles.docsHeader}>
                 <div className={styles.docsIcon}>

@@ -530,10 +530,8 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
       {/* Header */}
       <header className={styles.header}>
         <div className={styles.headerContent}>
-          <div className={styles.logo}>
-            <FontAwesomeIcon icon={faStore} />
-            <span>RAAVITO Partner</span>
-          </div>
+          <img src='/images/raavitologo.png' alt='Raavito' className={styles.logo} />
+          <h2>Partner Registration</h2>
           <div className={styles.headerRight}>
             <FontAwesomeIcon icon={faClock} className={styles.clockIcon} />
             <span>Takes ~5 minutes</span>
