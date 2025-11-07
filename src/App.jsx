@@ -5,7 +5,6 @@ import About from "./assets/components/About/about";
 import FAQ from "./assets/components/FAQ/faq";
 import Footer from "./assets/components/Footer/footer";
 import Gallery from "./assets/components/Gallery/gallery";
-import Hero from "./assets/components/Hero/hero";
 import LoginForm from "./assets/components/LoginForm/LoginForm";
 import RaavitoPartnerPage from "./assets/components/RaavitoPartnerPage/RaavitoPartnerPage";
 import PartnerRegister from "./assets/components/PartnerRegister/PartnerRegister";
@@ -19,6 +18,7 @@ import PartnerWithUs from "./assets/components/PartnerWithUs/PartnerWithUs";
 import Banner from "./assets/components/Banner/banner";
 import AppDownload from "./assets/components/AppDownload/AppDownload";
 import Contact from "./assets/components/Contact/Contact";
+import Hero from "./assets/components/Hero/hero";
 
 function App() {
   const [modal, setModal] = useState(null);

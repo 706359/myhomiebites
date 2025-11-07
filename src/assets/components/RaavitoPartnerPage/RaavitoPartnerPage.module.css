@@ -4,7 +4,6 @@
   flex-direction: column;
   background: #fafafa;
   color: var(--ink);
-  font-family: var(--font-primary);
 }
 
 /* Hero Section */
@@ -66,7 +65,6 @@
   font-weight: 700;
   color: #fff;
   margin: 0 0 8px;
-  font-family: var(--font-accent);
 }
 
 .formSubtitle {
@@ -103,7 +101,7 @@
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
   font-size: 14px;
-  font-family: var(--font-primary);
+
   transition: all 0.3s;
 }
 
@@ -139,7 +137,7 @@
   color: #666;
   cursor: not-allowed;
   font-size: 14px;
-  font-family: var(--font-primary);
+
   text-transform: uppercase;
   letter-spacing: 0.8px;
   display: flex;
@@ -217,7 +215,6 @@
   color: #fff;
   margin: 0 0 16px;
   line-height: 1.15;
-  font-family: var(--font-accent);
 }
 
 .heroTitleEm {
@@ -325,7 +322,6 @@
   font-weight: 700;
   color: #222;
   margin: 0 0 8px;
-  font-family: var(--font-accent);
 }
 
 .subheading {
@@ -411,7 +407,6 @@
   font-size: 1.05rem;
   font-weight: 600;
   color: #222;
-  font-family: var(--font-accent);
 }
 
 .stepDesc {
@@ -461,7 +456,6 @@
   font-weight: 600;
   color: var(--brand-deep);
   margin: 0;
-  font-family: var(--font-accent);
 }
 
 .docsList {

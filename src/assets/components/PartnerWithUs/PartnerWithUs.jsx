@@ -70,8 +70,8 @@ export default function PartnerWithUs() {
         </div>
 
         <div className={styles.cta}>
-          <button className={styles.btn} onClick={() => navigate("/chef-registration")}>
-            Register as Home Chef
+          <button className='btn btn-primary' onClick={() => navigate("/chef-registration")}>
+            Register Kitchen
           </button>
         </div>
       </div>

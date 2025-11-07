@@ -1,18 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..500;1,200..500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 :root {
-  --brand-orange: rgb(222, 140, 69);
+  --brand-orange: rgb(245, 117, 6);
   --brand-green: rgb(54, 109, 89);
-  --brand-deep: rgb(180, 73, 29);
+  --brand-deep: rgb(213, 86, 35);
   --brand-cream: #ffffff;
-  --brand-yellow: #f6d76b;
-  --brand-dark-green: #1d6541;
+  --brand-yellow: #f0c836;
+  --brand-dark-green: #166b41;
 
   --ink: #2c3e50;
   --muted: #6b7a8c;
   --card: #fbf5f2;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  --radius: 25px;
+  --radius: 12px;
   --transition: all 0.3s ease;
 
   --font-primary: "Nunito", "Roboto", Helvetica, Arial, sans-serif;
@@ -424,8 +424,7 @@ section {
   justify-content: center;
   gap: 10px;
   padding: 10px 25px;
-  border-radius: 25px;
-  font-weight: 700;
+  border-radius: var(--radius);
   font-size: 1rem;
   text-decoration: none;
   color: #fff;
@@ -466,13 +465,13 @@ section {
 }
 
 .btn-primary {
-  background: var(--brand-deep);
+  background: var(--brand-orange);
   color: #fff;
 }
 
 .btnGhost {
   background: #fff;
-  color: var(--brand-deep, #843501);
+  color: var(--brand-deep);
   border: 2px solid #ffd9c5;
 }
 .form-box {

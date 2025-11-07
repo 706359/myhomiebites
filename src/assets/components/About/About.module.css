@@ -87,7 +87,6 @@
   letter-spacing: 1.5px;
   text-transform: uppercase;
   border: 2px solid rgba(222, 140, 69, 0.2);
-  font-family: var(--font-primary);
 }
 
 .title {
@@ -95,7 +94,7 @@
   font-weight: 800;
   color: var(--ink);
   margin: 0 0 24px;
-  font-family: var(--font-accent);
+
   line-height: 1.2;
 }
 
@@ -112,7 +111,6 @@
   color: var(--muted);
   line-height: 1.7;
   margin-bottom: 32px;
-  font-family: var(--font-primary);
 }
 
 .copy {
@@ -124,7 +122,6 @@
   color: var(--muted);
   line-height: 1.8;
   margin-bottom: 20px;
-  font-family: var(--font-primary);
 }
 
 .copy strong {
@@ -222,7 +219,6 @@
   font-weight: 700;
   color: var(--ink);
   margin: 0 0 8px;
-  font-family: var(--font-accent);
 }
 
 .card p {
@@ -230,7 +226,6 @@
   color: var(--muted);
   margin: 0;
   line-height: 1.6;
-  font-family: var(--font-primary);
 }
 
 /* === Hero Media === */
@@ -266,7 +261,7 @@
   font-size: 14px;
   font-weight: 700;
   color: var(--brand-deep);
-  font-family: var(--font-primary);
+
   border: 2px solid rgba(222, 140, 69, 0.3);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -332,7 +327,6 @@
   margin-bottom: 10px;
   padding-left: 24px;
   position: relative;
-  font-family: var(--font-primary);
 }
 
 .list li::before {

@@ -38,11 +38,9 @@
   letter-spacing: 1.5px;
   text-transform: uppercase;
   border: 2px solid rgba(222, 140, 69, 0.2);
-  font-family: var(--font-primary);
 }
 
 .title {
-  font-family: var(--font-accent);
   font-size: clamp(30px, 4.8vw, 56px);
   color: var(--ink);
 }

@@ -56,7 +56,6 @@
   letter-spacing: 1.5px;
   text-transform: uppercase;
   border: 2px solid rgba(222, 140, 69, 0.2);
-  font-family: var(--font-primary);
 }
 
 .title {
@@ -64,7 +63,7 @@
   font-weight: 800;
   color: var(--ink);
   margin: 0 0 20px;
-  font-family: var(--font-accent);
+
   line-height: 1.2;
   background: linear-gradient(
     135deg,
@@ -83,7 +82,6 @@
   line-height: 1.8;
   max-width: 700px;
   margin: 0 auto;
-  font-family: var(--font-primary);
 }
 
 /* Layout Grid */
@@ -167,7 +165,6 @@
   font-weight: 700;
   color: var(--ink);
   margin: 0 0 10px;
-  font-family: var(--font-accent);
 }
 
 .card p {
@@ -175,7 +172,6 @@
   color: var(--muted);
   margin: 0;
   line-height: 1.7;
-  font-family: var(--font-primary);
 }
 
 /* Form */
@@ -210,14 +206,12 @@
   font-weight: 700;
   color: var(--ink);
   margin: 0 0 10px;
-  font-family: var(--font-accent);
 }
 
 .formHeader p {
   font-size: 16px;
   color: var(--muted);
   margin: 0;
-  font-family: var(--font-primary);
 }
 
 .form label {
@@ -231,7 +225,7 @@
   font-weight: 700;
   color: var(--ink);
   margin-bottom: 10px;
-  font-family: var(--font-primary);
+
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -245,7 +239,7 @@
   border-radius: 15px;
   color: var(--ink);
   font-size: 15px;
-  font-family: var(--font-primary);
+
   transition: var(--transition);
 }
 
@@ -281,7 +275,7 @@
   cursor: pointer;
   transition: var(--transition);
   box-shadow: 0 8px 25px rgba(180, 73, 29, 0.3);
-  font-family: var(--font-primary);
+
   text-transform: uppercase;
   letter-spacing: 1px;
   position: relative;
@@ -322,7 +316,6 @@
   font-weight: 600;
   text-align: center;
   animation: slideIn 0.3s ease-out;
-  font-family: var(--font-primary);
 }
 
 .success {

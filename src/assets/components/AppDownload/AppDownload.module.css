@@ -4,7 +4,6 @@
   padding: 6rem 1rem;
   overflow: hidden;
   min-height: 700px;
-  font-family: "Nunito", "Roboto", Helvetica, Arial, sans-serif;
 }
 .appDownloadSection::before {
   content: "";

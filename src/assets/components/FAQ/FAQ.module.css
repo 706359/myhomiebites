@@ -45,12 +45,11 @@
   letter-spacing: 1.5px;
   text-transform: uppercase;
   border: 2px solid rgba(222, 140, 69, 0.2);
-  font-family: var(--font-primary);
 }
 
 .title {
   margin-top: 0;
-  font-family: var(--font-accent);
+
   font-size: clamp(32px, 4.8vw, 52px);
   color: var(--ink);
   line-height: 1.1;
@@ -119,7 +118,7 @@
 }
 
 .active .question {
-  color: var(--brand-orange);
+  color: var(--brand-green);
 }
 
 .active .answer {
