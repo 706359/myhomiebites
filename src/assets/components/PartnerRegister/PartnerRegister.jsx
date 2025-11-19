@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -110,12 +110,15 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
   // Debounced pincode for API calls
   const debouncedPincode = useDebounce(formData.pincode, 500);
 
-  const steps = [
-    { number: 1, title: "Personal Info", icon: faUser },
-    { number: 2, title: "Kitchen Details", icon: faStore },
-    { number: 3, title: "Documents", icon: faIdCard },
-    { number: 4, title: "Menu Upload", icon: faUtensils },
-  ];
+  const steps = useMemo(
+    () => [
+      { number: 1, title: "Personal Info", icon: faUser },
+      { number: 2, title: "Kitchen Details", icon: faStore },
+      { number: 3, title: "Documents", icon: faIdCard },
+      { number: 4, title: "Menu Upload", icon: faUtensils },
+    ],
+    []
+  );
 
   // Cleanup function for timeouts
   const clearAllTimeouts = useCallback(() => {
@@ -124,35 +127,38 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
   }, []);
 
   // Enhanced notification system with priority
-  const showNotification = useCallback((message, type = "info", duration = 5000) => {
-    const id = ++notificationIdRef.current;
-    const notification = {
-      id,
-      message,
-      type, // 'success', 'error', 'warning', 'info'
-      timestamp: new Date(),
-    };
-
-    setNotifications((prev) => {
-      // Limit to max 5 notifications
-      const updated = [...prev, notification];
-      return updated.slice(-5);
-    });
-
-    // Auto remove notification after duration
-    if (duration > 0) {
-      const timeoutId = setTimeout(() => {
-        removeNotification(id);
-      }, duration);
-      timeoutRefs.current.push(timeoutId);
-    }
-
-    return id;
-  }, []);
-
   const removeNotification = useCallback((id) => {
     setNotifications((prev) => prev.filter((notif) => notif.id !== id));
   }, []);
+
+  const showNotification = useCallback(
+    (message, type = "info", duration = 5000) => {
+      const id = ++notificationIdRef.current;
+      const notification = {
+        id,
+        message,
+        type, // 'success', 'error', 'warning', 'info'
+        timestamp: new Date(),
+      };
+
+      setNotifications((prev) => {
+        // Limit to max 5 notifications
+        const updated = [...prev, notification];
+        return updated.slice(-5);
+      });
+
+      // Auto remove notification after duration
+      if (duration > 0) {
+        const timeoutId = setTimeout(() => {
+          removeNotification(id);
+        }, duration);
+        timeoutRefs.current.push(timeoutId);
+      }
+
+      return id;
+    },
+    [removeNotification]
+  );
 
   // Specific notification helpers
   const showSuccess = useCallback(
@@ -245,7 +251,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
       setPincodeError("");
       setFormData((f) => ({ ...f, location: "" }));
     }
-  }, [debouncedPincode]);
+  }, [debouncedPincode, fetchLocationsByPincode]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -706,7 +712,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
         `Moved back to ${steps[currentStep - 2].title}. You can edit your information here.`
       );
     }
-  }, [currentStep, showInfo]);
+  }, [currentStep, showInfo, steps]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
