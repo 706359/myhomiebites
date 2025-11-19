@@ -116,15 +116,42 @@
 }
 .prefix {
   position: absolute;
-  left: 44px; /* adjust if icon width changes */
+  left: 44px;
   top: 50%;
   transform: translateY(-50%);
   font-weight: 600;
   opacity: 0.9;
   pointer-events: none;
 }
+
+/* both prefix and input become black on focus or when input has a value or when browser autofills */
+.inputWrapper:focus-within .prefix,
+.input:focus,
+.input:not(:placeholder-shown),
+.input:not(:placeholder-shown) ~ .prefix,
+.input:not(:placeholder-shown) + .prefix,
+.inputWrapper:has(.input:not(:placeholder-shown)) .prefix,
+.input:-webkit-autofill,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill + .prefix,
+.input:-webkit-autofill ~ .prefix,
+.inputWrapper:has(.input:-webkit-autofill) .prefix {
+  color: #fff;
+}
+
+/* preserve custom background and set text color when Chrome/WebKit autofills */
+.input:-webkit-autofill,
+.input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff !important;
+  box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.1) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .inputWithPrefix {
-  padding-left: 100px; /* leave space for icon + prefix */
+  padding-left: 100px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
 }
 .proceedBtn {
   width: 100%;

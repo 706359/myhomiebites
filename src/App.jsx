@@ -19,6 +19,7 @@ import Banner from "./assets/components/Banner/banner";
 import AppDownload from "./assets/components/AppDownload/AppDownload";
 import Contact from "./assets/components/Contact/Contact";
 import Hero from "./assets/components/Hero/hero";
+import AdminDashboard from "./assets/components/AdminDashboard/Admindashboard";
 
 function App() {
   const [modal, setModal] = useState(null);
@@ -73,6 +74,15 @@ function App() {
             <>
               <Contact />
               <Footer />
+            </>
+          }
+        />
+        {/* Admin Dashboard */}
+        <Route
+          path='/admindashboard'
+          element={
+            <>
+              <AdminDashboard />
             </>
           }
         />

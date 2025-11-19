@@ -9,6 +9,7 @@ import {
   faHeadset,
   faMapMarkerAlt,
   faArrowUp,
+  faUser,
   faLeaf,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Footer.module.css";
@@ -34,6 +35,7 @@ const Footer = () => {
   const helpLinks = [
     { id: "faq", label: "FAQ", icon: faQuestionCircle, scroll: true },
     { label: "Help & Support", icon: faHeadset, scroll: false, route: "/contact" },
+    { label: "Admin Console", icon: faUser, scroll: false, route: "/AdminDashboard" },
   ];
 
   const serviceAreas = ["Panchsheel Greens-1", "Nearby Societies", "Within ~2 km radius"];

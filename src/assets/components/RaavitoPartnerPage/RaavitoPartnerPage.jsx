@@ -100,7 +100,6 @@ export default function RaavitoPartnerPage() {
               <div className={styles.inputWrapper}>
                 <FontAwesomeIcon icon={faMobileAlt} className={styles.inputIcon} />
 
-                {/* fixed prefix */}
                 <span className={styles.prefix}>+91-</span>
 
                 <input
