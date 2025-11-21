@@ -1,12 +1,12 @@
-import { useEffect, useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMobileScreenButton, faBowlRice, faTruckFast } from "@fortawesome/free-solid-svg-icons";
-import styles from "./HowItWorks.module.css";
+import { faBowlRice, faMobileScreenButton, faTruckFast } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useRef } from 'react';
+import styles from './HowItWorks.module.css';
 
 const accents = [
-  ["#de8c45", "#ffb070"],
-  ["#29a3ff", "#9ed5ff"],
-  ["#00c2a8", "#7ff0df"],
+  ['#de8c45', '#ffb070'],
+  ['#29a3ff', '#9ed5ff'],
+  ['#00c2a8', '#7ff0df'],
 ];
 
 export default function HowItWorks() {
@@ -30,31 +30,36 @@ export default function HowItWorks() {
   return (
     <section id='how' className={styles.section} ref={sectionRef} aria-labelledby='how-title'>
       <div className={styles.gridBackdrop} aria-hidden='true' />
+
       <div className={styles.wrap}>
         <header className={styles.head}>
           <p className={styles.kicker}>How Raavito Works</p>
+
           <h2 id='how-title' className={styles.title}>
-            Fresh home-style food in 3 easy steps
+            Fresh homemade food, delivered in 3 simple steps
           </h2>
-          <p className={styles.sub}>App-only ordering. Simple. Fast. Reliable.</p>
+
+          <p className={styles.sub}>
+            Everything happens on the app. No hassle. No confusion. Pure ghar-ka-khana.
+          </p>
         </header>
 
         <ol className={styles.grid}>
           {[
             {
               icon: faMobileScreenButton,
-              h: "Order on the app",
-              p: "Browse the daily menu, pick your meal or plan, and place the order in seconds.",
+              h: 'Choose your meal',
+              p: 'Open the app, check the daily desi-veg menu, and order in a few taps.',
             },
             {
               icon: faBowlRice,
-              h: "Cooked by local chefs",
-              p: "Verified pure-veg kitchens prepare your food fresh, clean, and homely.",
+              h: 'Cooked in real homes',
+              p: 'Local home chefs prepare your food fresh — just like family cooks at home.',
             },
             {
               icon: faTruckFast,
-              h: "Delivered hot",
-              p: "Hyperlocal delivery brings it to your door on time. Eat while it’s hot.",
+              h: 'Delivered hot & on time',
+              p: 'We keep delivery hyperlocal, so your meal reaches warm, fresh, and comforting.',
             },
           ].map((step, i) => {
             const [a, b] = accents[i % accents.length];
@@ -62,12 +67,19 @@ export default function HowItWorks() {
               <li
                 key={i}
                 className={styles.card}
-                style={{ "--accent-a": a, "--accent-b": b, "--stagger": `${i * 90}ms` }}>
+                style={{
+                  '--accent-a': a,
+                  '--accent-b': b,
+                  '--stagger': `${i * 90}ms`,
+                }}
+              >
                 <span className={styles.step}>{i + 1}</span>
+
                 <span className={styles.ring}>
                   <span className={styles.ringGlow} />
                   <FontAwesomeIcon icon={step.icon} className={styles.icon} />
                 </span>
+
                 <h3 className={styles.h3}>{step.h}</h3>
                 <p className={styles.p}>{step.p}</p>
               </li>

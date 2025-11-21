@@ -1,54 +1,54 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faLeaf,
   faBowlFood,
-  faTruckFast,
   faCalendarCheck,
+  faLeaf,
   faRupeeSign,
   faShieldHeart,
-} from "@fortawesome/free-solid-svg-icons";
-import styles from "./WhyChooseUs.module.css";
+  faTruckFast,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styles from './WhyChooseUs.module.css';
 
 export default function WhyChooseUs() {
   const accents = [
-    ["#de8c45", "#ffb070"],
-    ["#29a3ff", "#9ed5ff"],
-    ["#00c2a8", "#7ff0df"],
-    ["#ff6b6b", "#ffc2c2"],
-    ["#b86bff", "#e2c7ff"],
-    ["#f4c430", "#ffe58f"],
+    ['#de8c45', '#ffb070'],
+    ['#29a3ff', '#9ed5ff'],
+    ['#00c2a8', '#7ff0df'],
+    ['#ff6b6b', '#ffc2c2'],
+    ['#b86bff', '#e2c7ff'],
+    ['#f4c430', '#ffe58f'],
   ];
 
   const features = [
     {
       icon: faLeaf,
-      title: "Pure Veg & Hygienic Kitchens",
-      text: "Verified local chefs, clean kitchens, highest hygiene standards.",
+      title: 'Pure Veg, Clean Kitchens',
+      text: 'Local home chefs who cook in clean, well-kept kitchens you can trust.',
     },
     {
       icon: faBowlFood,
-      title: "Home-Style Taste",
-      text: "Balanced, simple, delicious — minimal oil, full of care.",
+      title: 'Real Home-Style Taste',
+      text: 'Simple, balanced food—less oil, no shortcuts, and cooked with care.',
     },
     {
       icon: faCalendarCheck,
-      title: "Daily Changing Menu",
-      text: "New, fresh dishes every day. Never boring, always homely.",
+      title: 'New Menu Every Day',
+      text: 'Fresh dishes daily so your meals stay interesting and homely.',
     },
     {
       icon: faRupeeSign,
-      title: "Affordable Meal Plans",
-      text: "Flexible tiffin plans — daily to monthly, pocket-friendly.",
+      title: 'Pocket-Friendly Plans',
+      text: 'Daily, weekly, or monthly tiffin plans that fit your budget.',
     },
     {
       icon: faTruckFast,
-      title: "On-Time Delivery",
-      text: "Hot meals, right on time, every time.",
+      title: 'Always On Time',
+      text: 'Your meal reaches hot and on time, without excuses.',
     },
     {
       icon: faShieldHeart,
-      title: "Trusted by Families",
-      text: "Hundreds of happy customers eat Raavito meals daily.",
+      title: 'Trusted by Families',
+      text: 'Hundreds of families choose Raavito for their daily meals.',
     },
   ];
 
@@ -59,11 +59,10 @@ export default function WhyChooseUs() {
         <header className={styles.head}>
           <p className={styles.kicker}>Why Choose Raavito</p>
           <h2 id='why-title' className={styles.title}>
-            Trusted by families for healthy, pure-veg meals
+            Healthy, pure-veg meals people rely on every day
           </h2>
           <p className={styles.sub}>
-            Simple food, clean kitchens, and timely delivery — because home-style meals never go out
-            of style.
+            Clean kitchens, simple food, and reliable delivery — the way home meals should be.
           </p>
         </header>
 
@@ -75,10 +74,11 @@ export default function WhyChooseUs() {
                 key={i}
                 className={styles.card}
                 style={{
-                  "--accent-a": a,
-                  "--accent-b": b,
-                  "--stagger": `${i * 80}ms`,
-                }}>
+                  '--accent-a': a,
+                  '--accent-b': b,
+                  '--stagger': `${i * 80}ms`,
+                }}
+              >
                 <div className={styles.iconWrap}>
                   <FontAwesomeIcon icon={f.icon} className={styles.icon} />
                 </div>

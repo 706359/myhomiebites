@@ -1,53 +1,68 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faMobileScreenButton,
+  faBell,
   faBowlRice,
   faHeart,
-  faBell,
-  faStar,
   faLocationDot,
-  faWallet,
+  faMobileScreenButton,
   faRepeat,
-} from "@fortawesome/free-solid-svg-icons";
-import styles from "./AppFeatures.module.css";
+  faStar,
+  faWallet,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styles from './AppFeatures.module.css';
 
 const features = [
   {
     icon: faBowlRice,
-    title: "Daily Veg Menu",
-    text: "Pure-veg, rotating dishes from local home chefs.",
+    title: 'Daily Veg Menu',
+    text: 'Fresh, pure-veg meals made in real home kitchens.',
   },
   {
     icon: faRepeat,
-    title: "Subscriptions",
-    text: "Weekly & monthly tiffin plans with easy pause.",
+    title: 'Easy Subscriptions',
+    text: 'Weekly or monthly tiffin plans you can pause anytime.',
   },
   {
     icon: faLocationDot,
-    title: "Live Order Tracking",
-    text: "Track prep, pickup, and doorstep ETA.",
+    title: 'Order Tracking',
+    text: 'See when your meal is being cooked, packed, and delivered.',
   },
-  { icon: faWallet, title: "Secure Payments", text: "UPI, cards, wallets. Instant receipts." },
-  { icon: faBell, title: "Smart Alerts", text: "Menu drops, order status, delivery reminders." },
-  { icon: faHeart, title: "Favourites", text: "Save chefs, dishes, and quick re-order." },
-  { icon: faStar, title: "Ratings & Hygiene", text: "Chef reviews and hygiene highlights." },
+  {
+    icon: faWallet,
+    title: 'Secure Payments',
+    text: 'UPI, cards, wallets — all safe and quick.',
+  },
+  {
+    icon: faBell,
+    title: 'Meal Alerts',
+    text: 'Get notified for menu updates, order status, and delivery time.',
+  },
+  {
+    icon: faHeart,
+    title: 'Favourites',
+    text: 'Save your favourite chefs and meals for one-tap ordering.',
+  },
+  {
+    icon: faStar,
+    title: 'Chef Ratings',
+    text: 'Real reviews and hygiene highlights from customers.',
+  },
   {
     icon: faMobileScreenButton,
-    title: "Clean UI",
-    text: "Fast, simple, accessible app experience.",
+    title: 'Simple App',
+    text: 'Clean, fast, easy to use — made for everyday meals.',
   },
 ];
 
-// Per-card accent pairs
 const accents = [
-  ["#de8c45", "#ffb070"],
-  ["#7c8cff", "#b7c2ff"],
-  ["#00c2a8", "#7ff0df"],
-  ["#ff6b6b", "#ffc2c2"],
-  ["#b86bff", "#e2c7ff"],
-  ["#f4c430", "#ffe58f"],
-  ["#29a3ff", "#9ed5ff"],
-  ["#ff8ccf", "#ffd3ec"],
+  ['#de8c45', '#ffb070'],
+  ['#7c8cff', '#b7c2ff'],
+  ['#00c2a8', '#7ff0df'],
+  ['#ff6b6b', '#ffc2c2'],
+  ['#b86bff', '#e2c7ff'],
+  ['#f4c430', '#ffe58f'],
+  ['#29a3ff', '#9ed5ff'],
+  ['#ff8ccf', '#ffd3ec'],
 ];
 
 export default function AppFeatures() {
@@ -56,12 +71,12 @@ export default function AppFeatures() {
       <div className={styles.gridBackdrop} aria-hidden='true' />
       <div className={styles.wrap}>
         <header className={styles.head}>
-          <span className={styles.kicker}>Premium Feature Set</span>
+          <span className={styles.kicker}>What the App Offers</span>
           <h2 id='af-title' className={styles.title}>
-            Everything you need. Nothing you don’t.
+            Made simple for daily home-style meals.
           </h2>
           <p className={styles.sub}>
-            Fast flows, safe checks, crisp UI. Built for daily use at scale.
+            Easy ordering, clear details, and everything you need for your everyday food routine.
           </p>
         </header>
 
@@ -72,11 +87,17 @@ export default function AppFeatures() {
               <li
                 key={i}
                 className={styles.card}
-                style={{ "--accent-a": a, "--accent-b": b, "--stagger": `${i * 60}ms` }}>
+                style={{
+                  '--accent-a': a,
+                  '--accent-b': b,
+                  '--stagger': `${i * 60}ms`,
+                }}
+              >
                 <span className={styles.ring}>
                   <span className={styles.ringGlow} />
                   <FontAwesomeIcon icon={f.icon} className={styles.icon} />
                 </span>
+
                 <div className={styles.body}>
                   <h3 className={styles.h3}>{f.title}</h3>
                   <p className={styles.p}>{f.text}</p>
