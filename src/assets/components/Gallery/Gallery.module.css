@@ -1,65 +1,9 @@
+/* Gallery Section - Matching Mobile App Style */
 .gallerySection {
   position: relative;
-  padding: 6rem 0;
-  background: rgb(254, 249, 238);
+  padding: 5rem 0;
+  background: #fcf8ec; /* Matching app's light background */
   overflow: hidden;
-}
-.gallerySection::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 100%;
-  height: 90px;
-  background: linear-gradient(135deg, var(--brand-yellow), var(--brand-orange));
-  -webkit-mask: radial-gradient(120% 150% at 50% 100%, transparent 60%, black 61%);
-  mask: radial-gradient(120% 150% at 50% 100%, transparent 60%, black 61%);
-  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.08);
-  z-index: 2;
-  pointer-events: none;
-}
-.bgAnimated {
-  position: absolute;
-  inset: 0;
-  opacity: 0.3;
-  pointer-events: none;
-}
-
-.bgBlob1 {
-  position: absolute;
-  top: 5rem;
-  left: 2.5rem;
-  width: 18rem;
-  height: 18rem;
-  background: #fed7aa;
-  border-radius: 50%;
-  filter: blur(80px);
-  animation: pulse 3s ease-in-out infinite;
-}
-
-.bgBlob2 {
-  position: absolute;
-  bottom: 5rem;
-  right: 2.5rem;
-  width: 24rem;
-  height: 24rem;
-  background: #fde68a;
-  border-radius: 50%;
-  filter: blur(80px);
-  animation: pulse 3s ease-in-out infinite;
-  animation-delay: 1s;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
 }
 
 .container {
@@ -69,9 +13,10 @@
   padding: 0 1.5rem;
 }
 
+/* Header */
 .header {
   text-align: center;
-  margin-bottom: 5rem;
+  margin-bottom: 4rem;
 }
 
 .badge {
@@ -79,129 +24,189 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: linear-gradient(to right, #fed7aa, #fde68a);
+  background: linear-gradient(to right, #f97316, #fb923c);
   border-radius: 9999px;
   margin-bottom: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.2);
 }
 
 .badgeIcon {
   width: 1rem;
   height: 1rem;
-  color: #c2410c;
+  color: white;
 }
 
 .badgeText {
   font-size: 0.875rem;
-  font-weight: 600;
-  color: #9a3412;
+  font-weight: 700;
+  color: white;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
 .title {
-  font-size: 3.75rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(to right, #ea580c, #d97706, #ea580c);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  line-height: 1.1;
+  margin-bottom: 1rem;
+  color: #111827;
+  line-height: 1.2;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
-  font-size: 1.25rem;
-  color: #4b5563;
+  font-size: 1.125rem;
+  color: #6b7280;
   max-width: 48rem;
   margin: 0 auto;
   line-height: 1.6;
+  font-family: 'Open Sans', sans-serif;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 2rem;
-  margin-bottom: 6rem;
+/* Gallery Section */
+.gallerySectionWrapper {
+  margin-bottom: 5rem;
 }
 
-@media (min-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding: 0 0.5rem;
 }
 
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.25rem;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -0.01em;
 }
 
-.card {
+.sectionSubtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 500;
+}
+
+.scrollControls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.scrollButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: #f97316;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+}
+
+.scrollButton:hover:not(.scrollButtonDisabled) {
+  background: #ea580c;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+}
+
+.scrollButtonDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.galleryScroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.galleryScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.galleryScrollContent {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.galleryCard {
+  position: relative;
+  width: 280px;
+  height: 200px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  border: 1px solid #f3f4f6;
+}
+
+.galleryCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.galleryCardImage {
+  width: 100%;
+  height: 100%;
   position: relative;
   overflow: hidden;
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  transform: translateY(-0.5rem);
-}
-
-.cardImage {
-  aspect-ratio: 4/3;
-  overflow: hidden;
-  background: #f3f4f6;
-}
-
-.cardImage img {
+.galleryCardImage img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s ease;
 }
 
-.card:hover .cardImage img {
+.galleryCard:hover .galleryCardImage img {
   transform: scale(1.1);
 }
 
-.cardOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4), transparent);
-  opacity: 0.6;
-  transition: opacity 0.5s;
-}
-
-.cardHovered .cardOverlay {
-  opacity: 1;
-}
-
-.cardCaption {
+.galleryGradient {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 1.5rem;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent);
+}
+
+.galleryCardInfo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: transform 0.5s;
-}
-
-.card:not(.cardHovered) .cardCaption {
-  transform: translateY(0.5rem);
 }
 
 .heartIcon {
   width: 1.25rem;
   height: 1.25rem;
   color: white;
-  transition: all 0.5s;
+  transition: all 0.3s;
+  flex-shrink: 0;
 }
 
 .heartActive {
@@ -210,88 +215,150 @@
   transform: scale(1.1);
 }
 
-.captionText {
-  color: white;
-  font-weight: 600;
-  font-size: 1.125rem;
+.galleryCardText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
+.galleryCaption {
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  letter-spacing: -0.01em;
+}
+
+.galleryPrice {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  font-size: 0.875rem;
+  font-family: 'Open Sans', sans-serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  gap: 1rem;
+}
+
+.loadingState p {
+  color: #6b7280;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #f3f4f6;
+  border-top-color: #f97316;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Specials Section */
 .specialsSection {
-  margin-bottom: 6rem;
+  margin-bottom: 5rem;
 }
 
 .specialsHeader {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .specialsTitle {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
-  background: linear-gradient(to right, #ea580c, #d97706);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin: 1rem 0 0.5rem;
+  color: #111827;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -0.01em;
 }
 
-.specialsGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+.specialsSubtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 500;
 }
 
-@media (min-width: 768px) {
-  .specialsGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.specialsScroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-@media (min-width: 1024px) {
-  .specialsGrid {
-    grid-template-columns: repeat(6, 1fr);
-  }
+.specialsScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.specialsScrollContent {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
 }
 
 .specialCard {
   position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 16px;
   overflow: hidden;
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  border: 1px solid #f3f4f6;
 }
 
 .specialCard:hover {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 .specialImage {
-  aspect-ratio: 1/1;
+  width: 100%;
+  height: 100%;
+  position: relative;
   overflow: hidden;
-  background: #f3f4f6;
 }
 
 .specialImage img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s ease;
 }
 
 .specialCard:hover .specialImage img {
-  transform: scale(1.25) rotate(3deg);
+  transform: scale(1.15);
 }
 
 .specialOverlay {
   position: absolute;
   inset: 0;
-
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
   opacity: 0;
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
 }
 
-.specialCardHovered .specialOverlay {
+.specialCard:hover .specialOverlay {
   opacity: 1;
 }
 
@@ -300,75 +367,53 @@
   bottom: 0;
   left: 0;
   right: 0;
-  margin: 0 0.5rem 0.5rem 0.5rem;
-  padding: 0.5rem 1rem;
-  color: var(--brand-deep);
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #fed7aa;
-  border-radius: 9999px;
+  padding: 0.75rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: white;
   font-size: 0.875rem;
   font-weight: 600;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
   opacity: 0;
-  transform: translateY(1rem);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(8px);
+  transform: translateY(0.5rem);
+  transition: all 0.3s;
 }
 
-.specialCardHovered .specialLabel {
+.specialCard:hover .specialLabel {
   opacity: 1;
   transform: translateY(0);
 }
 
-.specialsNote {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.specialsNote p {
-  display: inline-block;
-  color: #c2410c;
-  font-weight: 600;
-  background: #ffedd5;
-  padding: 0.75rem 1.5rem;
-  border-radius: 9999px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin: 0;
-}
-
+/* Kitchen Section */
 .kitchenSection {
-  background: linear-gradient(to bottom right, #ffedd5, #fef3c7);
-  border-radius: 3rem;
-  padding: 3rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-@media (max-width: 768px) {
-  .kitchenSection {
-    padding: 3rem 1.5rem;
-  }
+  background: white;
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f3f4f6;
 }
 
 .kitchenHeader {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 
 .kitchenTitle {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 1rem;
-  background: linear-gradient(to right, #ea580c, #d97706);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem;
+  color: #111827;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -0.01em;
 }
 
 .kitchenSubtitle {
-  font-size: 1.25rem;
-  color: #4b5563;
+  font-size: 1rem;
+  color: #6b7280;
   max-width: 42rem;
   margin: 0 auto;
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.6;
 }
 
 .kitchenGrid {
@@ -377,27 +422,24 @@
   gap: 2rem;
 }
 
-@media (min-width: 768px) {
-  .kitchenGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 .kitchenCard {
   position: relative;
+  border-radius: 18px;
   overflow: hidden;
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   background: white;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #f3f4f6;
 }
 
 .kitchenCard:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 .kitchenImage {
-  aspect-ratio: 3/4;
+  position: relative;
+  aspect-ratio: 4/3;
   overflow: hidden;
 }
 
@@ -405,23 +447,20 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s ease;
 }
 
 .kitchenCard:hover .kitchenImage img {
   transform: scale(1.05);
 }
 
-.kitchenOverlay {
+.kitchenGradient {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-
-.kitchenCard:hover .kitchenOverlay {
-  opacity: 1;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent);
 }
 
 .kitchenCaption {
@@ -430,23 +469,155 @@
   left: 0;
   right: 0;
   padding: 1.5rem;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.kitchenCaption p {
+.kitchenName {
   color: white;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.125rem;
   margin: 0;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
-@media (max-width: 768px) {
+.kitchenLocation {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.875rem;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 500;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.kitchenCuisine {
+  display: inline-block;
+  background: rgba(249, 115, 22, 0.9);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  align-self: flex-start;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ratingBadge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(249, 115, 22, 0.95);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 2;
+}
+
+.ratingIcon {
+  font-size: 0.875rem;
+}
+
+.ratingValue {
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
+}
+
+.discountBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #f97316, #fb923c);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 2;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
   .title {
-    font-size: 2.5rem;
+    font-size: 3rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.75rem;
   }
 
   .specialsTitle,
   .kitchenTitle {
+    font-size: 2.5rem;
+  }
+
+  .kitchenGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .galleryCard {
+    width: 320px;
+    height: 220px;
+  }
+
+  .specialCard {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .galleryCard {
+    width: 360px;
+    height: 240px;
+  }
+
+  .specialCard {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 767px) {
+  .gallerySection {
+    padding: 3rem 0;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .title {
     font-size: 2rem;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .scrollControls {
+    align-self: flex-end;
+  }
+
+  .kitchenSection {
+    padding: 2rem 1.5rem;
   }
 }

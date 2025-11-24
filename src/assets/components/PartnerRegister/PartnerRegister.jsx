@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import api from "../../../utils/api";
 import {
   faUser,
   faStore,
@@ -56,8 +57,11 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
   const hasShownWelcome = useRef(false);
   const [formData, setFormData] = useState({
     fullName: "",
+    firstName: "",
+    lastName: "",
     mobile: "",
     email: "",
+    password: "",
     kitchenName: "",
     address: "",
     pincode: "",
@@ -261,10 +265,18 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
     const { name, value, files } = e.target;
     const newValue = files ? files[0] : value;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: newValue,
-    }));
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: newValue };
+      
+      // Auto-split fullName into firstName and lastName
+      if (name === "fullName" && value) {
+        const parts = value.trim().split(" ");
+        updated.firstName = parts[0] || "";
+        updated.lastName = parts.slice(1).join(" ") || "";
+      }
+      
+      return updated;
+    });
 
     // Clear error for this field
     setFormErrors((prev) => {
@@ -368,7 +380,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
     }
   };
 
-  // OTP functions with proper cleanup
+  // OTP functions with proper cleanup - Integrated with backend API
   const sendOtp = useCallback(
     async (type) => {
       const value = type === "mobile" ? formData.mobile : formData.email;
@@ -406,11 +418,23 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
           showInfo(`Sending OTP to ${value}...`);
         }
 
-        // Simulate OTP sending with proper promise
-        await new Promise((resolve) => {
-          const timeoutId = setTimeout(resolve, 1500);
-          timeoutRefs.current.push(timeoutId);
+        // Get API base URL from api instance
+        const apiBaseURL = api.defaults.baseURL || (import.meta.env.VITE_API_URL || 'http://localhost:5050/api');
+        
+        // Call backend OTP API
+        const response = await fetch(`${apiBaseURL}/otp/send-otp`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ type, value }),
         });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to send OTP");
+        }
 
         if (type === "mobile") {
           setMobileOtpSent(true);
@@ -418,14 +442,14 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
           setMobileCountdown(30); // 30 second countdown
           setMobileOtp(["", "", "", "", "", ""]);
           setTimeout(() => mobileOtpRefs.current[0]?.focus(), 100);
-          showSuccess(`OTP sent to ${value}! Use: 123456 for testing`);
+          showSuccess(`OTP sent to ${value}!${data.otp ? ` Use: ${data.otp} for testing` : ''}`);
         } else {
           setEmailOtpSent(true);
           setEmailOtpLoading(false);
           setEmailCountdown(30); // 30 second countdown
           setEmailOtp(["", "", "", "", "", ""]);
           setTimeout(() => emailOtpRefs.current[0]?.focus(), 100);
-          showSuccess(`OTP sent to ${value}! Use: 123456 for testing`);
+          showSuccess(`OTP sent to ${value}!${data.otp ? ` Use: ${data.otp} for testing` : ''}`);
         }
       } catch (err) {
         const errorMsg = err.message || "Failed to send OTP";
@@ -471,26 +495,32 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
           showInfo("Verifying OTP...");
         }
 
-        // Simulate verification delay
-        await new Promise((resolve) => {
-          const timeoutId = setTimeout(resolve, 1000);
-          timeoutRefs.current.push(timeoutId);
+        // Get API base URL from api instance
+        const apiBaseURL = api.defaults.baseURL || (import.meta.env.VITE_API_URL || 'http://localhost:5050/api');
+        
+        // Call backend OTP verification API
+        const response = await fetch(`${apiBaseURL}/otp/verify-otp`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ type, value, otp: otpString }),
         });
 
-        const FIXED_OTP = "123456";
+        const data = await response.json();
 
-        if (otpString === FIXED_OTP) {
-          if (type === "mobile") {
-            setMobileVerified(true);
-            setMobileOtpError("");
-            showSuccess("🎉 Mobile number verified successfully!");
-          } else {
-            setEmailVerified(true);
-            setEmailOtpError("");
-            showSuccess("🎉 Email address verified successfully!");
-          }
+        if (!response.ok || !data.message || data.message !== "OTP verified successfully") {
+          throw new Error(data.message || "Invalid or expired OTP");
+        }
+
+        if (type === "mobile") {
+          setMobileVerified(true);
+          setMobileOtpError("");
+          showSuccess("🎉 Mobile number verified successfully!");
         } else {
-          throw new Error("Incorrect OTP. Use: 123456");
+          setEmailVerified(true);
+          setEmailOtpError("");
+          showSuccess("🎉 Email address verified successfully!");
         }
       } catch (err) {
         const errorMsg = err.message || "OTP verification failed";
@@ -666,10 +696,11 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
         return false;
       }
     } else if (currentStep === 4) {
-      if (!formData.menuFile) {
-        showError("Please upload your menu file to complete registration");
-        return false;
-      }
+      // Menu file is optional - can be uploaded later
+      // if (!formData.menuFile) {
+      //   showError("Please upload your menu file to complete registration");
+      //   return false;
+      // }
     }
 
     setFormErrors(errors);
@@ -1288,11 +1319,14 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       aria-required='true'
                       aria-invalid={!!formErrors.cuisineType}>
                       <option value=''>Select cuisine type</option>
-                      <option value='north-indian'>North Indian</option>
-                      <option value='south-indian'>South Indian</option>
-                      <option value='chinese'>Chinese</option>
-                      <option value='continental'>Continental</option>
-                      <option value='multi-cuisine'>Multi Cuisine</option>
+                      <option value='North Indian'>North Indian</option>
+                      <option value='South Indian'>South Indian</option>
+                      <option value='Gujarati'>Gujarati</option>
+                      <option value='Rajasthani'>Rajasthani</option>
+                      <option value='Punjabi'>Punjabi</option>
+                      <option value='Chinese'>Chinese</option>
+                      <option value='Continental'>Continental</option>
+                      <option value='Multi Cuisine'>Multi Cuisine</option>
                     </select>
                     {formErrors.cuisineType && (
                       <span className={styles.fieldError} role='alert'>
@@ -1525,8 +1559,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                     onChange={handleChange}
                     className={styles.fileInput}
                     id='menuFile'
-                    required
-                    aria-required='true'
+                    aria-required='false'
                   />
                   <label htmlFor='menuFile' className={styles.uploadBtn}>
                     <FontAwesomeIcon icon={faFileUpload} />
