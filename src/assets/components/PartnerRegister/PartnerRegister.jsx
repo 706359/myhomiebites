@@ -3,27 +3,30 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../../../utils/api";
 import {
-  faUser,
-  faStore,
+  faArrowLeft,
+  faArrowRight,
+  faCheckCircle,
+  faClock,
+  faEnvelope,
+  faExclamationTriangle,
+  faFileUpload,
+  faIdCard,
+  faInfoCircle,
   faMapMarkerAlt,
   faPhone,
-  faEnvelope,
-  faIdCard,
-  faUniversity,
-  faFileUpload,
-  faCheckCircle,
-  faArrowRight,
-  faArrowLeft,
-  faUtensils,
-  faClock,
   faShieldAlt,
-  faTimes,
-  faExclamationTriangle,
-  faInfoCircle,
-  faTimesCircle,
   faSpinner,
-} from "@fortawesome/free-solid-svg-icons";
-import styles from "./PartnerRegister.module.css";
+  faStore,
+  faTimes,
+  faTimesCircle,
+  faUniversity,
+  faUser,
+  faUtensils,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from './PartnerRegister.module.css';
 
 /**
  * Enhanced PartnerRegister with comprehensive notification system
@@ -50,29 +53,31 @@ const useDebounce = (value, delay) => {
 export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
   const navigate = useNavigate();
 
+  const [isLogin, setIsLogin] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const hasLoadedDraft = useRef(false);
-  const hasShownWelcome = useRef(false);
+
   const [formData, setFormData] = useState({
-    fullName: "",
-    firstName: "",
-    lastName: "",
-    mobile: "",
-    email: "",
-    password: "",
-    kitchenName: "",
-    address: "",
-    pincode: "",
-    location: "",
-    cuisineType: "",
-    fssai: "",
-    pan: "",
-    gst: "",
-    bankName: "",
-    accountNumber: "",
-    ifsc: "",
+    firstName: '',
+    lastName: '',
+    mobile: '',
+    email: '',
+    password: '',
+    kitchenName: '',
+    address: '',
+    pincode: '',
+    location: '',
+    cuisineType: '',
+    operatingHours: '',
+    deliveryRadius: '',
+    fssai: '',
+    pan: '',
+    gst: '',
+    bankName: '',
+    accountHolderName: '',
+    accountNumber: '',
+    ifsc: '',
     menuFile: null,
   });
 
@@ -86,16 +91,16 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
   // OTP & verification state
   const [mobileOtpSent, setMobileOtpSent] = useState(false);
   const [mobileVerified, setMobileVerified] = useState(false);
-  const [mobileOtp, setMobileOtp] = useState(["", "", "", "", "", ""]); // Pin-style 6 digits
+  const [mobileOtp, setMobileOtp] = useState(['', '', '', '', '', '']); // Pin-style 6 digits
   const [mobileOtpLoading, setMobileOtpLoading] = useState(false);
-  const [mobileOtpError, setMobileOtpError] = useState("");
+  const [mobileOtpError, setMobileOtpError] = useState('');
   const [mobileCountdown, setMobileCountdown] = useState(0);
 
   const [emailOtpSent, setEmailOtpSent] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
-  const [emailOtp, setEmailOtp] = useState(["", "", "", "", "", ""]); // Pin-style 6 digits
+  const [emailOtp, setEmailOtp] = useState(['', '', '', '', '', '']); // Pin-style 6 digits
   const [emailOtpLoading, setEmailOtpLoading] = useState(false);
-  const [emailOtpError, setEmailOtpError] = useState("");
+  const [emailOtpError, setEmailOtpError] = useState('');
   const [emailCountdown, setEmailCountdown] = useState(0);
 
   // Refs for OTP inputs
@@ -105,7 +110,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
   // Pincode -> locations
   const [locations, setLocations] = useState([]);
   const [pincodeLoading, setPincodeLoading] = useState(false);
-  const [pincodeError, setPincodeError] = useState("");
+  const [pincodeError, setPincodeError] = useState('');
 
   // Refs for cleanup
   const timeoutRefs = useRef([]);
@@ -115,10 +120,10 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
   const debouncedPincode = useDebounce(formData.pincode, 500);
 
   const steps = [
-    { number: 1, title: "Personal Info", icon: faUser },
-    { number: 2, title: "Kitchen Details", icon: faStore },
-    { number: 3, title: "Documents", icon: faIdCard },
-    { number: 4, title: "Menu Upload", icon: faUtensils },
+    { number: 1, title: 'Personal Info', icon: faUser },
+    { number: 2, title: 'Kitchen Details', icon: faStore },
+    { number: 3, title: 'Documents', icon: faIdCard },
+    { number: 4, title: 'Menu Upload', icon: faUtensils },
   ];
 
   // Cleanup function for timeouts
@@ -128,7 +133,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
   }, []);
 
   // Enhanced notification system with priority
-  const showNotification = useCallback((message, type = "info", duration = 5000) => {
+  const showNotification = useCallback((message, type = 'info', duration = 5000) => {
     const id = ++notificationIdRef.current;
     const notification = {
       id,
@@ -160,39 +165,33 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
 
   // Specific notification helpers
   const showSuccess = useCallback(
-    (message) => showNotification(message, "success"),
+    (message) => showNotification(message, 'success'),
     [showNotification]
   );
   const showError = useCallback(
-    (message) => showNotification(message, "error", 7000),
+    (message) => showNotification(message, 'error', 7000),
     [showNotification]
   );
   const showWarning = useCallback(
-    (message) => showNotification(message, "warning"),
+    (message) => showNotification(message, 'warning'),
     [showNotification]
   );
   const showInfo = useCallback(
-    (message) => showNotification(message, "info", 4000),
+    (message) => showNotification(message, 'info', 4000),
     [showNotification]
   );
 
   // Load saved draft from localStorage
   useEffect(() => {
-    // Prevent double execution
-    if (hasLoadedDraft.current) return;
-
     try {
-      const saved = localStorage.getItem("raavito_partner_draft");
+      const saved = localStorage.getItem('raavito_partner_draft');
       if (saved) {
         const parsed = JSON.parse(saved);
         setFormData((prev) => ({ ...prev, ...parsed }));
-
-        // Mark as loaded so it doesn't run again
-        hasLoadedDraft.current = true;
         showInfo("We've restored your previous registration progress.");
       }
     } catch (err) {
-      console.error("Failed to load draft:", err);
+      console.error('Failed to load draft:', err);
     }
   }, [showInfo]);
 
@@ -202,9 +201,9 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
       try {
         const dataToSave = { ...formData };
         delete dataToSave.menuFile; // Don't save file object
-        localStorage.setItem("raavito_partner_draft", JSON.stringify(dataToSave));
+        localStorage.setItem('raavito_partner_draft', JSON.stringify(dataToSave));
       } catch (err) {
-        console.error("Failed to save draft:", err);
+        console.error('Failed to save draft:', err);
       }
     }, 2000);
 
@@ -213,17 +212,15 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
 
   // Welcome message - only once
   useEffect(() => {
-    if (hasShownWelcome.current) return;
-
     const timer = setTimeout(() => {
       showInfo(
         "Welcome to Raavito Partner Registration! Let's get your kitchen listed in just 5 minutes."
       );
-      hasShownWelcome.current = true; // Mark as shown
     }, 1000);
 
     return () => clearTimeout(timer);
   }, [showInfo]);
+
   // Countdown timers for OTP resend
   useEffect(() => {
     if (mobileCountdown > 0) {
@@ -246,8 +243,8 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
       fetchLocationsByPincode(pin);
     } else {
       setLocations([]);
-      setPincodeError("");
-      setFormData((f) => ({ ...f, location: "" }));
+      setPincodeError('');
+      setFormData((f) => ({ ...f, location: '' }));
     }
   }, [debouncedPincode]);
 
@@ -289,18 +286,18 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
     if (files && files[0]) {
       const file = files[0];
       const maxSize = 5 * 1024 * 1024; // 5MB
-      const allowedTypes = ["application/pdf", "image/jpeg", "image/jpg", "image/png"];
+      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
 
       if (file.size > maxSize) {
-        showError("File size must be less than 5MB. Please choose a smaller file.");
-        e.target.value = "";
+        showError('File size must be less than 5MB. Please choose a smaller file.');
+        e.target.value = '';
         setFormData((prev) => ({ ...prev, [name]: null }));
         return;
       }
 
       if (!allowedTypes.includes(file.type)) {
-        showError("Please upload only PDF, JPG, or PNG files for your menu.");
-        e.target.value = "";
+        showError('Please upload only PDF, JPG, or PNG files for your menu.');
+        e.target.value = '';
         setFormData((prev) => ({ ...prev, [name]: null }));
         return;
       }
@@ -309,7 +306,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
     }
 
     // Contextual guidance
-    if (name === "mobile" && newValue.length === 10 && /^\d{10}$/.test(newValue)) {
+    if (name === 'mobile' && newValue.length === 10 && /^\d{10}$/.test(newValue)) {
       showInfo("Great! Now click 'Send OTP' to verify your mobile number.");
     }
   };
@@ -318,18 +315,18 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
   const handleOtpChange = (type, index, value) => {
     if (value && !/^\d$/.test(value)) return; // Only digits
 
-    const setOtp = type === "mobile" ? setMobileOtp : setEmailOtp;
-    const otp = type === "mobile" ? mobileOtp : emailOtp;
-    const refs = type === "mobile" ? mobileOtpRefs : emailOtpRefs;
+    const setOtp = type === 'mobile' ? setMobileOtp : setEmailOtp;
+    const otp = type === 'mobile' ? mobileOtp : emailOtp;
+    const refs = type === 'mobile' ? mobileOtpRefs : emailOtpRefs;
 
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
 
-    if (type === "mobile") {
-      setMobileOtpError("");
+    if (type === 'mobile') {
+      setMobileOtpError('');
     } else {
-      setEmailOtpError("");
+      setEmailOtpError('');
     }
 
     // Auto-advance
@@ -338,83 +335,83 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
     }
 
     // Auto-verify when all 6 filled
-    if (newOtp.every((d) => d !== "") && index === 5) {
-      setTimeout(() => verifyOtp(type, newOtp.join("")), 300);
+    if (newOtp.every((d) => d !== '') && index === 5) {
+      setTimeout(() => verifyOtp(type, newOtp.join('')), 300);
     }
   };
 
   const handleOtpKeyDown = (type, index, e) => {
-    const otp = type === "mobile" ? mobileOtp : emailOtp;
-    const refs = type === "mobile" ? mobileOtpRefs : emailOtpRefs;
+    const otp = type === 'mobile' ? mobileOtp : emailOtp;
+    const refs = type === 'mobile' ? mobileOtpRefs : emailOtpRefs;
 
-    if (e.key === "Backspace") {
+    if (e.key === 'Backspace') {
       if (!otp[index] && index > 0) {
         refs.current[index - 1]?.focus();
       }
-    } else if (e.key === "ArrowLeft" && index > 0) {
+    } else if (e.key === 'ArrowLeft' && index > 0) {
       refs.current[index - 1]?.focus();
-    } else if (e.key === "ArrowRight" && index < 5) {
+    } else if (e.key === 'ArrowRight' && index < 5) {
       refs.current[index + 1]?.focus();
     }
   };
 
   const handleOtpPaste = (type, e) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").trim();
+    const pastedData = e.clipboardData.getData('text').trim();
 
     if (/^\d{6}$/.test(pastedData)) {
-      const newOtp = pastedData.split("");
-      if (type === "mobile") {
+      const newOtp = pastedData.split('');
+      if (type === 'mobile') {
         setMobileOtp(newOtp);
-        setMobileOtpError("");
+        setMobileOtpError('');
         mobileOtpRefs.current[5]?.focus();
       } else {
         setEmailOtp(newOtp);
-        setEmailOtpError("");
+        setEmailOtpError('');
         emailOtpRefs.current[5]?.focus();
       }
       setTimeout(() => verifyOtp(type, pastedData), 300);
-      showInfo("OTP pasted! Verifying...");
+      showInfo('OTP pasted! Verifying...');
     } else {
-      showError("Please paste a valid 6-digit OTP");
+      showError('Please paste a valid 6-digit OTP');
     }
   };
 
   // OTP functions with proper cleanup - Integrated with backend API
   const sendOtp = useCallback(
     async (type) => {
-      const value = type === "mobile" ? formData.mobile : formData.email;
+      const value = type === 'mobile' ? formData.mobile : formData.email;
 
       if (!value) {
-        if (type === "mobile") {
-          showError("Please enter your mobile number first");
-          setMobileOtpError("Enter mobile first");
+        if (type === 'mobile') {
+          showError('Please enter your mobile number first');
+          setMobileOtpError('Enter mobile first');
         } else {
-          showError("Please enter your email address first");
-          setEmailOtpError("Enter email first");
+          showError('Please enter your email address first');
+          setEmailOtpError('Enter email first');
         }
         return;
       }
 
       // Validate format
-      if (type === "mobile" && !/^\d{10}$/.test(value)) {
-        showError("Please enter a valid 10-digit mobile number");
+      if (type === 'mobile' && !/^\d{10}$/.test(value)) {
+        showError('Please enter a valid 10-digit mobile number');
         return;
       }
 
-      if (type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-        showError("Please enter a valid email address");
+      if (type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        showError('Please enter a valid email address');
         return;
       }
 
       try {
-        if (type === "mobile") {
+        if (type === 'mobile') {
           setMobileOtpLoading(true);
-          setMobileOtpError("");
+          setMobileOtpError('');
           showInfo(`Sending OTP to ${value}...`);
         } else {
           setEmailOtpLoading(true);
-          setEmailOtpError("");
+          setEmailOtpError('');
           showInfo(`Sending OTP to ${value}...`);
         }
 
@@ -440,20 +437,20 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
           setMobileOtpSent(true);
           setMobileOtpLoading(false);
           setMobileCountdown(30); // 30 second countdown
-          setMobileOtp(["", "", "", "", "", ""]);
+          setMobileOtp(['', '', '', '', '', '']);
           setTimeout(() => mobileOtpRefs.current[0]?.focus(), 100);
           showSuccess(`OTP sent to ${value}!${data.otp ? ` Use: ${data.otp} for testing` : ''}`);
         } else {
           setEmailOtpSent(true);
           setEmailOtpLoading(false);
           setEmailCountdown(30); // 30 second countdown
-          setEmailOtp(["", "", "", "", "", ""]);
+          setEmailOtp(['', '', '', '', '', '']);
           setTimeout(() => emailOtpRefs.current[0]?.focus(), 100);
           showSuccess(`OTP sent to ${value}!${data.otp ? ` Use: ${data.otp} for testing` : ''}`);
         }
       } catch (err) {
-        const errorMsg = err.message || "Failed to send OTP";
-        if (type === "mobile") {
+        const errorMsg = err.message || 'Failed to send OTP';
+        if (type === 'mobile') {
           setMobileOtpError(errorMsg);
           showError(`Failed to send OTP to mobile: ${errorMsg}`);
           setMobileOtpLoading(false);
@@ -469,30 +466,30 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
 
   const verifyOtp = useCallback(
     async (type, otpValue = null) => {
-      const otp = type === "mobile" ? mobileOtp : emailOtp;
-      const otpString = otpValue || otp.join("");
-      const value = type === "mobile" ? formData.mobile : formData.email;
+      const otp = type === 'mobile' ? mobileOtp : emailOtp;
+      const otpString = otpValue || otp.join('');
+      const value = type === 'mobile' ? formData.mobile : formData.email;
 
       if (!otpString || otpString.length !== 6) {
-        if (type === "mobile") {
-          showError("Please enter all 6 digits");
-          setMobileOtpError("Enter complete OTP");
+        if (type === 'mobile') {
+          showError('Please enter all 6 digits');
+          setMobileOtpError('Enter complete OTP');
         } else {
-          showError("Please enter all 6 digits");
-          setEmailOtpError("Enter complete OTP");
+          showError('Please enter all 6 digits');
+          setEmailOtpError('Enter complete OTP');
         }
         return;
       }
 
       try {
-        if (type === "mobile") {
+        if (type === 'mobile') {
           setMobileOtpLoading(true);
-          setMobileOtpError("");
-          showInfo("Verifying OTP...");
+          setMobileOtpError('');
+          showInfo('Verifying OTP...');
         } else {
           setEmailOtpLoading(true);
-          setEmailOtpError("");
-          showInfo("Verifying OTP...");
+          setEmailOtpError('');
+          showInfo('Verifying OTP...');
         }
 
         // Get API base URL from api instance
@@ -521,22 +518,36 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
           setEmailVerified(true);
           setEmailOtpError("");
           showSuccess("🎉 Email address verified successfully!");
+        const FIXED_OTP = '123456';
+
+        if (otpString === FIXED_OTP) {
+          if (type === 'mobile') {
+            setMobileVerified(true);
+            setMobileOtpError('');
+            showSuccess('🎉 Mobile number verified successfully!');
+          } else {
+            setEmailVerified(true);
+            setEmailOtpError('');
+            showSuccess('🎉 Email address verified successfully!');
+          }
+        } else {
+          throw new Error('Incorrect OTP. Use: 123456');
         }
       } catch (err) {
-        const errorMsg = err.message || "OTP verification failed";
-        if (type === "mobile") {
+        const errorMsg = err.message || 'OTP verification failed';
+        if (type === 'mobile') {
           setMobileOtpError(errorMsg);
-          setMobileOtp(["", "", "", "", "", ""]);
+          setMobileOtp(['', '', '', '', '', '']);
           setTimeout(() => mobileOtpRefs.current[0]?.focus(), 100);
           showError(errorMsg);
         } else {
           setEmailOtpError(errorMsg);
-          setEmailOtp(["", "", "", "", "", ""]);
+          setEmailOtp(['', '', '', '', '', '']);
           setTimeout(() => emailOtpRefs.current[0]?.focus(), 100);
           showError(errorMsg);
         }
       } finally {
-        if (type === "mobile") setMobileOtpLoading(false);
+        if (type === 'mobile') setMobileOtpLoading(false);
         else setEmailOtpLoading(false);
       }
     },
@@ -553,29 +564,29 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
       abortControllerRef.current = new AbortController();
 
       setPincodeLoading(true);
-      setPincodeError("");
+      setPincodeError('');
       setLocations([]);
-      setFormData((f) => ({ ...f, location: "" }));
+      setFormData((f) => ({ ...f, location: '' }));
 
-      showInfo("Loading localities for your pincode...");
+      showInfo('Loading localities for your pincode...');
 
       try {
         const res = await fetch(`https://api.postalpincode.in/pincode/${pincode}`, {
           signal: abortControllerRef.current.signal,
         });
 
-        if (!res.ok) throw new Error("Failed to fetch pincode data");
+        if (!res.ok) throw new Error('Failed to fetch pincode data');
 
         const json = await res.json();
-        if (!Array.isArray(json) || json.length === 0) throw new Error("No data for pincode");
+        if (!Array.isArray(json) || json.length === 0) throw new Error('No data for pincode');
 
         const first = json[0];
         if (
-          first.Status !== "Success" ||
+          first.Status !== 'Success' ||
           !Array.isArray(first.PostOffice) ||
           first.PostOffice.length === 0
         ) {
-          throw new Error("No locations found for this pincode");
+          throw new Error('No locations found for this pincode');
         }
 
         const locationNames = first.PostOffice.map((p) => `${p.Name} (${p.Division})`);
@@ -584,9 +595,9 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
           `Found ${locationNames.length} localities for pincode ${pincode}. Please select your location.`
         );
       } catch (err) {
-        if (err.name === "AbortError") return; // Ignore aborted requests
+        if (err.name === 'AbortError') return; // Ignore aborted requests
 
-        const errorMsg = err.message || "Unable to load locations";
+        const errorMsg = err.message || 'Unable to load locations';
         setPincodeError(errorMsg);
         showError(
           `Could not load localities: ${errorMsg}. Please check your pincode and try again.`
@@ -603,104 +614,103 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
 
     if (currentStep === 1) {
       if (!formData.fullName.trim()) {
-        errors.fullName = "Full name is required";
-        showError("Please enter your full name");
+        errors.fullName = 'Full name is required';
+        showError('Please enter your full name');
         return false;
       }
       if (formData.fullName.trim().length < 2) {
-        errors.fullName = "Name must be at least 2 characters";
-        showError("Please enter a valid full name");
+        errors.fullName = 'Name must be at least 2 characters';
+        showError('Please enter a valid full name');
         return false;
       }
       if (!formData.mobile.trim()) {
-        errors.mobile = "Mobile number is required";
-        showError("Please enter your mobile number");
+        errors.mobile = 'Mobile number is required';
+        showError('Please enter your mobile number');
         return false;
       }
       if (!/^\d{10}$/.test(formData.mobile)) {
-        errors.mobile = "Invalid mobile number";
-        showError("Please enter a valid 10-digit mobile number");
+        errors.mobile = 'Invalid mobile number';
+        showError('Please enter a valid 10-digit mobile number');
         return false;
       }
       if (!mobileVerified) {
-        showError("Please verify your mobile number before proceeding");
+        showError('Please verify your mobile number before proceeding');
         return false;
       }
       if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-        errors.email = "Invalid email";
-        showError("Please enter a valid email address");
+        errors.email = 'Invalid email';
+        showError('Please enter a valid email address');
         return false;
       }
       if (formData.email && !emailVerified) {
-        showError("Please verify your email address or remove it to continue");
+        showError('Please verify your email address or remove it to continue');
         return false;
       }
     } else if (currentStep === 2) {
       if (!formData.kitchenName?.trim() || formData.kitchenName.trim().length < 3) {
-        errors.kitchenName = "Kitchen name required (min 3 characters)";
-        showError("Please enter a valid kitchen name (at least 3 characters)");
+        errors.kitchenName = 'Kitchen name required (min 3 characters)';
+        showError('Please enter a valid kitchen name (at least 3 characters)');
         return false;
       }
       if (!formData.address?.trim() || formData.address.trim().length < 10) {
-        errors.address = "Complete address required";
-        showError("Please provide a complete address with landmarks");
+        errors.address = 'Complete address required';
+        showError('Please provide a complete address with landmarks');
         return false;
       }
       if (!formData.pincode?.trim() || !/^\d{6}$/.test(formData.pincode)) {
-        errors.pincode = "Valid 6-digit pincode required";
-        showError("Please enter a valid 6-digit pincode");
+        errors.pincode = 'Valid 6-digit pincode required';
+        showError('Please enter a valid 6-digit pincode');
         return false;
       }
       if (!formData.location?.trim()) {
-        errors.location = "Location required";
-        showError("Please select your location from the dropdown");
+        errors.location = 'Location required';
+        showError('Please select your location from the dropdown');
         return false;
       }
       if (!formData.cuisineType?.trim()) {
-        errors.cuisineType = "Cuisine type required";
-        showError("Please select your cuisine type");
+        errors.cuisineType = 'Cuisine type required';
+        showError('Please select your cuisine type');
         return false;
       }
     } else if (currentStep === 3) {
       if (!formData.fssai?.trim() || !/^\d{14}$/.test(formData.fssai)) {
-        errors.fssai = "Valid 14-digit FSSAI required";
-        showError("Please enter a valid 14-digit FSSAI license number");
+        errors.fssai = 'Valid 14-digit FSSAI required';
+        showError('Please enter a valid 14-digit FSSAI license number');
         return false;
       }
       if (!formData.pan?.trim() || !/^[A-Z]{5}\d{4}[A-Z]{1}$/.test(formData.pan.toUpperCase())) {
-        errors.pan = "Valid PAN required";
-        showError("Please enter a valid PAN number (e.g., ABCDE1234F)");
+        errors.pan = 'Valid PAN required';
+        showError('Please enter a valid PAN number (e.g., ABCDE1234F)');
         return false;
       }
       if (
         formData.gst &&
         !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}$/.test(formData.gst.toUpperCase())
       ) {
-        errors.gst = "Invalid GST format";
-        showError("Please enter a valid 15-digit GST number");
+        errors.gst = 'Invalid GST format';
+        showError('Please enter a valid 15-digit GST number');
         return false;
       }
       if (!formData.bankName?.trim()) {
-        errors.bankName = "Bank name required";
-        showError("Please enter your bank name");
+        errors.bankName = 'Bank name required';
+        showError('Please enter your bank name');
         return false;
       }
       if (!formData.accountNumber?.trim() || !/^\d{9,18}$/.test(formData.accountNumber)) {
-        errors.accountNumber = "Valid account number required";
-        showError("Please enter a valid bank account number (9-18 digits)");
+        errors.accountNumber = 'Valid account number required';
+        showError('Please enter a valid bank account number (9-18 digits)');
         return false;
       }
       if (!formData.ifsc?.trim() || !/^[A-Z]{4}\d{7}$/.test(formData.ifsc.toUpperCase())) {
-        errors.ifsc = "Valid IFSC required";
-        showError("Please enter a valid IFSC code (e.g., ABCD0123456)");
+        errors.ifsc = 'Valid IFSC required';
+        showError('Please enter a valid IFSC code (e.g., ABCD0123456)');
         return false;
       }
     } else if (currentStep === 4) {
-      // Menu file is optional - can be uploaded later
-      // if (!formData.menuFile) {
-      //   showError("Please upload your menu file to complete registration");
-      //   return false;
-      // }
+      if (!formData.menuFile) {
+        showError('Please upload your menu file to complete registration');
+        return false;
+      }
     }
 
     setFormErrors(errors);
@@ -713,18 +723,18 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
     setCurrentStep((s) => s + 1);
 
     // Smooth scroll to top
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     // Step-specific guidance
     if (currentStep === 1) {
       showInfo("Great! Now let's add your kitchen details and location information.");
     } else if (currentStep === 2) {
       showInfo(
-        "Perfect! Now we need your business documents and banking information for payments."
+        'Perfect! Now we need your business documents and banking information for payments.'
       );
     } else if (currentStep === 3) {
       showInfo(
-        "Almost done! Please upload your menu so customers can see your delicious offerings."
+        'Almost done! Please upload your menu so customers can see your delicious offerings.'
       );
     }
   }, [validateCurrentStep, currentStep, showInfo]);
@@ -732,7 +742,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
   const handlePrev = useCallback(() => {
     if (currentStep > 1) {
       setCurrentStep((s) => s - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       showInfo(
         `Moved back to ${steps[currentStep - 2].title}. You can edit your information here.`
       );
@@ -745,7 +755,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
     if (!validateCurrentStep()) return;
 
     setIsSubmitting(true);
-    showInfo("Submitting your registration application...");
+    showInfo('Submitting your registration application...');
 
     try {
       // Simulate API delay
@@ -755,19 +765,19 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
       });
 
       // Clear saved draft
-      localStorage.removeItem("raavito_partner_draft");
+      localStorage.removeItem('raavito_partner_draft');
 
-      showSuccess("🎉 Registration submitted successfully! Welcome to Raavito family!");
+      showSuccess('🎉 Registration submitted successfully! Welcome to Raavito family!');
       setShowSuccessModal(true);
       setIsLoggedIn?.(true);
       onRegisterSuccess?.();
 
       // Navigate after delay
-      const timeoutId = setTimeout(() => navigate("/partner/dashboard"), 2500);
+      const timeoutId = setTimeout(() => navigate('/partner/dashboard'), 2500);
       timeoutRefs.current.push(timeoutId);
     } catch (err) {
       showError(
-        `Registration failed: ${err.message || "Something went wrong"}. Please try again or contact support.`
+        `Registration failed: ${err.message || 'Something went wrong'}. Please try again or contact support.`
       );
     } finally {
       setIsSubmitting(false);
@@ -776,7 +786,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
 
   const handleCloseModal = () => {
     setShowSuccessModal(false);
-    navigate("/partner/dashboard");
+    navigate('/partner/dashboard');
   };
 
   // Render notifications
@@ -789,12 +799,13 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
             className={`${styles.notification} ${styles[`notification-${notification.type}`]}`}
             onClick={() => removeNotification(notification.id)}
             role='alert'
-            aria-live='polite'>
+            aria-live='polite'
+          >
             <div className={styles.notificationIcon} aria-hidden='true'>
-              {notification.type === "success" && <FontAwesomeIcon icon={faCheckCircle} />}
-              {notification.type === "error" && <FontAwesomeIcon icon={faTimesCircle} />}
-              {notification.type === "warning" && <FontAwesomeIcon icon={faExclamationTriangle} />}
-              {notification.type === "info" && <FontAwesomeIcon icon={faInfoCircle} />}
+              {notification.type === 'success' && <FontAwesomeIcon icon={faCheckCircle} />}
+              {notification.type === 'error' && <FontAwesomeIcon icon={faTimesCircle} />}
+              {notification.type === 'warning' && <FontAwesomeIcon icon={faExclamationTriangle} />}
+              {notification.type === 'info' && <FontAwesomeIcon icon={faInfoCircle} />}
             </div>
             <div className={styles.notificationContent}>
               <div className={styles.notificationMessage}>{notification.message}</div>
@@ -808,7 +819,8 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                 e.stopPropagation();
                 removeNotification(notification.id);
               }}
-              aria-label='Close notification'>
+              aria-label='Close notification'
+            >
               <FontAwesomeIcon icon={faTimes} />
             </button>
           </div>
@@ -825,12 +837,14 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
           onClick={handleCloseModal}
           role='dialog'
           aria-modal='true'
-          aria-labelledby='modal-title'>
+          aria-labelledby='modal-title'
+        >
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <button
               className={styles.modalClose}
               onClick={handleCloseModal}
-              aria-label='Close modal'>
+              aria-label='Close modal'
+            >
               <FontAwesomeIcon icon={faTimes} />
             </button>
             <div className={styles.modalIcon} aria-hidden='true'>
@@ -870,7 +884,8 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
             role='progressbar'
             aria-valuenow={currentStep}
             aria-valuemin='1'
-            aria-valuemax='4'>
+            aria-valuemax='4'
+          >
             {steps.map((step, index) => (
               <div key={index} className={styles.progressItem}>
                 <div
@@ -879,9 +894,10 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       ? styles.completed
                       : currentStep === step.number
                         ? styles.active
-                        : ""
+                        : ''
                   }`}
-                  aria-label={`Step ${step.number}: ${step.title}`}>
+                  aria-label={`Step ${step.number}: ${step.title}`}
+                >
                   {currentStep > step.number ? (
                     <FontAwesomeIcon icon={faCheckCircle} />
                   ) : (
@@ -891,7 +907,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                 <span className={styles.progressLabel}>{step.title}</span>
                 {index < steps.length - 1 && (
                   <div
-                    className={`${styles.progressLine} ${currentStep > step.number ? styles.completed : ""}`}
+                    className={`${styles.progressLine} ${currentStep > step.number ? styles.completed : ''}`}
                     aria-hidden='true'
                   />
                 )}
@@ -927,11 +943,11 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       placeholder='Enter your full name'
                       value={formData.fullName}
                       onChange={handleChange}
-                      className={formErrors.fullName ? styles.errorInput : ""}
+                      className={formErrors.fullName ? styles.errorInput : ''}
                       required
                       aria-required='true'
                       aria-invalid={!!formErrors.fullName}
-                      aria-describedby={formErrors.fullName ? "fullName-error" : undefined}
+                      aria-describedby={formErrors.fullName ? 'fullName-error' : undefined}
                     />
                     {formErrors.fullName && (
                       <span id='fullName-error' className={styles.fieldError} role='alert'>
@@ -958,17 +974,17 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       onChange={(e) => {
                         setMobileVerified(false);
                         setMobileOtpSent(false);
-                        setMobileOtp(["", "", "", "", "", ""]);
-                        setMobileOtpError("");
+                        setMobileOtp(['', '', '', '', '', '']);
+                        setMobileOtpError('');
                         handleChange(e);
                       }}
-                      className={formErrors.mobile ? styles.errorInput : ""}
+                      className={formErrors.mobile ? styles.errorInput : ''}
                       required
                       pattern='\d{10}'
                       maxLength='10'
                       aria-required='true'
                       aria-invalid={!!formErrors.mobile}
-                      aria-describedby={formErrors.mobile ? "mobile-error" : undefined}
+                      aria-describedby={formErrors.mobile ? 'mobile-error' : undefined}
                     />
                     {formErrors.mobile && (
                       <span id='mobile-error' className={styles.fieldError} role='alert'>
@@ -981,20 +997,21 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                           <button
                             type='button'
                             className={styles.smallBtn}
-                            onClick={() => sendOtp("mobile")}
+                            onClick={() => sendOtp('mobile')}
                             disabled={
                               mobileOtpLoading ||
                               !formData.mobile ||
                               formErrors.mobile ||
                               mobileCountdown > 0
                             }
-                            aria-busy={mobileOtpLoading}>
+                            aria-busy={mobileOtpLoading}
+                          >
                             {mobileOtpLoading && <FontAwesomeIcon icon={faSpinner} spin />}
                             {mobileOtpLoading
-                              ? "Sending..."
+                              ? 'Sending...'
                               : mobileOtpSent
-                                ? "Resend OTP"
-                                : "Send OTP"}
+                                ? 'Resend OTP'
+                                : 'Send OTP'}
                           </button>
                           {mobileOtpSent && mobileCountdown > 0 && (
                             <span className={styles.countdownBadge}>
@@ -1019,11 +1036,11 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                               inputMode='numeric'
                               maxLength={1}
                               value={digit}
-                              onChange={(e) => handleOtpChange("mobile", index, e.target.value)}
-                              onKeyDown={(e) => handleOtpKeyDown("mobile", index, e)}
-                              onPaste={index === 0 ? (e) => handleOtpPaste("mobile", e) : undefined}
-                              className={`${styles.otpPinInput} ${mobileOtpError ? styles.errorOtp : ""} ${
-                                digit ? styles.filledOtp : ""
+                              onChange={(e) => handleOtpChange('mobile', index, e.target.value)}
+                              onKeyDown={(e) => handleOtpKeyDown('mobile', index, e)}
+                              onPaste={index === 0 ? (e) => handleOtpPaste('mobile', e) : undefined}
+                              className={`${styles.otpPinInput} ${mobileOtpError ? styles.errorOtp : ''} ${
+                                digit ? styles.filledOtp : ''
                               }`}
                               disabled={mobileOtpLoading}
                               aria-label={`Digit ${index + 1}`}
@@ -1039,11 +1056,12 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                         <button
                           type='button'
                           className={styles.verifyBtn}
-                          onClick={() => verifyOtp("mobile")}
+                          onClick={() => verifyOtp('mobile')}
                           disabled={mobileOtpLoading || mobileOtp.some((d) => !d)}
-                          aria-busy={mobileOtpLoading}>
+                          aria-busy={mobileOtpLoading}
+                        >
                           {mobileOtpLoading && <FontAwesomeIcon icon={faSpinner} spin />}
-                          {mobileOtpLoading ? "Verifying..." : "Verify OTP"}
+                          {mobileOtpLoading ? 'Verifying...' : 'Verify OTP'}
                         </button>
                       </div>
                     )}
@@ -1056,7 +1074,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                         className={styles.inputIcon}
                         aria-hidden='true'
                       />
-                      Email Address {mobileVerified ? "*" : "(Verify mobile first)"}
+                      Email Address {mobileVerified ? '*' : '(Verify mobile first)'}
                     </label>
                     <input
                       id='email'
@@ -1067,16 +1085,16 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       onChange={(e) => {
                         setEmailOtpSent(false);
                         setEmailVerified(false);
-                        setEmailOtp(["", "", "", "", "", ""]);
-                        setEmailOtpError("");
+                        setEmailOtp(['', '', '', '', '', '']);
+                        setEmailOtpError('');
                         handleChange(e);
                       }}
-                      className={formErrors.email ? styles.errorInput : ""}
+                      className={formErrors.email ? styles.errorInput : ''}
                       required={mobileVerified}
                       disabled={!mobileVerified}
                       aria-required={mobileVerified}
                       aria-invalid={!!formErrors.email}
-                      aria-describedby={formErrors.email ? "email-error" : undefined}
+                      aria-describedby={formErrors.email ? 'email-error' : undefined}
                     />
                     {formErrors.email && (
                       <span id='email-error' className={styles.fieldError} role='alert'>
@@ -1089,20 +1107,21 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                           <button
                             type='button'
                             className={styles.smallBtn}
-                            onClick={() => sendOtp("email")}
+                            onClick={() => sendOtp('email')}
                             disabled={
                               emailOtpLoading ||
                               !formData.email ||
                               formErrors.email ||
                               emailCountdown > 0
                             }
-                            aria-busy={emailOtpLoading}>
+                            aria-busy={emailOtpLoading}
+                          >
                             {emailOtpLoading && <FontAwesomeIcon icon={faSpinner} spin />}
                             {emailOtpLoading
-                              ? "Sending..."
+                              ? 'Sending...'
                               : emailOtpSent
-                                ? "Resend OTP"
-                                : "Send OTP"}
+                                ? 'Resend OTP'
+                                : 'Send OTP'}
                           </button>
                           {emailOtpSent && emailCountdown > 0 && (
                             <span className={styles.countdownBadge}>
@@ -1128,11 +1147,11 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                               inputMode='numeric'
                               maxLength={1}
                               value={digit}
-                              onChange={(e) => handleOtpChange("email", index, e.target.value)}
-                              onKeyDown={(e) => handleOtpKeyDown("email", index, e)}
-                              onPaste={index === 0 ? (e) => handleOtpPaste("email", e) : undefined}
-                              className={`${styles.otpPinInput} ${emailOtpError ? styles.errorOtp : ""} ${
-                                digit ? styles.filledOtp : ""
+                              onChange={(e) => handleOtpChange('email', index, e.target.value)}
+                              onKeyDown={(e) => handleOtpKeyDown('email', index, e)}
+                              onPaste={index === 0 ? (e) => handleOtpPaste('email', e) : undefined}
+                              className={`${styles.otpPinInput} ${emailOtpError ? styles.errorOtp : ''} ${
+                                digit ? styles.filledOtp : ''
                               }`}
                               disabled={emailOtpLoading}
                               aria-label={`Digit ${index + 1}`}
@@ -1148,11 +1167,12 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                         <button
                           type='button'
                           className={styles.verifyBtn}
-                          onClick={() => verifyOtp("email")}
+                          onClick={() => verifyOtp('email')}
                           disabled={emailOtpLoading || emailOtp.some((d) => !d)}
-                          aria-busy={emailOtpLoading}>
+                          aria-busy={emailOtpLoading}
+                        >
                           {emailOtpLoading && <FontAwesomeIcon icon={faSpinner} spin />}
-                          {emailOtpLoading ? "Verifying..." : "Verify OTP"}
+                          {emailOtpLoading ? 'Verifying...' : 'Verify OTP'}
                         </button>
                       </div>
                     )}
@@ -1186,7 +1206,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       placeholder='Your kitchen/restaurant name'
                       value={formData.kitchenName}
                       onChange={handleChange}
-                      className={formErrors.kitchenName ? styles.errorInput : ""}
+                      className={formErrors.kitchenName ? styles.errorInput : ''}
                       required
                       aria-required='true'
                       aria-invalid={!!formErrors.kitchenName}
@@ -1214,7 +1234,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       value={formData.address}
                       onChange={handleChange}
                       rows='3'
-                      className={formErrors.address ? styles.errorInput : ""}
+                      className={formErrors.address ? styles.errorInput : ''}
                       required
                       aria-required='true'
                       aria-invalid={!!formErrors.address}
@@ -1243,7 +1263,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       value={formData.pincode}
                       onChange={handleChange}
                       maxLength={6}
-                      className={formErrors.pincode ? styles.errorInput : ""}
+                      className={formErrors.pincode ? styles.errorInput : ''}
                       required
                       aria-required='true'
                       aria-invalid={!!formErrors.pincode}
@@ -1280,12 +1300,13 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       name='location'
                       value={formData.location}
                       onChange={handleChange}
-                      className={formErrors.location ? styles.errorInput : ""}
+                      className={formErrors.location ? styles.errorInput : ''}
                       required
                       aria-required='true'
-                      aria-invalid={!!formErrors.location}>
+                      aria-invalid={!!formErrors.location}
+                    >
                       <option value=''>
-                        {locations.length ? "Select locality" : "Enter valid pincode to load"}
+                        {locations.length ? 'Select locality' : 'Enter valid pincode to load'}
                       </option>
                       {locations.map((loc, i) => (
                         <option key={i} value={loc}>
@@ -1314,10 +1335,11 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       name='cuisineType'
                       value={formData.cuisineType}
                       onChange={handleChange}
-                      className={formErrors.cuisineType ? styles.errorInput : ""}
+                      className={formErrors.cuisineType ? styles.errorInput : ''}
                       required
                       aria-required='true'
-                      aria-invalid={!!formErrors.cuisineType}>
+                      aria-invalid={!!formErrors.cuisineType}
+                    >
                       <option value=''>Select cuisine type</option>
                       <option value='North Indian'>North Indian</option>
                       <option value='South Indian'>South Indian</option>
@@ -1359,7 +1381,8 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                         <a
                           href='https://foodlicensing.fssai.gov.in/'
                           target='_blank'
-                          rel='noreferrer'>
+                          rel='noreferrer'
+                        >
                           Apply here for FSSAI
                         </a>
                       </small>
@@ -1371,7 +1394,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       placeholder='14-digit FSSAI number'
                       value={formData.fssai}
                       onChange={handleChange}
-                      className={formErrors.fssai ? styles.errorInput : ""}
+                      className={formErrors.fssai ? styles.errorInput : ''}
                       maxLength='14'
                       required
                       aria-required='true'
@@ -1400,9 +1423,9 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       placeholder='10-character PAN'
                       value={formData.pan}
                       onChange={handleChange}
-                      className={formErrors.pan ? styles.errorInput : ""}
+                      className={formErrors.pan ? styles.errorInput : ''}
                       maxLength='10'
-                      style={{ textTransform: "uppercase" }}
+                      style={{ textTransform: 'uppercase' }}
                       required
                       aria-required='true'
                       aria-invalid={!!formErrors.pan}
@@ -1435,9 +1458,9 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       placeholder='15-digit GST number'
                       value={formData.gst}
                       onChange={handleChange}
-                      className={formErrors.gst ? styles.errorInput : ""}
+                      className={formErrors.gst ? styles.errorInput : ''}
                       maxLength='15'
-                      style={{ textTransform: "uppercase" }}
+                      style={{ textTransform: 'uppercase' }}
                       aria-invalid={!!formErrors.gst}
                     />
                     {formErrors.gst && (
@@ -1463,7 +1486,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       placeholder='Bank name'
                       value={formData.bankName}
                       onChange={handleChange}
-                      className={formErrors.bankName ? styles.errorInput : ""}
+                      className={formErrors.bankName ? styles.errorInput : ''}
                       required
                       aria-required='true'
                       aria-invalid={!!formErrors.bankName}
@@ -1491,7 +1514,7 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       placeholder='Account number'
                       value={formData.accountNumber}
                       onChange={handleChange}
-                      className={formErrors.accountNumber ? styles.errorInput : ""}
+                      className={formErrors.accountNumber ? styles.errorInput : ''}
                       required
                       aria-required='true'
                       aria-invalid={!!formErrors.accountNumber}
@@ -1519,9 +1542,9 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                       placeholder='Bank IFSC code'
                       value={formData.ifsc}
                       onChange={handleChange}
-                      className={formErrors.ifsc ? styles.errorInput : ""}
+                      className={formErrors.ifsc ? styles.errorInput : ''}
                       maxLength='11'
-                      style={{ textTransform: "uppercase" }}
+                      style={{ textTransform: 'uppercase' }}
                       required
                       aria-required='true'
                       aria-invalid={!!formErrors.ifsc}
@@ -1589,7 +1612,8 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                   type='button'
                   onClick={handlePrev}
                   className={styles.btnSecondary}
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                >
                   <FontAwesomeIcon icon={faArrowLeft} /> Previous
                 </button>
               )}
@@ -1599,7 +1623,8 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                   type='button'
                   onClick={handleNext}
                   className={styles.btnPrimary}
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                >
                   Next <FontAwesomeIcon icon={faArrowRight} />
                 </button>
               ) : (
@@ -1607,10 +1632,11 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
                   type='submit'
                   className={styles.btnPrimary}
                   disabled={isSubmitting}
-                  aria-busy={isSubmitting}>
+                  aria-busy={isSubmitting}
+                >
                   {isSubmitting && <FontAwesomeIcon icon={faSpinner} spin />}
                   {isSubmitting ? (
-                    "Submitting..."
+                    'Submitting...'
                   ) : (
                     <>
                       <FontAwesomeIcon icon={faCheckCircle} /> Submit Application

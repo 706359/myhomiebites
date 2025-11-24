@@ -1,18 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHome,
-  faHandshake,
-  faInfoCircle,
-  faImages,
-  faQuestionCircle,
-  faHeadset,
-  faMapMarkerAlt,
   faArrowUp,
-  faUser,
+  faHandshake,
+  faHeadset,
+  faHome,
+  faImages,
+  faInfoCircle,
   faLeaf,
-} from "@fortawesome/free-solid-svg-icons";
-import styles from "./Footer.module.css";
+  faQuestionCircle,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
+import styles from './Footer.module.css';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -21,53 +20,62 @@ const Footer = () => {
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
-  const quickLinks = [
-    { id: "home", label: "Home", icon: faHome, scroll: true },
-    { label: "Partner with Us", icon: faHandshake, scroll: false, route: "/chef-registration" },
-    { id: "about", label: "About Us", icon: faInfoCircle, scroll: true },
-    { id: "gallery", label: "Food Gallery", icon: faImages, scroll: true },
+  // EXPLORE
+  const exploreLinks = [
+    { id: 'home', label: 'Home', icon: faHome, scroll: true },
+    { id: 'about', label: 'About Us', icon: faInfoCircle, scroll: true },
+    { id: 'gallery', label: 'Food Gallery', icon: faImages, scroll: true },
+    { label: 'Partner with Us', icon: faHandshake, scroll: false, route: '/chef-registration' },
   ];
 
-  const helpLinks = [
-    { id: "faq", label: "FAQ", icon: faQuestionCircle, scroll: true },
-    { label: "Help & Support", icon: faHeadset, scroll: false, route: "/contact" },
-    { label: "Admin Console", icon: faUser, scroll: false, route: "/AdminDashboard" },
+  // SERVICES
+  const serviceLinks = [
+    { id: 'menu', label: 'Today’s Menu', icon: faLeaf, scroll: true },
+    { id: 'plans', label: 'Tiffin Plans', icon: faLeaf, scroll: true },
+    { id: 'faq', label: 'FAQ', icon: faQuestionCircle, scroll: true },
+    { label: 'Download App', icon: faInfoCircle, scroll: false, route: '/app-download' },
   ];
 
-  const serviceAreas = ["Panchsheel Greens-1", "Nearby Societies", "Within ~2 km radius"];
+  // SUPPORT / POLICIES
+  const supportLinks = [
+    { label: 'Help & Support', icon: faHeadset, scroll: false, route: '/contact' },
+    { label: 'Terms & Conditions', icon: faInfoCircle, scroll: false, route: '/terms' },
+    { label: 'Privacy Policy', icon: faInfoCircle, scroll: false, route: '/privacy' },
+    { label: 'Refund & Cancellation', icon: faInfoCircle, scroll: false, route: '/refund-policy' },
+    { label: 'Admin Console', icon: faUser, scroll: false, route: '/AdminDashboard' },
+  ];
+
+  // const serviceAreas = ['Panchsheel Greens-1', 'Nearby Societies', 'Within ~2 km radius'];
 
   return (
     <footer className={styles.footer}>
       <div className={styles.decorBg} aria-hidden='true'></div>
 
       <div className={styles.wrap}>
-        {/* Brand */}
+        {/* BRAND */}
         <div className={styles.brand}>
           <div className={styles.logoWrap}>
             <img src='/images/logo2.png' alt='Raavito' className={styles.logo} />
-            {/* <div className={styles.badge}>
-              <FontAwesomeIcon icon={faLeaf} />
-              <span>100% Veg</span>
-            </div> */}
           </div>
           <p className={styles.tagline}>Pure-veg, home-style meals from trusted local chefs.</p>
         </div>
 
-        {/* Footer Navigation */}
-        <nav className={styles.links} aria-label='Footer'>
-          {/* Quick Links */}
+        {/* FOOTER NAVIGATION */}
+        <nav className={styles.links} aria-label='Footer Navigation'>
+          {/* EXPLORE */}
           <div className={styles.col}>
-            <h4>Quick Links</h4>
+            <h4>Explore</h4>
             <ul>
-              {quickLinks.map((link, index) => (
+              {exploreLinks.map((link, index) => (
                 <li key={index}>
                   <button
                     onClick={() => (link.scroll ? scrollToSection(link.id) : navigate(link.route))}
-                    className={styles.linkButton}>
+                    className={styles.linkButton}
+                  >
                     <FontAwesomeIcon icon={link.icon} />
                     <span>{link.label}</span>
                   </button>
@@ -76,15 +84,16 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Help */}
+          {/* SERVICES */}
           <div className={styles.col}>
-            <h4>Help</h4>
+            <h4>Services</h4>
             <ul>
-              {helpLinks.map((link, index) => (
+              {serviceLinks.map((link, index) => (
                 <li key={index}>
                   <button
                     onClick={() => (link.scroll ? scrollToSection(link.id) : navigate(link.route))}
-                    className={styles.linkButton}>
+                    className={styles.linkButton}
+                  >
                     <FontAwesomeIcon icon={link.icon} />
                     <span>{link.label}</span>
                   </button>
@@ -93,8 +102,23 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Service Areas */}
+          {/* SUPPORT */}
           <div className={styles.col}>
+            <h4>Support & Policies</h4>
+            <ul>
+              {supportLinks.map((link, index) => (
+                <li key={index}>
+                  <button onClick={() => navigate(link.route)} className={styles.linkButton}>
+                    <FontAwesomeIcon icon={link.icon} />
+                    <span>{link.label}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* SERVICE AREAS */}
+          {/* <div className={styles.col}>
             <h4>
               <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.colIcon} />
               Service Areas
@@ -107,17 +131,18 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </nav>
       </div>
 
-      {/* Footer Bottom */}
+      {/* FOOTER BOTTOM */}
       <div className={styles.bottom}>
-        <p>© {year} RAAVITO. All rights reserved. Home-cooked meals delivered with care.</p>
+        <p>© {year} RAAVITO. All rights reserved.</p>
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className={styles.topBtn}
-          aria-label='Back to top'>
+          aria-label='Back to top'
+        >
           <FontAwesomeIcon icon={faArrowUp} />
         </button>
       </div>

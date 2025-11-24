@@ -1,31 +1,55 @@
-import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import styles from "./FAQ.module.css";
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+import styles from './FAQ.module.css';
 
 export default function FAQ() {
   const [open, setOpen] = useState(null);
 
   const faqs = [
     {
-      q: "What are your delivery timings?",
-      a: "We deliver Breakfast (7:00 AM – 9:00 AM), Lunch (1:00 PM – 3:00 PM), and Dinner (7:00 PM – 9:00 PM) daily. Last orders are accepted until 7:00 PM.",
+      q: 'What are your delivery timings?',
+      a: 'Breakfast: 7–9 AM, Lunch: 1–3 PM, Dinner: 7–9 PM. Last orders close at 7 PM.',
     },
     {
-      q: "Do you deliver on weekends?",
-      a: "Yes, Raavito provides service 7 days a week, including weekends and most holidays.",
+      q: 'Do you deliver on weekends?',
+      a: 'Yes, we deliver all 7 days, including weekends and most holidays.',
     },
     {
-      q: "Which areas do you currently deliver to?",
-      a: "We currently serve all towers in Panchsheel Greens 1. Expansion to nearby sectors is coming soon.",
+      q: 'Which areas do you deliver to?',
+      a: 'We are currently delivering to all towers in Panchsheel Greens 1. Nearby sectors coming soon.',
     },
     {
-      q: "Is there a minimum order value?",
-      a: "For home delivery, the minimum order is ₹100. Orders below this may have a small delivery charge.",
+      q: 'Is there a minimum order value?',
+      a: 'Yes, the minimum order is ₹100. Below that, a small delivery fee may apply.',
     },
     {
-      q: "How can I place an order?",
-      a: "All orders are accepted only via the Raavito app. Download the app, browse the daily menu, and order in a few taps.",
+      q: 'How can I place an order?',
+      a: 'All orders are placed through the Raavito app. Just download the app and order from the daily menu.',
+    },
+    {
+      q: 'What payment methods do you accept?',
+      a: 'We accept UPI, cards, net banking, and wallet payments.',
+    },
+    {
+      q: "Can I pause or skip meals if I'm on a plan?",
+      a: 'Yes. You can pause or skip your meal plan anytime through the Raavito app.',
+    },
+    {
+      q: 'Are the meals hygienic and safe?',
+      a: 'All meals are prepared by verified home chefs who follow Raavito’s hygiene checks and guidelines.',
+    },
+    {
+      q: 'What if my delivery is delayed?',
+      a: 'You’ll be notified in the app. Delays are rare, but we keep you informed.',
+    },
+    {
+      q: 'How is the food packaged?',
+      a: 'Meals come in food-grade, leak-proof containers designed to keep food fresh and warm.',
+    },
+    {
+      q: 'How do I reach customer support?',
+      a: 'You can contact support directly through the Help section in the Raavito app.',
     },
   ];
 
@@ -42,8 +66,7 @@ export default function FAQ() {
           <p className={styles.kicker}>Have Questions?</p>
           <h2 className={styles.title}>Frequently Asked Questions</h2>
           <p className={styles.sub}>
-            Find quick answers to the most common queries about Raavito meals, delivery, and
-            service.
+            Quick answers about our meals, delivery, subscriptions, hygiene, and support.
           </p>
         </header>
 
@@ -51,8 +74,9 @@ export default function FAQ() {
           {faqs.map((item, index) => (
             <div
               key={index}
-              className={`${styles.item} ${open === index ? styles.active : ""}`}
-              onClick={() => toggleFAQ(index)}>
+              className={`${styles.item} ${open === index ? styles.active : ''}`}
+              onClick={() => toggleFAQ(index)}
+            >
               <div className={styles.question}>
                 <span>{item.q}</span>
                 <FontAwesomeIcon

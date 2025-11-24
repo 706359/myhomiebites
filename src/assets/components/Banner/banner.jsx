@@ -1,13 +1,13 @@
-import { useEffect, useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faLeaf,
-  faHeart,
-  faClock,
-  faArrowRight,
   faCheckCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import styles from "./banner.module.css";
+  faClock,
+  faDownload,
+  faHeart,
+  faLeaf,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useRef } from 'react';
+import styles from './banner.module.css';
 
 const Banner = () => {
   const contentRef = useRef(null);
@@ -33,18 +33,18 @@ const Banner = () => {
   const features = [
     {
       icon: faLeaf,
-      title: "100% Vegetarian",
-      desc: "Pure veg meals, no compromise",
+      title: '100% Vegetarian',
+      desc: 'Real home-style veg food',
     },
     {
       icon: faHeart,
-      title: "Made with Love",
-      desc: "Home chefs cooking with care",
+      title: 'Made with Love',
+      desc: 'Cooked by real home chefs',
     },
     {
       icon: faClock,
-      title: "Fresh Daily",
-      desc: "Prepared fresh every morning",
+      title: 'Fresh Daily',
+      desc: 'Prepared every single morning',
     },
   ];
 
@@ -54,42 +54,42 @@ const Banner = () => {
         <div ref={contentRef} className={styles.content}>
           {/* Left Content */}
           <div className={styles.leftContent}>
-            <span className={styles.label}>Why Choose Raavito</span>
+            <span className={styles.label}>Why People Choose Us</span>
 
             <h2 className={styles.title}>
-              Pure. Fresh.
+              Good Food. Made Fresh.
               <br />
-              <span className={styles.highlight}>Home-Cooked</span> Every Day.
+              <span className={styles.highlight}>Home-cooked</span> the way it should be.
             </h2>
 
             <p className={styles.description}>
-              Experience the warmth of homemade food with <strong>Raavito</strong>. Authentic
-              vegetarian meals prepared by local home chefs, delivered fresh to your doorstep with
-              love and care.
+              At Raavito, every meal comes straight from local home kitchens. Fresh, simple, and
+              prepared by people who actually care about the food they make. No fancy gimmicks —
+              just honest, homemade vegetarian meals delivered to you.
             </p>
 
             <ul className={styles.checkList}>
               <li>
                 <FontAwesomeIcon icon={faCheckCircle} />
-                <span>Balanced nutrition in every meal</span>
+                <span>Balanced meals that actually fill you up</span>
               </li>
               <li>
                 <FontAwesomeIcon icon={faCheckCircle} />
-                <span>Verified & hygienic home kitchens</span>
+                <span>Clean and verified home kitchens</span>
               </li>
               <li>
                 <FontAwesomeIcon icon={faCheckCircle} />
-                <span>Same-day delivery in your area</span>
+                <span>Fresh food delivered in 30 minuts</span>
               </li>
             </ul>
 
             <div className={styles.ctaGroup}>
               <a href='#download' className={styles.primaryCta}>
-                Order Now
-                <FontAwesomeIcon icon={faArrowRight} />
+                Download App
+                <FontAwesomeIcon icon={faDownload} />
               </a>
               <a href='#about' className={styles.secondaryCta}>
-                Learn More
+                Know More
               </a>
             </div>
           </div>

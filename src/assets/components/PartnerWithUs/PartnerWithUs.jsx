@@ -1,12 +1,12 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBowlRice,
   faHandshake,
   faMoneyBillTrendUp,
   faShieldHeart,
-} from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
-import styles from "./PartnerWithUs.module.css";
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
+import styles from './PartnerWithUs.module.css';
 
 export default function PartnerWithUs() {
   const navigate = useNavigate();
@@ -14,23 +14,23 @@ export default function PartnerWithUs() {
   const benefits = [
     {
       icon: faBowlRice,
-      title: "Start With Your Kitchen",
-      desc: "Cook pure-veg, homely meals — no fancy setup required. Just your passion for food.",
+      title: 'Start From Your Own Kitchen',
+      desc: 'Cook pure-veg, homely meals using the space you already have. No fancy setup needed.',
     },
     {
       icon: faHandshake,
-      title: "Zero Listing Fee",
-      desc: "Join Raavito without upfront cost. We handle discovery, delivery, and marketing.",
+      title: 'No Listing Charges',
+      desc: 'Join Raavito at zero cost. We handle customer reach, delivery, and visibility for you.',
     },
     {
       icon: faShieldHeart,
-      title: "Hygiene & Support",
-      desc: "We help you maintain safety standards with simple training and kitchen checks.",
+      title: 'Hygiene Support',
+      desc: 'We guide you through simple hygiene standards and quick kitchen checks to keep things safe.',
     },
     {
       icon: faMoneyBillTrendUp,
-      title: "Earn Every Day",
-      desc: "Get paid for every order. Transparent earnings and flexible schedules.",
+      title: 'Earn Steadily',
+      desc: 'Get paid for every order. Clear payouts, flexible timings, and consistent demand.',
     },
   ];
 
@@ -40,11 +40,13 @@ export default function PartnerWithUs() {
       <div className={styles.wrap}>
         <header className={styles.head}>
           <p className={styles.kicker}>Partner with Raavito</p>
+
           <h2 id='partner-title' className={styles.title}>
             Cook. Earn. Grow with Us.
           </h2>
+
           <p className={styles.sub}>
-            Join our network of verified home chefs bringing healthy, homemade food to their
+            Become part of our community of home chefs delivering fresh, healthy meals to their
             neighbourhoods.
           </p>
         </header>
@@ -55,14 +57,16 @@ export default function PartnerWithUs() {
               key={i}
               className={styles.card}
               style={{
-                "--accent-a": ["#de8c45", "#29a3ff", "#00c2a8", "#ff6b6b"][i % 4],
-                "--accent-b": ["#ffb070", "#9ed5ff", "#7ff0df", "#ffc2c2"][i % 4],
-                "--stagger": `${i * 80}ms`,
-              }}>
+                '--accent-a': ['#de8c45', '#29a3ff', '#00c2a8', '#ff6b6b'][i % 4],
+                '--accent-b': ['#ffb070', '#9ed5ff', '#7ff0df', '#ffc2c2'][i % 4],
+                '--stagger': `${i * 80}ms`,
+              }}
+            >
               <div className={styles.ring}>
                 <span className={styles.ringGlow}></span>
                 <FontAwesomeIcon icon={b.icon} className={styles.icon} />
               </div>
+
               <h3 className={styles.h3}>{b.title}</h3>
               <p className={styles.p}>{b.desc}</p>
             </div>
@@ -70,7 +74,7 @@ export default function PartnerWithUs() {
         </div>
 
         <div className={styles.cta}>
-          <button className='btn btn-primary' onClick={() => navigate("/chef-registration")}>
+          <button className='btn btn-primary' onClick={() => navigate('/chef-registration')}>
             Register Kitchen
           </button>
         </div>

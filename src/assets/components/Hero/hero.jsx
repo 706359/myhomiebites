@@ -1,37 +1,26 @@
 // Hero.jsx
-import React, { useState, useEffect } from "react";
-import {
-  Truck,
-  Leaf,
-  Heart,
-  ChefHat,
-  Clock,
-  Star,
-  MapPin,
-  ArrowRight,
-  ChevronDown,
-  Play,
-} from "lucide-react";
-import styles from "./Hero.module.css";
-import { useNavigate } from "react-router-dom";
+import { ChefHat, ChevronDown, Clock, Heart, Leaf, Play, Star, Truck } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from './Hero.module.css';
 
 const badges = [
-  { id: 1, icon: Truck, text: "30min Delivery", color: "orange" },
-  { id: 2, icon: Leaf, text: "100% Fresh", color: "green" },
-  { id: 3, icon: Heart, text: "Homemade Love", color: "pink" },
-  { id: 4, icon: ChefHat, text: "Local Chefs", color: "purple" },
+  { id: 1, icon: Truck, text: '30min Delivery', color: 'orange' },
+  { id: 2, icon: Leaf, text: '100% Fresh', color: 'green' },
+  { id: 3, icon: Heart, text: 'Homemade Love', color: 'pink' },
+  { id: 4, icon: ChefHat, text: 'Local Chefs', color: 'blue' },
 ];
 
 const foodImages = [
-  "./images/veg-thali.png",
-  "./images/FullTiffin.jpg",
-  "./images/DesiThali.jpeg",
-  "./images/AalooPuri.jpg",
-  "./images/Amritsarichhole.png",
-  "./images/VegThali.png",
-  "./images/MoondDalKhichdi.jpg",
-  "./images/rajma.jpg",
-  "./images/RotiSabji.png",
+  './images/veg-thali.png',
+  './images/FullTiffin.jpg',
+  './images/DesiThali.jpeg',
+  './images/AalooPuri.jpg',
+  './images/Amritsarichhole.png',
+  './images/VegThali.png',
+  './images/MoondDalKhichdi.jpg',
+  './images/rajma.jpg',
+  './images/RotiSabji.png',
 ];
 
 export default function Hero() {
@@ -41,8 +30,8 @@ export default function Hero() {
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -53,21 +42,14 @@ export default function Hero() {
   }, []);
 
   const onScrollNext = () => {
-    window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
   };
 
   return (
     <section className={styles.hero}>
-      {/* Animated Background Elements */}
-      <div className={styles.backgroundElements}>
-        <div className={`${styles.blob} ${styles.blob1}`}></div>
-        <div className={`${styles.blob} ${styles.blob2}`}></div>
-        <div className={`${styles.blob} ${styles.blob3}`}></div>
-      </div>
-
       {/* Floating Food Icons */}
-      <div className={styles.floatingIcons}>
-        {["🍛", "🥗", "🍕", "🍜", "🥘", "🍲"].map((emoji, i) => (
+      {/* <div className={styles.floatingIcons}>
+        {['🍛', '🥗', '🍕', '🍜', '🥘', '🍲'].map((emoji, i) => (
           <div
             key={i}
             className={styles.floatingIcon}
@@ -76,18 +58,20 @@ export default function Hero() {
               top: `${Math.random() * 100}%`,
               animationDelay: `${i * 0.5}s`,
               animationDuration: `${3 + Math.random() * 2}s`,
-            }}>
+            }}
+          >
             {emoji}
           </div>
         ))}
-      </div>
+      </div> */}
 
       <div className={styles.heroContainer}>
         <div className={styles.heroGrid}>
           {/* Left Content */}
           <div
             className={styles.heroContent}
-            style={{ transform: `translateY(${scrollY * 0.2}px)` }}>
+            style={{ transform: `translateY(${scrollY * 0.2}px)` }}
+          >
             {/* Premium Badge */}
             <div className={styles.premiumBadge}>
               <Star className={styles.starIcon} />
@@ -116,7 +100,8 @@ export default function Hero() {
                   <div
                     key={badge.id}
                     className={styles.badge}
-                    style={{ animationDelay: `${idx * 100}ms` }}>
+                    style={{ animationDelay: `${idx * 100}ms` }}
+                  >
                     <div className={`${styles.badgeIcon} ${styles[`badge${badge.color}`]}`}>
                       <Icon className={styles.icon} />
                     </div>
@@ -133,7 +118,7 @@ export default function Hero() {
                 Download App
               </button>
 
-              <button className='btn btnGhost' onClick={() => navigate("/chef-registration")}>
+              <button className='btn btnGhost' onClick={() => navigate('/chef-registration')}>
                 Partner with Raavito
               </button>
             </div>
@@ -142,7 +127,8 @@ export default function Hero() {
           {/* Right Content - Food Showcase */}
           <div
             className={styles.foodShowcase}
-            style={{ transform: `translateY(${-scrollY * 0.15}px)` }}>
+            style={{ transform: `translateY(${-scrollY * 0.15}px)` }}
+          >
             <div className={styles.showcaseInner}>
               <div className={styles.imageContainer}>
                 {/* Rotating Border */}
@@ -156,7 +142,7 @@ export default function Hero() {
                       src={img}
                       alt={`Delicious food ${idx + 1}`}
                       className={`${styles.foodImage} ${
-                        idx === currentImage ? styles.activeImage : ""
+                        idx === currentImage ? styles.activeImage : ''
                       }`}
                     />
                   ))}
@@ -210,7 +196,7 @@ export default function Hero() {
                 src={img}
                 alt={`Delicious food ${idx + 1}`}
                 className={`${styles.mobileFoodImage} ${
-                  idx === currentImage ? styles.activeImage : ""
+                  idx === currentImage ? styles.activeImage : ''
                 }`}
               />
             ))}
@@ -234,7 +220,8 @@ export default function Hero() {
       <button
         onClick={onScrollNext}
         className={styles.scrollIndicator}
-        aria-label='Scroll to next section'>
+        aria-label='Scroll to next section'
+      >
         <span className={styles.scrollText}>Scroll to explore</span>
         <ChevronDown className={styles.chevronIcon} />
       </button>

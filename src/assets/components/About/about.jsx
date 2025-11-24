@@ -1,39 +1,39 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faLeaf,
-  faHeart,
   faBolt,
-  faUsers,
-  faShieldHeart,
+  faHeart,
+  faLeaf,
   faMapMarkerAlt,
-} from "@fortawesome/free-solid-svg-icons";
-import styles from "./About.module.css";
+  faShieldHeart,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styles from './About.module.css';
 
 export default function About() {
   const values = [
     {
       icon: faLeaf,
-      title: "Homemade & Hygienic",
-      desc: "Verified kitchens. Clean prep. Transparent sourcing.",
-      color: "green",
+      title: 'Real Homemade Taste',
+      desc: 'Fresh, simple, pure-veg meals made in real home kitchens.',
+      color: 'green',
     },
     {
       icon: faHeart,
-      title: "Affordable & Honest",
-      desc: "Clear rates. No surge gimmicks. Real portions.",
-      color: "orange",
+      title: 'From Hands You Trust',
+      desc: "Food that feels like it's cooked by your mother, sister, or wife.",
+      color: 'orange',
     },
     {
       icon: faBolt,
-      title: "Local & Fast",
-      desc: "Hyperlocal delivery for fresh, hot meals.",
-      color: "deep",
+      title: 'Fresh & Hot Delivery',
+      desc: 'Hyperlocal delivery so your food reaches warm, just like home.',
+      color: 'deep',
     },
     {
       icon: faUsers,
-      title: "Chef-First",
-      desc: "Tools and support for neighbourhood cooks.",
-      color: "yellow",
+      title: 'Supporting Home Chefs',
+      desc: 'Helping neighbourhood cooks share their food and grow.',
+      color: 'yellow',
     },
   ];
 
@@ -42,6 +42,7 @@ export default function About() {
       <div className={styles.bgAccent} aria-hidden='true' />
 
       <div className={styles.wrap}>
+        {/* Left Column */}
         <div className={styles.left}>
           <p className={styles.kicker}>
             <FontAwesomeIcon icon={faHeart} className={styles.kickerIcon} />
@@ -49,23 +50,31 @@ export default function About() {
           </p>
 
           <h2 className={styles.title}>
-            Homely meals. Local chefs.
-            <span className={styles.titleEm}> Honest delivery.</span>
+            Desi, homemade meals.
+            <span className={styles.titleEm}> Served fresh & hot.</span>
           </h2>
 
           <p className={styles.subtitle}>
-            Authentic, home-cooked vegetarian food from verified neighbourhood kitchens. App-only
-            ordering. The website builds trust and discovery.
+            At Raavito, we believe real food comes from real homes — not big brands or fancy
+            restaurant kitchens. Our vision is simple: bring the warmth of homemade vegetarian meals
+            to your doorstep.
           </p>
 
           <div className={styles.copy}>
             <p>
-              Started in <strong>Feb 2024</strong> from <strong>A1-405, Panchsheel Greens</strong>.
-              Daily meals that taste like home. Lower oil, fresh produce, balanced spice.
+              Every meal comes with that familiar comfort — the kind you feel when someone at home
+              cooks for you. Food that’s light on oil, balanced in taste, and made with real care.
             </p>
+
             <p>
-              Kitchens are verified. Menus rotate daily. Hyperlocal delivery for speed and
-              consistency. No cloud factories. Real kitchens run by real people.
+              While others chase branding and “restaurant-style” glamour, Raavito focuses on the one
+              thing that matters: <strong>ghar-ka-khana</strong>. Fresh, honest, and prepared by
+              trusted home chefs.
+            </p>
+
+            <p>
+              We’re currently serving the NCR region, but with the support and love for homemade
+              food, we aim to take this feeling to families all across India.
             </p>
           </div>
 
@@ -75,7 +84,8 @@ export default function About() {
               <div
                 key={index}
                 className={styles.card}
-                style={{ animationDelay: `${index * 0.1}s` }}>
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                 <div className={`${styles.cardIcon} ${styles[value.color]}`}>
                   <FontAwesomeIcon icon={value.icon} />
                 </div>
@@ -90,7 +100,6 @@ export default function About() {
 
         {/* Right Column */}
         <div className={styles.right}>
-          {/* Hero Image */}
           <figure className={styles.heroMedia}>
             <img
               src='images/kitchen3.png'
@@ -99,39 +108,32 @@ export default function About() {
             />
             <figcaption className={styles.heroTag}>
               <FontAwesomeIcon icon={faMapMarkerAlt} />
-              <span>From local home kitchens</span>
+              <span>Made in real home kitchens</span>
             </figcaption>
           </figure>
 
-          {/* Info Cards */}
           <div className={styles.infoGrid}>
             <div className={`${styles.card} ${styles.soft} ${styles.infoCard}`}>
               <div className={styles.infoHeader}>
                 <FontAwesomeIcon icon={faShieldHeart} className={styles.infoIcon} />
-                <h4 className={styles.hGreen}>Hygiene & Safety</h4>
+                <h4 className={styles.hGreen}>Care & Hygiene</h4>
               </div>
               <ul className={styles.list}>
-                <li>Gloves, hairnets, sanitized stations</li>
-                <li>Fresh produce. No artificial colours</li>
-                <li>Temperature-safe packing</li>
+                <li>Clean prep and home-style cooking</li>
+                <li>Fresh ingredients, no added colours</li>
+                <li>Safe, heat-retaining packaging</li>
               </ul>
             </div>
 
             <div className={`${styles.card} ${styles.soft} ${styles.infoCard}`}>
               <div className={styles.infoHeader}>
-                <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.infoIcon} />
-                <h4 className={styles.hDeep}>Journey</h4>
+                <FontAwesomeIcon icon={faUsers} className={styles.infoIcon} />
+                <h4 className={styles.hDeep}>Our Vision</h4>
               </div>
               <ul className={styles.list}>
-                <li>
-                  <strong>Feb 2024</strong> — First kitchen in Panchsheel Greens
-                </li>
-                <li>
-                  <strong>2024–2025</strong> — Daily rotating menu, hyperlocal delivery
-                </li>
-                <li>
-                  <strong>Next</strong> — More neighbourhood chefs. App-only ordering
-                </li>
+                <li>Make homemade food easily accessible</li>
+                <li>Support home chefs across India</li>
+                <li>Deliver hot, desi meals with true home feels</li>
               </ul>
             </div>
           </div>

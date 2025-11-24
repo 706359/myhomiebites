@@ -1,75 +1,12 @@
 .hero {
   position: relative;
-  margin-top: -60px;
-  min-height: 100vh;
+  width: 100%;
+  padding: 0;
+  margin: 0; /* remove negative margin */
   overflow: hidden;
   background: linear-gradient(135deg, var(--brand-cream) 50%, var(--brand-orange) 120%);
 }
 
-/* Background Elements */
-.backgroundElements {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.blob {
-  position: absolute;
-  width: 24rem;
-  height: 24rem;
-  border-radius: 9999px;
-  mix-blend-mode: multiply;
-  filter: blur(64px);
-  animation: blob 7s infinite;
-}
-
-.blob1 {
-  top: -10rem;
-  right: -10rem;
-  background-color: var(--brand-green);
-  opacity: 0.3;
-}
-
-.blob2 {
-  bottom: -10rem;
-  left: -10rem;
-  background-color: #fde047;
-  opacity: 0.3;
-  animation-delay: 2s;
-}
-
-.blob3 {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--brand-deep);
-  opacity: 0.2;
-  animation-delay: 4s;
-}
-
-/* Floating Food Icons */
-.floatingIcons {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.floatingIcon {
-  position: absolute;
-  font-size: 2.25rem;
-  opacity: 0.1;
-  animation: float 3s ease-in-out infinite;
-}
-
-@media (max-width: 768px) {
-  .floatingIcon {
-    font-size: 1.5rem;
-    opacity: 0.08;
-  }
-}
-
-/* Hero Container */
 .heroContainer {
   position: relative;
   margin: 0 auto;
@@ -94,6 +31,7 @@
   gap: 2rem;
   align-items: center;
   min-height: calc(100vh - 8rem);
+  padding-inline: 5rem;
 }
 
 @media (min-width: 1024px) {
@@ -139,6 +77,14 @@
   animation: slideDown 0.8s ease-out;
   align-self: flex-start;
   max-width: 100%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.premiumBadge:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 25px -5px rgba(234, 88, 12, 0.3);
+  border-color: var(--brand-orange);
 }
 
 @media (max-width: 640px) {
@@ -224,9 +170,7 @@
 }
 
 .subheading {
-  font-size: 1rem;
   color: var(--ink);
-  line-height: 1.6;
   max-width: 40rem;
   animation: slideUp 0.8s ease-out;
   animation-delay: 0.2s;
@@ -257,6 +201,7 @@
   animation-delay: 0.6s;
   opacity: 0;
   animation-fill-mode: forwards;
+  line-height: 1.5;
 }
 
 @media (min-width: 768px) {
@@ -310,7 +255,7 @@
 }
 
 .badge:hover .badgeIcon {
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(10deg);
 }
 
 .badgeorange {
@@ -323,10 +268,6 @@
 
 .badgepink {
   background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
-}
-
-.badgepurple {
-  background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
 }
 
 .badgeblue {
@@ -433,6 +374,12 @@
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   border: 8px solid var(--brand-cream);
+  transition: transform 0.3s ease;
+}
+
+.mainImageWrapper:hover {
+  transform: scale(1.02);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.3);
 }
 
 .foodImage {
@@ -462,6 +409,13 @@
   border-radius: 1rem;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   padding: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.floatingCard:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 30px 40px -5px rgba(0, 0, 0, 0.2);
 }
 
 .card1 {
@@ -491,6 +445,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.floatingCard:hover .cardIcon {
+  transform: scale(1.15) rotate(15deg);
 }
 
 .greenGradient {
@@ -585,6 +544,12 @@
   overflow: hidden;
   box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
   border: 6px solid var(--brand-cream);
+  transition: transform 0.3s ease;
+}
+
+.mobileImageContainer:hover {
+  transform: scale(1.02);
+  box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.35);
 }
 
 .mobileFoodImage {
@@ -622,6 +587,13 @@
   animation: float 3s ease-in-out infinite;
   flex: 1;
   max-width: 160px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.mobileCard:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.25);
 }
 
 .mobileCard1 {
@@ -637,6 +609,11 @@
   height: 1.5rem;
   color: var(--brand-orange);
   flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.mobileCard:hover .mobileCardIcon {
+  transform: scale(1.2) rotate(15deg);
 }
 
 .mobileCardText {
@@ -747,19 +724,6 @@
   }
   50% {
     transform: translateY(-20px);
-  }
-}
-
-@keyframes blob {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
   }
 }
 
