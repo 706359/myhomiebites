@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../../utils/api";
 import styles from "./AdminDashboard.module.css";
 
 class AdminDashboard extends Component {
@@ -14,6 +16,7 @@ class AdminDashboard extends Component {
       sidebarCollapsed: false,
       showProfileMenu: false,
       dateRange: "today",
+      loading: false,
       formData: {
         name: "",
         price: "",
@@ -29,31 +32,37 @@ class AdminDashboard extends Component {
         email: "",
         preparationTime: "",
         tags: "",
+        title: "",
+        subtitle: "",
+        gradient: [],
+        isActive: true,
+        startDate: null,
+        endDate: null,
       },
       formErrors: {},
       notifications: [],
       dashboardStats: {
-        totalRevenue: 945840,
-        totalOrders: 12847,
-        activeKitchens: 156,
-        pendingOrders: 34,
-        todayRevenue: 48920,
-        todayOrders: 456,
-        monthlyGrowth: 18.5,
-        customerSatisfaction: 4.7,
-        avgDeliveryTime: 32,
-        cancelRate: 1.8,
-        repeatCustomers: 72,
+        totalRevenue: 0,
+        totalOrders: 0,
+        activeKitchens: 0,
+        pendingOrders: 0,
+        todayRevenue: 0,
+        todayOrders: 0,
+        monthlyGrowth: 0,
+        customerSatisfaction: 0,
+        avgDeliveryTime: 0,
+        cancelRate: 0,
+        repeatCustomers: 0,
         peakHours: "12PM - 2PM, 7PM - 9PM",
       },
       revenueData: [
-        { day: "Mon", revenue: 42500, orders: 345 },
-        { day: "Tue", revenue: 44200, orders: 378 },
-        { day: "Wed", revenue: 41800, orders: 331 },
-        { day: "Thu", revenue: 45600, orders: 412 },
-        { day: "Fri", revenue: 48900, orders: 489 },
-        { day: "Sat", revenue: 52200, orders: 545 },
-        { day: "Sun", revenue: 49400, orders: 498 },
+        { day: "Mon", revenue: 0, orders: 0 },
+        { day: "Tue", revenue: 0, orders: 0 },
+        { day: "Wed", revenue: 0, orders: 0 },
+        { day: "Thu", revenue: 0, orders: 0 },
+        { day: "Fri", revenue: 0, orders: 0 },
+        { day: "Sat", revenue: 0, orders: 0 },
+        { day: "Sun", revenue: 0, orders: 0 },
       ],
       kitchens: [
         {
@@ -153,6 +162,8 @@ class AdminDashboard extends Component {
           isOnline: false,
         },
       ],
+      deals: [],
+      loadingDeals: false,
       menuItems: [
         {
           id: 1,
@@ -296,157 +307,8 @@ class AdminDashboard extends Component {
           tags: ["mild", "traditional"],
         },
       ],
-      orders: [
-        {
-          id: 10001,
-          customer: "Rajesh Kumar",
-          customerEmail: "rajesh.kumar@gmail.com",
-          customerPhone: "+91-9988776655",
-          kitchen: "Shree Krishna Bhojanalaya",
-          kitchenId: 1,
-          items: [
-            { name: "Paneer Butter Masala", qty: 2, price: 498 },
-            { name: "Dal Makhani", qty: 1, price: 199 },
-            { name: "Butter Naan", qty: 6, price: 180 },
-          ],
-          total: 877,
-          status: "delivered",
-          priority: "normal",
-          orderTime: "2024-11-13T10:30:00Z",
-          deliveryTime: "2024-11-13T11:15:00Z",
-          address: "B-45, Karol Bagh, New Delhi - 110005",
-          paymentMethod: "UPI",
-          tip: 50,
-        },
-        {
-          id: 10002,
-          customer: "Priya Sharma",
-          customerEmail: "priya.sharma@gmail.com",
-          customerPhone: "+91-9988776656",
-          kitchen: "Annapurna Kitchen",
-          kitchenId: 2,
-          items: [
-            { name: "Masala Dosa", qty: 2, price: 298 },
-            { name: "Idli Sambar", qty: 1, price: 99 },
-            { name: "Filter Coffee", qty: 2, price: 80 },
-          ],
-          total: 477,
-          status: "preparing",
-          priority: "high",
-          orderTime: "2024-11-13T11:45:00Z",
-          address: "12th Main, Indiranagar, Bangalore - 560038",
-          paymentMethod: "Card",
-          tip: 40,
-        },
-        {
-          id: 10003,
-          customer: "Amit Patel",
-          customerEmail: "amit.patel@gmail.com",
-          customerPhone: "+91-9988776657",
-          kitchen: "Gujarati Rasoi",
-          kitchenId: 3,
-          items: [{ name: "Gujarati Thali", qty: 3, price: 1047 }],
-          total: 1047,
-          status: "pending",
-          priority: "urgent",
-          orderTime: "2024-11-13T12:00:00Z",
-          address: "A-23, Navrangpura, Ahmedabad - 380009",
-          paymentMethod: "UPI",
-          tip: 100,
-        },
-        {
-          id: 10004,
-          customer: "Sneha Deshmukh",
-          customerEmail: "sneha.d@gmail.com",
-          customerPhone: "+91-9988776658",
-          kitchen: "Maharashtrian Swaad",
-          kitchenId: 5,
-          items: [
-            { name: "Misal Pav", qty: 2, price: 338 },
-            { name: "Puran Poli", qty: 4, price: 716 },
-          ],
-          total: 1054,
-          status: "out_for_delivery",
-          priority: "normal",
-          orderTime: "2024-11-13T11:30:00Z",
-          address: "15, Model Colony, Pune - 411016",
-          paymentMethod: "Card",
-          tip: 80,
-        },
-        {
-          id: 10005,
-          customer: "Vikram Singh",
-          customerEmail: "vikram.singh@gmail.com",
-          customerPhone: "+91-9988776659",
-          kitchen: "Shree Krishna Bhojanalaya",
-          kitchenId: 1,
-          items: [
-            { name: "Paneer Butter Masala", qty: 1, price: 249 },
-            { name: "Jeera Rice", qty: 2, price: 180 },
-          ],
-          total: 429,
-          status: "pending",
-          priority: "normal",
-          orderTime: "2024-11-13T12:15:00Z",
-          address: "D-12, Rajouri Garden, New Delhi - 110027",
-          paymentMethod: "UPI",
-          tip: 30,
-        },
-      ],
-      users: [
-        {
-          id: 1,
-          name: "Rajesh Kumar",
-          email: "rajesh.kumar@gmail.com",
-          phone: "+91-9988776655",
-          totalOrders: 45,
-          totalSpent: 12847,
-          joinDate: "2023-06-15",
-          status: "active",
-          favoriteKitchen: "Shree Krishna Bhojanalaya",
-          lastOrder: "2024-11-13",
-          loyaltyPoints: 2560,
-        },
-        {
-          id: 2,
-          name: "Priya Sharma",
-          email: "priya.sharma@gmail.com",
-          phone: "+91-9988776656",
-          totalOrders: 38,
-          totalSpent: 9823,
-          joinDate: "2023-08-22",
-          status: "active",
-          favoriteKitchen: "Annapurna Kitchen",
-          lastOrder: "2024-11-13",
-          loyaltyPoints: 1960,
-        },
-        {
-          id: 3,
-          name: "Amit Patel",
-          email: "amit.patel@gmail.com",
-          phone: "+91-9988776657",
-          totalOrders: 52,
-          totalSpent: 15680,
-          joinDate: "2023-05-10",
-          status: "active",
-          favoriteKitchen: "Gujarati Rasoi",
-          lastOrder: "2024-11-13",
-          loyaltyPoints: 3120,
-        },
-        {
-          id: 4,
-          name: "Sneha Deshmukh",
-          email: "sneha.d@gmail.com",
-          phone: "+91-9988776658",
-          totalOrders: 28,
-          totalSpent: 7425,
-          joinDate: "2023-09-30",
-          status: "active",
-          favoriteKitchen: "Maharashtrian Swaad",
-          lastOrder: "2024-11-13",
-          loyaltyPoints: 1480,
-        },
-      ],
+      orders: [],
+      users: [],
       settings: {
         platformFee: 12,
         deliveryRadius: 15,
@@ -462,22 +324,199 @@ class AdminDashboard extends Component {
 
   componentDidMount() {
     document.title = "Raavito Admin - Pure Veg Platform";
-
+    this.loadAllData();
+    
     setTimeout(() => {
       this.showInfo("Namaste! Welcome to Raavito Admin Dashboard 🙏");
     }, 500);
 
-    const pendingOrders = this.state.orders.filter((order) => order.status === "pending").length;
-    if (pendingOrders > 0) {
-      setTimeout(() => {
-        this.showWarning(`${pendingOrders} orders need immediate attention!`);
-      }, 1500);
-    }
-
     this.updateInterval = setInterval(() => {
-      this.simulateRealTimeUpdate();
-    }, 30000);
+      this.loadAllData();
+    }, 60000); // Refresh every minute
   }
+
+  loadAllData = async () => {
+    try {
+      this.setState({ loading: true });
+      await Promise.all([
+        this.loadKitchens(),
+        this.loadMenuItems(),
+        this.loadOrders(),
+        this.loadUsers(),
+        this.loadDashboardStats(),
+        this.loadDeals(),
+      ]);
+    } catch (error) {
+      console.error("Error loading data:", error);
+      this.showError("Failed to load dashboard data");
+    } finally {
+      this.setState({ loading: false });
+    }
+  };
+
+  loadKitchens = async () => {
+    try {
+      const response = await api.get("/kitchens");
+      const kitchens = response.data.map((k) => ({
+        id: k._id,
+        _id: k._id,
+        name: k.name,
+        cuisine: k.cuisineType || k.cuisine,
+        status: k.isActive ? "active" : "inactive",
+        rating: k.averageRating || k.rating || 0,
+        orders: k.totalOrders || 0,
+        location: k.location,
+        revenue: 0, // Calculate from orders if needed
+        phone: k.mobile,
+        email: k.email,
+        joinDate: k.createdAt ? new Date(k.createdAt).toISOString().split("T")[0] : new Date().toISOString().split("T")[0],
+        completionRate: 98,
+        avgPrepTime: 30,
+        isOnline: k.isActive,
+        isVerified: k.isVerified,
+      }));
+      this.setState({ kitchens });
+    } catch (error) {
+      console.error("Error loading kitchens:", error);
+      this.showError("Failed to load kitchens");
+    }
+  };
+
+  loadMenuItems = async () => {
+    try {
+      const response = await api.get("/menu");
+      const menuItems = response.data.map((item) => ({
+        id: item._id,
+        _id: item._id,
+        kitchenId: item.kitchen?._id || item.kitchen,
+        name: item.name,
+        price: item.price,
+        category: item.category,
+        available: item.isAvailable,
+        description: item.description || "",
+        image: item.image || "https://via.placeholder.com/300x200?text=🥗",
+        popularity: 90,
+        orderCount: 0,
+        preparationTime: 25,
+        tags: item.isBestseller ? ["bestseller"] : [],
+      }));
+      this.setState({ menuItems });
+    } catch (error) {
+      console.error("Error loading menu items:", error);
+      this.showError("Failed to load menu items");
+    }
+  };
+
+  loadOrders = async () => {
+    try {
+      const response = await api.get("/orders");
+      const orders = response.data.map((order) => ({
+        id: order._id,
+        _id: order._id,
+        customer: order.user?.firstName
+          ? `${order.user.firstName} ${order.user.lastName || ""}`.trim()
+          : "Customer",
+        customerEmail: order.user?.email || "",
+        customerPhone: order.user?.mobile || "",
+        kitchen: order.kitchen?.name || "Unknown Kitchen",
+        kitchenId: order.kitchen?._id || order.kitchen,
+        items: order.items || [],
+        total: order.totalAmount || 0,
+        status: order.status || "pending",
+        priority: "normal",
+        orderTime: order.createdAt || new Date().toISOString(),
+        deliveryTime: order.deliveredAt || null,
+        address: order.deliveryAddress?.address || "",
+        paymentMethod: order.paymentMethod || "Cash",
+        tip: 0,
+      }));
+      this.setState({ orders });
+      
+      const pendingOrders = orders.filter((order) => order.status === "pending").length;
+      if (pendingOrders > 0) {
+        setTimeout(() => {
+          this.showWarning(`${pendingOrders} orders need immediate attention!`);
+        }, 1500);
+      }
+    } catch (error) {
+      console.error("Error loading orders:", error);
+      this.showError("Failed to load orders");
+    }
+  };
+
+  loadUsers = async () => {
+    try {
+      const response = await api.get("/admin/users");
+      const users = response.data.users.map((user) => ({
+        id: user._id,
+        _id: user._id,
+        name: `${user.firstName || ""} ${user.lastName || ""}`.trim() || "User",
+        email: user.email || "",
+        phone: user.mobile || "",
+        totalOrders: 0,
+        totalSpent: 0,
+        joinDate: user.createdAt ? new Date(user.createdAt).toISOString().split("T")[0] : new Date().toISOString().split("T")[0],
+        status: "active",
+        favoriteKitchen: "",
+        lastOrder: "",
+        loyaltyPoints: 0,
+      }));
+      this.setState({ users });
+    } catch (error) {
+      console.error("Error loading users:", error);
+      this.showError("Failed to load users");
+    }
+  };
+
+  loadDashboardStats = async () => {
+    try {
+      const [summaryRes, kitchensRes, ordersRes] = await Promise.all([
+        api.get("/admin/summary"),
+        api.get("/kitchens"),
+        api.get("/orders"),
+      ]);
+
+      const kitchens = kitchensRes.data;
+      const orders = ordersRes.data;
+      const summary = summaryRes.data;
+
+      const totalRevenue = orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+      const pendingOrders = orders.filter((o) => o.status === "pending").length;
+      const activeKitchens = kitchens.filter((k) => k.isActive && k.isVerified).length;
+
+      this.setState({
+        dashboardStats: {
+          totalRevenue,
+          totalOrders: summary.orders || orders.length,
+          activeKitchens,
+          pendingOrders,
+          todayRevenue: 0,
+          todayOrders: 0,
+          monthlyGrowth: 0,
+          customerSatisfaction: 4.5,
+          avgDeliveryTime: 30,
+          cancelRate: 2,
+          repeatCustomers: 70,
+          peakHours: "12PM - 2PM, 7PM - 9PM",
+        },
+      });
+    } catch (error) {
+      console.error("Error loading dashboard stats:", error);
+    }
+  };
+
+  loadDeals = async () => {
+    try {
+      this.setState({ loadingDeals: true });
+      const response = await api.get("/deals");
+      this.setState({ deals: response.data });
+    } catch (error) {
+      console.error("Error loading deals:", error);
+      this.showError("Failed to load deals");
+    } finally {
+      this.setState({ loadingDeals: false });
+    }
+  };
 
   componentWillUnmount() {
     if (this.updateInterval) {
@@ -558,6 +597,12 @@ class AdminDashboard extends Component {
         email: "",
         preparationTime: "",
         tags: "",
+        title: "",
+        subtitle: "",
+        gradient: [],
+        isActive: true,
+        startDate: null,
+        endDate: null,
       },
       formErrors: {},
     });
@@ -615,10 +660,17 @@ class AdminDashboard extends Component {
 
   openModal = (type, item = null) => {
     if (item) {
+      const formData = { ...item };
+      if (type === "menu" && item.tags) {
+        formData.tags = item.tags.join(", ");
+      }
+      if (type === "deal" && item.gradientColors) {
+        formData.gradient = item.gradientColors;
+      }
       this.setState({
         modalType: type,
         selectedItem: item,
-        formData: { ...item, tags: item.tags ? item.tags.join(", ") : "" },
+        formData,
         modalVisible: true,
         formErrors: {},
       });
@@ -637,125 +689,182 @@ class AdminDashboard extends Component {
     this.setState({ modalVisible: false, selectedItem: null, formErrors: {} }, this.resetForm);
   };
 
-  handleMenuSubmit = () => {
+  handleMenuSubmit = async () => {
     if (!this.validateForm("menu")) return;
 
-    const { formData, selectedItem, menuItems } = this.state;
+    const { formData, selectedItem } = this.state;
     const menuData = {
-      ...formData,
+      name: formData.name,
       price: parseFloat(formData.price),
-      kitchenId: parseInt(formData.kitchenId, 10),
-      preparationTime: parseInt(formData.preparationTime) || 20,
-      tags: formData.tags ? formData.tags.split(",").map((t) => t.trim().toLowerCase()) : [],
-      popularity: selectedItem ? selectedItem.popularity : Math.floor(Math.random() * 21) + 80,
-      orderCount: selectedItem ? selectedItem.orderCount : 0,
+      kitchen: formData.kitchenId,
+      category: formData.category,
+      description: formData.description || "",
+      image: formData.image || "",
+      isAvailable: formData.available !== false,
+      isVeg: true,
+      isBestseller: formData.tags?.includes("bestseller") || false,
     };
 
-    if (selectedItem) {
-      this.setState({
-        menuItems: menuItems.map((item) =>
-          item.id === selectedItem.id ? { ...menuData, id: selectedItem.id } : item
-        ),
-      });
-      this.showSuccess(`"${menuData.name}" updated successfully! ✅`);
-    } else {
-      const newItem = { ...menuData, id: Date.now() };
-      this.setState({ menuItems: [...menuItems, newItem] });
-      this.showSuccess(`"${menuData.name}" added to menu! 🍽️`);
+    try {
+      if (selectedItem?._id || selectedItem?.id) {
+        const id = selectedItem._id || selectedItem.id;
+        await api.put(`/menu/${id}`, menuData);
+        this.showSuccess(`"${menuData.name}" updated successfully! ✅`);
+      } else {
+        await api.post("/menu", menuData);
+        this.showSuccess(`"${menuData.name}" added to menu! 🍽️`);
+      }
+      await this.loadMenuItems();
+      this.closeModal();
+    } catch (error) {
+      console.error("Error saving menu item:", error);
+      this.showError(error.response?.data?.message || "Failed to save menu item");
     }
-
-    this.closeModal();
   };
 
-  handleKitchenSubmit = () => {
+  handleKitchenSubmit = async () => {
     if (!this.validateForm("kitchen")) return;
 
-    const { formData, selectedItem, kitchens } = this.state;
-    const kitchenData = { ...formData };
+    const { formData, selectedItem } = this.state;
+    const kitchenData = {
+      name: formData.name,
+      cuisineType: formData.cuisine,
+      location: formData.location,
+      mobile: formData.phone || "",
+      email: formData.email || "",
+      isActive: formData.status === "active",
+    };
 
-    if (selectedItem) {
-      this.setState({
-        kitchens: kitchens.map((kitchen) =>
-          kitchen.id === selectedItem.id
-            ? { ...kitchen, ...kitchenData, id: selectedItem.id }
-            : kitchen
-        ),
-      });
-      this.showSuccess(`Kitchen "${kitchenData.name}" updated! ✅`);
-    } else {
-      const newKitchen = {
-        ...kitchenData,
-        id: Date.now(),
-        rating: 0,
-        orders: 0,
-        revenue: 0,
-        joinDate: new Date().toISOString().split("T")[0],
-        completionRate: 0,
-        avgPrepTime: 30,
-        isOnline: false,
-      };
-      this.setState({ kitchens: [...kitchens, newKitchen] });
-      this.showSuccess(`Welcome "${kitchenData.name}" to Raavito! 🎉`);
+    try {
+      if (selectedItem?._id || selectedItem?.id) {
+        const id = selectedItem._id || selectedItem.id;
+        await api.put(`/kitchens/${id}`, kitchenData);
+        this.showSuccess(`Kitchen "${kitchenData.name}" updated! ✅`);
+      } else {
+        // For new kitchens, use the register endpoint
+        await api.post("/kitchens/register", {
+          ...kitchenData,
+          ownerName: formData.name,
+          address: formData.location,
+          pincode: "000000",
+        });
+        this.showSuccess(`Welcome "${kitchenData.name}" to Raavito! 🎉`);
+      }
+      await this.loadKitchens();
+      this.closeModal();
+    } catch (error) {
+      console.error("Error saving kitchen:", error);
+      this.showError(error.response?.data?.message || "Failed to save kitchen");
+    }
+  };
+
+  handleDealSubmit = async () => {
+    const { formData, selectedItem } = this.state;
+    
+    if (!formData.title || !formData.gradient || formData.gradient.length === 0) {
+      this.showError("Please fill title and gradient colors");
+      return;
     }
 
-    this.closeModal();
+    const dealData = {
+      title: formData.title,
+      subtitle: formData.subtitle || "",
+      description: formData.description || "",
+      gradientColors: formData.gradient || [],
+      image: formData.image || "",
+      isActive: formData.isActive !== false,
+      startDate: formData.startDate || new Date(),
+      endDate: formData.endDate || null,
+    };
+
+    try {
+      if (selectedItem?._id || selectedItem?.id) {
+        const id = selectedItem._id || selectedItem.id;
+        await api.put(`/deals/${id}`, dealData);
+        this.showSuccess("Deal updated successfully! ✅");
+      } else {
+        await api.post("/deals", dealData);
+        this.showSuccess("Deal created successfully! 🎁");
+      }
+      await this.loadDeals();
+      this.closeModal();
+    } catch (error) {
+      console.error("Error saving deal:", error);
+      this.showError(error.response?.data?.message || "Failed to save deal");
+    }
   };
 
   handleSubmit = () => {
     const { modalType } = this.state;
     if (modalType === "menu") this.handleMenuSubmit();
     else if (modalType === "kitchen") this.handleKitchenSubmit();
+    else if (modalType === "deal") this.handleDealSubmit();
   };
 
-  handleDelete = (type, id) => {
+  handleDelete = async (type, id) => {
     const itemName =
       type === "menu"
-        ? this.state.menuItems.find((item) => item.id === id)?.name
-        : this.state.kitchens.find((kitchen) => kitchen.id === id)?.name;
+        ? this.state.menuItems.find((item) => item.id === id || item._id === id)?.name
+        : type === "deal"
+          ? this.state.deals.find((deal) => deal.id === id || deal._id === id)?.title
+          : this.state.kitchens.find((kitchen) => kitchen.id === id || kitchen._id === id)?.name;
 
-    if (window.confirm(`Are you sure you want to delete "${itemName}"?`)) {
+    if (!window.confirm(`Are you sure you want to delete "${itemName}"?`)) {
+      return;
+    }
+
+    try {
       if (type === "menu") {
-        this.setState((prev) => ({
-          menuItems: prev.menuItems.filter((item) => item.id !== id),
-        }));
+        await api.delete(`/menu/${id}`);
+        await this.loadMenuItems();
         this.showSuccess(`"${itemName}" removed from menu`);
       } else if (type === "kitchen") {
-        this.setState((prev) => ({
-          kitchens: prev.kitchens.filter((kitchen) => kitchen.id !== id),
-          menuItems: prev.menuItems.filter((item) => item.kitchenId !== id),
-        }));
-        this.showSuccess(`Kitchen "${itemName}" removed`);
+        // Note: Backend might not have delete endpoint, so we'll deactivate
+        await api.put(`/kitchens/${id}`, { isActive: false });
+        await this.loadKitchens();
+        await this.loadMenuItems();
+        this.showSuccess(`Kitchen "${itemName}" deactivated`);
+      } else if (type === "deal") {
+        await api.delete(`/deals/${id}`);
+        await this.loadDeals();
+        this.showSuccess(`Deal "${itemName}" deleted`);
       }
+    } catch (error) {
+      console.error("Error deleting:", error);
+      this.showError(error.response?.data?.message || "Failed to delete");
     }
   };
 
-  updateOrderStatus = (orderId, newStatus) => {
-    const order = this.state.orders.find((o) => o.id === orderId);
-    const now = new Date().toISOString();
+  updateOrderStatus = async (orderId, newStatus) => {
+    try {
+      await api.put(`/orders/${orderId}/status`, { status: newStatus });
+      await this.loadOrders();
+      
+      const order = this.state.orders.find((o) => o.id === orderId || o._id === orderId);
+      const statusMessages = {
+        preparing: `Order #${orderId} is being prepared 👨‍🍳`,
+        out_for_delivery: `Order #${orderId} is out for delivery 🛵`,
+        delivered: `Order #${orderId} delivered to ${order?.customer || "customer"}! ✅`,
+      };
 
-    this.setState((prev) => ({
-      orders: prev.orders.map((o) => {
-        if (o.id === orderId) {
-          const updated = { ...o, status: newStatus };
-          if (newStatus === "delivered") updated.deliveryTime = now;
-          return updated;
-        }
-        return o;
-      }),
-    }));
-
-    const statusMessages = {
-      preparing: `Order #${orderId} is being prepared 👨‍🍳`,
-      out_for_delivery: `Order #${orderId} is out for delivery 🛵`,
-      delivered: `Order #${orderId} delivered to ${order.customer}! ✅`,
-    };
-
-    this.showSuccess(statusMessages[newStatus] || `Order status updated`);
+      this.showSuccess(statusMessages[newStatus] || `Order status updated`);
+    } catch (error) {
+      console.error("Error updating order status:", error);
+      this.showError(error.response?.data?.message || "Failed to update order status");
+    }
   };
 
   getKitchenName = (kitchenId) => {
-    const kitchen = this.state.kitchens.find((k) => k.id === kitchenId);
+    const kitchen = this.state.kitchens.find((k) => k.id === kitchenId || k._id === kitchenId);
     return kitchen ? kitchen.name : "Unknown Kitchen";
+  };
+
+  handleLogout = () => {
+    if (window.confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem("adminToken");
+      localStorage.removeItem("adminUser");
+      window.location.href = "/#/admin/login";
+    }
   };
 
   getStatusColor = (status) => {
@@ -953,10 +1062,10 @@ class AdminDashboard extends Component {
             <div className={this.cx("top-list")}>
               {kitchens
                 .filter((k) => k.status === "active")
-                .sort((a, b) => b.revenue - a.revenue)
+                .sort((a, b) => (b.revenue || 0) - (a.revenue || 0))
                 .slice(0, 4)
                 .map((kitchen, index) => (
-                  <div key={kitchen.id} className={this.cx("top-item")}>
+                  <div key={kitchen._id || kitchen.id} className={this.cx("top-item")}>
                     <div className={this.cx("top-rank")}>#{index + 1}</div>
                     <div className={this.cx("top-info")}>
                       <div className={this.cx("top-name")}>{kitchen.name}</div>
@@ -966,9 +1075,9 @@ class AdminDashboard extends Component {
                     </div>
                     <div className={this.cx("top-stats")}>
                       <div className={this.cx("top-revenue")}>
-                        {this.formatCurrency(kitchen.revenue)}
+                        {this.formatCurrency(kitchen.revenue || 0)}
                       </div>
-                      <div className={this.cx("top-rating")}>⭐ {kitchen.rating}</div>
+                      <div className={this.cx("top-rating")}>⭐ {kitchen.rating || 0}</div>
                     </div>
                   </div>
                 ))}
@@ -997,23 +1106,25 @@ class AdminDashboard extends Component {
               </thead>
               <tbody>
                 {orders.slice(0, 5).map((order) => (
-                  <tr key={order.id}>
-                    <td className={this.cx("order-id")}>#{order.id}</td>
-                    <td>{order.customer}</td>
-                    <td>{order.kitchen}</td>
-                    <td className={this.cx("amount")}>{this.formatCurrency(order.total)}</td>
+                  <tr key={order._id || order.id}>
+                    <td className={this.cx("order-id")}>#{order._id || order.id}</td>
+                    <td>{order.customer || order.user?.firstName || "N/A"}</td>
+                    <td>{order.kitchen || order.kitchenId?.name || "N/A"}</td>
+                    <td className={this.cx("amount")}>{this.formatCurrency(order.totalAmount || order.total || 0)}</td>
                     <td>
                       <span
                         className={this.cx("status-badge")}
                         style={{ backgroundColor: this.getStatusColor(order.status) }}>
-                        {order.status.replace("_", " ")}
+                        {order.status?.replace("_", " ") || "pending"}
                       </span>
                     </td>
                     <td className={this.cx("time")}>
-                      {new Date(order.orderTime).toLocaleTimeString("en-IN", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      {order.createdAt || order.orderTime
+                        ? new Date(order.createdAt || order.orderTime).toLocaleTimeString("en-IN", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })
+                        : "N/A"}
                     </td>
                   </tr>
                 ))}
@@ -1029,9 +1140,9 @@ class AdminDashboard extends Component {
     const { searchTerm, menuItems } = this.state;
     const filteredMenuItems = menuItems.filter(
       (item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        this.getKitchenName(item.kitchenId).toLowerCase().includes(searchTerm.toLowerCase())
+        item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        this.getKitchenName(item.kitchenId || item.kitchen)?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -1069,7 +1180,7 @@ class AdminDashboard extends Component {
             </div>
           ) : (
             filteredMenuItems.map((item) => (
-              <div key={item.id} className={this.cx("menu-card")}>
+              <div key={item._id || item.id} className={this.cx("menu-card")}>
                 <div className={this.cx("menu-image")}>
                   <img
                     src={item.image}
@@ -1097,7 +1208,7 @@ class AdminDashboard extends Component {
                   <p className={this.cx("menu-desc")}>{item.description}</p>
                   <div className={this.cx("menu-meta")}>
                     <span className={this.cx("kitchen-tag")}>
-                      🏠 {this.getKitchenName(item.kitchenId)}
+                      🏠 {this.getKitchenName(item.kitchenId || item.kitchen)}
                     </span>
                     <span className={this.cx("category-tag")}>{item.category}</span>
                   </div>
@@ -1134,7 +1245,7 @@ class AdminDashboard extends Component {
                   </button>
                   <button
                     className={this.cx("btn-delete")}
-                    onClick={() => this.handleDelete("menu", item.id)}>
+                    onClick={() => this.handleDelete("menu", item._id || item.id)}>
                     🗑️ Delete
                   </button>
                 </div>
@@ -1190,7 +1301,7 @@ class AdminDashboard extends Component {
             </div>
           ) : (
             filteredKitchens.map((kitchen) => (
-              <div key={kitchen.id} className={this.cx("kitchen-card")}>
+              <div key={kitchen._id || kitchen.id} className={this.cx("kitchen-card")}>
                 <div className={this.cx("kitchen-header")}>
                   <div className={this.cx("kitchen-title")}>
                     <h3>{kitchen.name}</h3>
@@ -1261,7 +1372,7 @@ class AdminDashboard extends Component {
                     </button>
                     <button
                       className={this.cx("btn-sm", "delete")}
-                      onClick={() => this.handleDelete("kitchen", kitchen.id)}>
+                      onClick={() => this.handleDelete("kitchen", kitchen._id || kitchen.id)}>
                       Remove
                     </button>
                   </div>
@@ -1341,10 +1452,10 @@ class AdminDashboard extends Component {
             </div>
           ) : (
             filteredOrders.map((order) => (
-              <div key={order.id} className={this.cx("order-card")}>
+              <div key={order._id || order.id} className={this.cx("order-card")}>
                 <div className={this.cx("order-header")}>
                   <div className={this.cx("order-id-section")}>
-                    <span className={this.cx("order-number")}>#{order.id}</span>
+                    <span className={this.cx("order-number")}>#{order._id || order.id}</span>
                     <span
                       className={this.cx("priority-badge")}
                       style={{ backgroundColor: this.getPriorityColor(order.priority) }}>
@@ -1411,21 +1522,21 @@ class AdminDashboard extends Component {
                   {order.status === "pending" && (
                     <button
                       className={this.cx("action-btn", "preparing")}
-                      onClick={() => this.updateOrderStatus(order.id, "preparing")}>
+                      onClick={() => this.updateOrderStatus(order._id || order.id, "preparing")}>
                       👨‍🍳 Start Preparing
                     </button>
                   )}
                   {order.status === "preparing" && (
                     <button
                       className={this.cx("action-btn", "delivery")}
-                      onClick={() => this.updateOrderStatus(order.id, "out_for_delivery")}>
+                      onClick={() => this.updateOrderStatus(order._id || order.id, "out_for_delivery")}>
                       🛵 Out for Delivery
                     </button>
                   )}
                   {order.status === "out_for_delivery" && (
                     <button
                       className={this.cx("action-btn", "delivered")}
-                      onClick={() => this.updateOrderStatus(order.id, "delivered")}>
+                      onClick={() => this.updateOrderStatus(order._id || order.id, "delivered")}>
                       ✅ Mark Delivered
                     </button>
                   )}
@@ -1489,7 +1600,7 @@ class AdminDashboard extends Component {
             </thead>
             <tbody>
               {filteredUsers.map((user) => (
-                <tr key={user.id}>
+                <tr key={user._id || user.id}>
                   <td>
                     <div className={this.cx("user-info")}>
                       <div className={this.cx("user-avatar")}>
@@ -1515,7 +1626,11 @@ class AdminDashboard extends Component {
                     <span className={this.cx("loyalty-badge")}>🏆 {user.loyaltyPoints}</span>
                   </td>
                   <td>{user.favoriteKitchen}</td>
-                  <td>{new Date(user.lastOrder).toLocaleDateString("en-IN")}</td>
+                  <td>
+                    {user.lastOrder
+                      ? new Date(user.lastOrder).toLocaleDateString("en-IN")
+                      : "Never"}
+                  </td>
                   <td>
                     <span
                       className={this.cx("status-badge")}
@@ -1528,6 +1643,115 @@ class AdminDashboard extends Component {
             </tbody>
           </table>
         </div>
+      </div>
+    );
+  };
+
+  renderDealsManagement = () => {
+    const { deals, searchTerm, loadingDeals } = this.state;
+    const filteredDeals = searchTerm
+      ? deals.filter(
+          (deal) =>
+            deal.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            deal.subtitle?.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      : deals;
+
+    return (
+      <div className={this.cx("section-content")}>
+        <div className={this.cx("page-header")}>
+          <div>
+            <h1>Exclusive Deals</h1>
+            <p className={this.cx("subtitle")}>
+              {deals.length} total deals • {deals.filter((d) => d.isActive).length} active
+            </p>
+          </div>
+          <div className={this.cx("header-actions")}>
+            <div className={this.cx("search-box")}>
+              <span>🔍</span>
+              <input
+                type='text'
+                placeholder='Search deals...'
+                value={searchTerm}
+                onChange={(e) => this.setSearchTerm(e.target.value)}
+              />
+            </div>
+            <button className={this.cx("btn-primary")} onClick={() => this.openModal("deal")}>
+              + Add Deal
+            </button>
+          </div>
+        </div>
+
+        {loadingDeals ? (
+          <div className={this.cx("empty-state")}>
+            <span>⏳</span>
+            <h3>Loading deals...</h3>
+          </div>
+        ) : filteredDeals.length === 0 ? (
+          <div className={this.cx("empty-state")}>
+            <span>🎁</span>
+            <h3>No deals found</h3>
+            <p>Try adjusting your search or add a new exclusive deal</p>
+          </div>
+        ) : (
+          <div className={this.cx("deals-grid")}>
+            {filteredDeals.map((deal) => (
+              <div key={deal._id || deal.id} className={this.cx("deal-card")}>
+                <div
+                  className={this.cx("deal-gradient")}
+                  style={{
+                    background: deal.gradientColors
+                      ? `linear-gradient(135deg, ${deal.gradientColors.join(", ")})`
+                      : "linear-gradient(135deg, #f97316, #fb923c)",
+                  }}>
+                  {deal.image && (
+                    <img src={deal.image} alt={deal.title} className={this.cx("deal-image")} />
+                  )}
+                  <div className={this.cx("deal-content")}>
+                    <h3>{deal.title}</h3>
+                    {deal.subtitle && <p className={this.cx("deal-subtitle")}>{deal.subtitle}</p>}
+                    {deal.description && (
+                      <p className={this.cx("deal-description")}>{deal.description}</p>
+                    )}
+                  </div>
+                </div>
+                <div className={this.cx("deal-body")}>
+                  <div className={this.cx("deal-meta")}>
+                    <span
+                      className={this.cx("status-badge")}
+                      style={{
+                        backgroundColor: deal.isActive ? "#029962" : "#6B7280",
+                      }}>
+                      {deal.isActive ? "Active" : "Inactive"}
+                    </span>
+                    {deal.startDate && (
+                      <span className={this.cx("deal-date")}>
+                        Starts: {new Date(deal.startDate).toLocaleDateString("en-IN")}
+                      </span>
+                    )}
+                    {deal.endDate && (
+                      <span className={this.cx("deal-date")}>
+                        Ends: {new Date(deal.endDate).toLocaleDateString("en-IN")}
+                      </span>
+                    )}
+                  </div>
+                  <div className={this.cx("deal-actions")}>
+                    <button
+                      className={this.cx("btn-edit")}
+                      onClick={() => this.openModal("deal", deal)}>
+                      ✏️ Edit
+                    </button>
+                    <button
+                      className={this.cx("btn-delete")}
+                      onClick={() => this.handleDelete("deal", deal._id || deal.id)}>
+                      🗑️ Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   };
@@ -1596,13 +1820,19 @@ class AdminDashboard extends Component {
   renderModal = () => {
     const { modalVisible, modalType, formData, kitchens, selectedItem, formErrors } = this.state;
 
+    if (!modalVisible) return null;
+
     return (
       <div className={`${this.cx("modal-overlay")} ${modalVisible ? this.cx("show") : ""}`}>
         <div className={this.cx("modal-content")}>
           <div className={this.cx("modal-header")}>
             <h3>
               {selectedItem ? "Edit" : "Add New"}{" "}
-              {modalType === "menu" ? "Menu Item" : "Kitchen Partner"}
+              {modalType === "menu"
+                ? "Menu Item"
+                : modalType === "deal"
+                  ? "Deal"
+                  : "Kitchen Partner"}
             </h3>
             <button className={this.cx("close-btn")} onClick={this.closeModal}>
               ✕
@@ -1610,7 +1840,107 @@ class AdminDashboard extends Component {
           </div>
 
           <div className={this.cx("modal-body")}>
-            {modalType === "menu" ? (
+            {modalType === "deal" ? (
+              <div className={this.cx("form-grid")}>
+                <div className={this.cx("form-group")}>
+                  <label>
+                    Title <span className={this.cx("required")}>*</span>
+                  </label>
+                  <input
+                    type='text'
+                    placeholder='e.g., Premium Subscription'
+                    value={formData.title || ""}
+                    onChange={(e) => this.handleInputChange("title", e.target.value)}
+                  />
+                </div>
+
+                <div className={this.cx("form-group")}>
+                  <label>Subtitle</label>
+                  <input
+                    type='text'
+                    placeholder='e.g., Save up to 60% for 6 months'
+                    value={formData.subtitle || ""}
+                    onChange={(e) => this.handleInputChange("subtitle", e.target.value)}
+                  />
+                </div>
+
+                <div className={this.cx("form-group", "full-width")}>
+                  <label>Description</label>
+                  <textarea
+                    placeholder='Deal description (optional)'
+                    value={formData.description || ""}
+                    onChange={(e) => this.handleInputChange("description", e.target.value)}
+                    rows='3'></textarea>
+                </div>
+
+                <div className={this.cx("form-group", "full-width")}>
+                  <label>
+                    Gradient Colors (comma separated) <span className={this.cx("required")}>*</span>
+                  </label>
+                  <input
+                    type='text'
+                    placeholder='e.g., #f97316, #fb923c'
+                    value={formData.gradient ? formData.gradient.join(", ") : ""}
+                    onChange={(e) => {
+                      const colors = e.target.value
+                        .split(",")
+                        .map((c) => c.trim())
+                        .filter((c) => c);
+                      this.handleInputChange("gradient", colors);
+                    }}
+                  />
+                </div>
+
+                <div className={this.cx("form-group")}>
+                  <label>Image URL (optional)</label>
+                  <input
+                    type='url'
+                    placeholder='https://example.com/image.jpg'
+                    value={formData.image || ""}
+                    onChange={(e) => this.handleInputChange("image", e.target.value)}
+                  />
+                </div>
+
+                <div className={this.cx("form-group")}>
+                  <label>Start Date (optional)</label>
+                  <input
+                    type='date'
+                    value={
+                      formData.startDate
+                        ? new Date(formData.startDate).toISOString().split("T")[0]
+                        : ""
+                    }
+                    onChange={(e) =>
+                      this.handleInputChange("startDate", e.target.value ? new Date(e.target.value) : null)
+                    }
+                  />
+                </div>
+
+                <div className={this.cx("form-group")}>
+                  <label>End Date (optional)</label>
+                  <input
+                    type='date'
+                    value={
+                      formData.endDate ? new Date(formData.endDate).toISOString().split("T")[0] : ""
+                    }
+                    onChange={(e) =>
+                      this.handleInputChange("endDate", e.target.value ? new Date(e.target.value) : null)
+                    }
+                  />
+                </div>
+
+                <div className={this.cx("form-group", "checkbox")}>
+                  <label>
+                    <input
+                      type='checkbox'
+                      checked={formData.isActive !== false}
+                      onChange={(e) => this.handleInputChange("isActive", e.target.checked)}
+                    />
+                    Active
+                  </label>
+                </div>
+              </div>
+            ) : modalType === "menu" ? (
               <div className={this.cx("form-grid")}>
                 <div className={this.cx("form-group")}>
                   <label>
@@ -1656,7 +1986,7 @@ class AdminDashboard extends Component {
                     {kitchens
                       .filter((k) => k.status === "active")
                       .map((kitchen) => (
-                        <option key={kitchen.id} value={kitchen.id}>
+                        <option key={kitchen._id || kitchen.id} value={kitchen._id || kitchen.id}>
                           {kitchen.name}
                         </option>
                       ))}
@@ -1824,7 +2154,8 @@ class AdminDashboard extends Component {
               Cancel
             </button>
             <button className={this.cx("btn-submit")} onClick={this.handleSubmit}>
-              {selectedItem ? "Update" : "Add"} {modalType === "menu" ? "Item" : "Kitchen"}
+              {selectedItem ? "Update" : "Add"}{" "}
+              {modalType === "menu" ? "Item" : modalType === "deal" ? "Deal" : "Kitchen"}
             </button>
           </div>
         </div>
@@ -1919,6 +2250,16 @@ class AdminDashboard extends Component {
             </button>
 
             <button
+              className={this.cx("nav-item", activeTab === "deals" ? "active" : "")}
+              onClick={() => {
+                this.setActiveTab("deals");
+                if (this.state.deals.length === 0) this.loadDeals();
+              }}>
+              <span className={this.cx("nav-icon")}>🎁</span>
+              {!sidebarCollapsed && <span>Deals</span>}
+            </button>
+
+            <button
               className={this.cx("nav-item", activeTab === "settings" ? "active" : "")}
               onClick={() => this.setActiveTab("settings")}>
               <span className={this.cx("nav-icon")}>⚙️</span>
@@ -1931,11 +2272,26 @@ class AdminDashboard extends Component {
               <div className={this.cx("admin-avatar")}>👤</div>
               {!sidebarCollapsed && (
                 <div className={this.cx("admin-info")}>
-                  <div className={this.cx("admin-name")}>Admin</div>
+                  <div className={this.cx("admin-name")}>
+                    {(() => {
+                      try {
+                        const adminUser = JSON.parse(localStorage.getItem("adminUser") || "{}");
+                        const fullName = [adminUser.firstName, adminUser.lastName].filter(Boolean).join(" ");
+                        return fullName || adminUser.mobile || "Admin";
+                      } catch {
+                        return "Admin";
+                      }
+                    })()}
+                  </div>
                   <div className={this.cx("admin-role")}>Super Admin</div>
                 </div>
               )}
             </div>
+            {!sidebarCollapsed && (
+              <button className={this.cx("logout-btn")} onClick={this.handleLogout}>
+                🚪 Logout
+              </button>
+            )}
           </div>
         </aside>
 
@@ -1945,6 +2301,7 @@ class AdminDashboard extends Component {
           {activeTab === "kitchens" && this.renderKitchenManagement()}
           {activeTab === "orders" && this.renderOrderManagement()}
           {activeTab === "users" && this.renderUserManagement()}
+          {activeTab === "deals" && this.renderDealsManagement()}
           {activeTab === "settings" && this.renderSettings()}
         </main>
 

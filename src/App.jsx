@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { HashRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import About from "./assets/components/About/about";
 import FAQ from "./assets/components/FAQ/faq";
 import Footer from "./assets/components/Footer/footer";
 import Gallery from "./assets/components/Gallery/gallery";
+import Offers from "./assets/components/Offers/Offers";
 import LoginForm from "./assets/components/LoginForm/LoginForm";
 import RaavitoPartnerPage from "./assets/components/RaavitoPartnerPage/RaavitoPartnerPage";
 import PartnerRegister from "./assets/components/PartnerRegister/PartnerRegister";
@@ -20,10 +21,58 @@ import AppDownload from "./assets/components/AppDownload/AppDownload";
 import Contact from "./assets/components/Contact/Contact";
 import Hero from "./assets/components/Hero/hero";
 import AdminDashboard from "./assets/components/AdminDashboard/Admindashboard";
+import AdminLogin from "./assets/components/AdminLogin/AdminLogin";
 
 function App() {
   const [modal, setModal] = useState(null);
   const [isPartnerLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [adminUser, setAdminUser] = useState(null);
+
+  // Check if admin is logged in on mount and when localStorage changes
+  useEffect(() => {
+    const checkAdminSession = () => {
+      const token = localStorage.getItem('adminToken');
+      const user = localStorage.getItem('adminUser');
+      if (!token || !user) {
+        setIsAdminLoggedIn(false);
+        setAdminUser(null);
+        return;
+      }
+      try {
+        const userData = JSON.parse(user);
+        if (userData.role === 'admin') {
+          setIsAdminLoggedIn(true);
+          setAdminUser(userData);
+        } else {
+          setIsAdminLoggedIn(false);
+          setAdminUser(null);
+        }
+      } catch {
+        setIsAdminLoggedIn(false);
+        setAdminUser(null);
+      }
+    };
+
+    checkAdminSession();
+
+    // Listen for storage changes (when login happens in another tab/window)
+    const handleStorageChange = (e) => {
+      if (e.key === 'adminToken' || e.key === 'adminUser') {
+        checkAdminSession();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also check periodically in case of same-tab updates
+    const interval = setInterval(checkAdminSession, 1000);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <HashRouter>
@@ -43,6 +92,7 @@ function App() {
               <Hero />
               <About />
               <AppFeatures />
+              <Offers />
               <Gallery />
               <Banner />
               <HowItWorks />
@@ -77,13 +127,30 @@ function App() {
             </>
           }
         />
-        {/* Admin Dashboard */}
+        {/* Admin Routes */}
+        <Route
+          path='/admin/login'
+          element={<AdminLogin onLoginSuccess={() => {
+            setIsAdminLoggedIn(true);
+            const user = localStorage.getItem('adminUser');
+            if (user) {
+              try {
+                setAdminUser(JSON.parse(user));
+              } catch {}
+            }
+          }} />}
+        />
         <Route
           path='/admindashboard'
           element={
-            <>
-              <AdminDashboard />
-            </>
+            isAdminLoggedIn ? (
+              <AdminDashboard adminUser={adminUser} onLogout={() => {
+                setIsAdminLoggedIn(false);
+                setAdminUser(null);
+              }} />
+            ) : (
+              <Navigate to='/admin/login' replace />
+            )
           }
         />
 
