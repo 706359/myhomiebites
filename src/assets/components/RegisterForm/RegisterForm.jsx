@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../Model/Model';
 import styles from './RegisterForm.module.css';
 
 export default function RegisterForm({ onClose }) {
+  const navigate = useNavigate();
   const firstInput = useRef(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -119,6 +121,20 @@ export default function RegisterForm({ onClose }) {
             type='password'
           />
           {errors.confirmPassword && <span className={styles.error}>{errors.confirmPassword}</span>}
+        </div>
+
+        <div className={styles.terms}>
+          <p className={styles.termsText}>
+            By clicking Submit, you agree to our{' '}
+            <a href='#/privacy' className={styles.termsLink} onClick={(e) => { e.preventDefault(); onClose(); navigate('/privacy'); }}>
+              Privacy Policy
+            </a>{' '}
+            and{' '}
+            <a href='#/terms' className={styles.termsLink} onClick={(e) => { e.preventDefault(); onClose(); navigate('/terms'); }}>
+              Terms & Conditions
+            </a>
+            .
+          </p>
         </div>
 
         <div className={styles.actions}>

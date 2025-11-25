@@ -1101,31 +1101,34 @@
   margin-top: 32px;
 }
 
-/* Notifications System - Premium */
+/* Notifications System - Premium & Refined */
 .notificationsContainer {
   position: fixed;
-  top: 20px;
+  top: 80px;
   right: 20px;
   z-index: 1100;
-  max-width: 400px;
+  max-width: 380px;
   width: 100%;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .notification {
   background: #ffffff;
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 12px;
+  border-radius: 12px;
+  padding: 16px 18px;
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 4px 20px rgba(0, 0, 0, 0.1),
     0 0 0 1px rgba(0, 0, 0, 0.05);
   border-left: 4px solid #3b82f6;
   display: flex;
   align-items: flex-start;
+  gap: 12px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: slideInRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   pointer-events: auto;
   position: relative;
   backdrop-filter: blur(10px);
@@ -1208,18 +1211,12 @@
 }
 
 .notificationMessage {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--ink);
   font-size: 14px;
   line-height: 1.5;
-  margin-bottom: 4px;
   word-wrap: break-word;
-}
-
-.notificationTime {
-  font-size: 12px;
-  color: var(--muted);
-  font-weight: 500;
+  font-family: var(--font-primary);
 }
 
 .notificationClose {
@@ -1248,12 +1245,23 @@
 
 @keyframes slideInRight {
   from {
-    transform: translateX(120%) scale(0.8);
+    transform: translateX(120%) scale(0.9);
     opacity: 0;
   }
   to {
     transform: translateX(0) scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(120%) scale(0.9);
+    opacity: 0;
   }
 }
 

@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../Model/Model';
 import styles from './LoginForm.module.css';
 
 export default function LoginForm({ onClose }) {
+  const navigate = useNavigate();
   const firstInput = useRef(null);
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
@@ -82,6 +84,20 @@ export default function LoginForm({ onClose }) {
             type='password'
           />
           {errors.password && <span className={styles.error}>{errors.password}</span>}
+        </div>
+
+        <div className={styles.terms}>
+          <p className={styles.termsText}>
+            By signing in, you agree to our{' '}
+            <a href='#/privacy' className={styles.termsLink} onClick={(e) => { e.preventDefault(); onClose(); navigate('/privacy'); }}>
+              Privacy Policy
+            </a>{' '}
+            and{' '}
+            <a href='#/terms' className={styles.termsLink} onClick={(e) => { e.preventDefault(); onClose(); navigate('/terms'); }}>
+              Terms & Conditions
+            </a>
+            .
+          </p>
         </div>
 
         <div className={styles.actions}>

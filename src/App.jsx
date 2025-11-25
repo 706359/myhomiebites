@@ -22,6 +22,8 @@ import Contact from "./assets/components/Contact/Contact";
 import Hero from "./assets/components/Hero/hero";
 import AdminDashboard from "./assets/components/AdminDashboard/Admindashboard";
 import AdminLogin from "./assets/components/AdminLogin/AdminLogin";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
 
 function App() {
   const [modal, setModal] = useState(null);
@@ -151,6 +153,24 @@ function App() {
             ) : (
               <Navigate to='/admin/login' replace />
             )
+          }
+        />
+
+        {/* Privacy & Terms Routes */}
+        <Route
+          path='/privacy'
+          element={
+            <>
+              <PrivacyPolicy />
+            </>
+          }
+        />
+        <Route
+          path='/terms'
+          element={
+            <>
+              <TermsConditions />
+            </>
           }
         />
 

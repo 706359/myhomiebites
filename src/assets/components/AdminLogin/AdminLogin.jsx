@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone, faLock, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import api from '../../../utils/api';
 import styles from './AdminLogin.module.css';
 
@@ -9,6 +11,7 @@ export default function AdminLogin({ onLoginSuccess }) {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [remember, setRemember] = useState(true);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -118,57 +121,72 @@ export default function AdminLogin({ onLoginSuccess }) {
   return (
     <div className={styles.loginContainer}>
       <div className={styles.loginCard}>
+        {/* Logo - Centered */}
         <div className={styles.logoSection}>
-          <img src='/images/logo2.png' alt='Raavito' className={styles.logo} />
-          <h1 className={styles.title}>Admin Login</h1>
-          <p className={styles.subtitle}>Enter your credentials to access the admin dashboard</p>
+          <img src='/images/raavitologo.png' alt='Raavito' className={styles.logo} />
+        </div>
+
+        {/* Title Section */}
+        <div className={styles.titleSection}>
+          <h1 className={styles.title}>Welcome Back</h1>
+          <p className={styles.subtitle}>Admin Dashboard Access</p>
         </div>
 
         <form onSubmit={handleSubmit} className={styles.form}>
           {errorMessage && <div className={styles.errorAlert}>{errorMessage}</div>}
 
-          <div className={styles.formGroup}>
-            <label htmlFor='mobile' className={styles.label}>
-              Mobile Number
-            </label>
+          {/* Mobile Input with Icon */}
+          <div className={`${styles.inputWrapper} ${errors.mobile ? styles.inputError : ''}`}>
+            <FontAwesomeIcon icon={faPhone} className={styles.inputIcon} />
             <input
               id='mobile'
               name='mobile'
               type='tel'
               value={formData.mobile}
               onChange={handleChange}
-              className={`${styles.input} ${errors.mobile ? styles.inputError : ''}`}
-              placeholder='Enter your mobile number'
+              className={styles.input}
+              placeholder='Mobile Number'
+              maxLength={10}
               disabled={loading}
             />
-            {errors.mobile && <span className={styles.errorText}>{errors.mobile}</span>}
           </div>
+          {errors.mobile && <span className={styles.errorText}>{errors.mobile}</span>}
 
-          <div className={styles.formGroup}>
-            <label htmlFor='password' className={styles.label}>
-              Password
-            </label>
+          {/* Password Input with Icon */}
+          <div className={`${styles.inputWrapper} ${errors.password ? styles.inputError : ''}`}>
+            <FontAwesomeIcon icon={faLock} className={styles.inputIcon} />
             <input
               id='password'
               name='password'
               type='password'
               value={formData.password}
               onChange={handleChange}
-              className={`${styles.input} ${errors.password ? styles.inputError : ''}`}
-              placeholder='Enter your password'
+              className={styles.input}
+              placeholder='Password'
               disabled={loading}
             />
-            {errors.password && <span className={styles.errorText}>{errors.password}</span>}
+          </div>
+          {errors.password && <span className={styles.errorText}>{errors.password}</span>}
+
+          {/* Remember Me */}
+          <div className={styles.optionsRow}>
+            <label className={styles.checkboxLabel}>
+              <input
+                type='checkbox'
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
+                className={styles.checkbox}
+              />
+              <span>Remember me</span>
+            </label>
           </div>
 
+          {/* Sign In Button with Gradient */}
           <button type='submit' className={styles.submitButton} disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            <FontAwesomeIcon icon={faSignInAlt} className={styles.buttonIcon} />
+            <span>{loading ? 'Logging in...' : 'Admin Sign In'}</span>
           </button>
         </form>
-
-        <div className={styles.footer}>
-          <p>© 2024 Raavito. All rights reserved.</p>
-        </div>
       </div>
     </div>
   );

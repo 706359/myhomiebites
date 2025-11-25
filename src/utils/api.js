@@ -67,16 +67,24 @@ api.interceptors.response.use(
 );
 
 // API helper functions
+// IMPORTANT: Raavito is a PURE VEGETARIAN platform - default to vegetarian items
 export const fetchMenuItems = async (filters = {}) => {
   try {
     const params = new URLSearchParams();
     if (filters.kitchenId) params.append('kitchenId', filters.kitchenId);
     if (filters.category) params.append('category', filters.category);
     if (filters.search) params.append('search', filters.search);
-    if (filters.isVeg !== undefined) params.append('isVeg', filters.isVeg);
+    // Default to vegetarian items only - Raavito is pure veg
+    // Only allow non-veg if explicitly set to false (for admin purposes)
+    if (filters.isVeg !== undefined) {
+      params.append('isVeg', filters.isVeg);
+    } else {
+      params.append('isVeg', 'true'); // Default to vegetarian
+    }
     
     const { data } = await api.get(`/menu?${params.toString()}`);
-    return data;
+    // Double-check: filter out any non-vegetarian items that might have slipped through
+    return data.filter(item => item.isVeg !== false);
   } catch (error) {
     console.error('Error fetching menu items:', error);
     throw error;

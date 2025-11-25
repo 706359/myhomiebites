@@ -52,6 +52,30 @@
   display: block;
 }
 
+.terms {
+  margin: 16px 0 8px;
+  text-align: center;
+}
+
+.termsText {
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.termsLink {
+  color: var(--brand-orange, #f57506);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.termsLink:hover {
+  color: var(--brand-deep, #d55623);
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
