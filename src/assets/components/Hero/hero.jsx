@@ -1,6 +1,6 @@
 // Hero.jsx
-import { ChefHat, ChevronDown, Clock, Heart, Leaf, Play, Star, Truck } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { ChefHat, ChevronDown, Clock, Heart, Leaf, Play, Star, Truck, MapPin, Search, X } from 'lucide-react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Hero.module.css';
 
@@ -27,6 +27,12 @@ export default function Hero() {
   const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
   const [currentImage, setCurrentImage] = useState(0);
+  const [location, setLocation] = useState(null);
+  const [locationLoading, setLocationLoading] = useState(true);
+  const [showLocationSelector, setShowLocationSelector] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const locationSelectorRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -40,6 +46,138 @@ export default function Hero() {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  // Load saved location from localStorage
+  useEffect(() => {
+    const savedLocation = localStorage.getItem('selectedLocation');
+    if (savedLocation) {
+      setLocation(savedLocation);
+      setLocationLoading(false);
+    }
+  }, []);
+
+  // Auto-fetch location
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        setLocationLoading(true);
+        
+        // Check if location is already saved
+        const savedLocation = localStorage.getItem('selectedLocation');
+        if (savedLocation) {
+          setLocation(savedLocation);
+          setLocationLoading(false);
+          return;
+        }
+
+        // Request geolocation
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              const { latitude, longitude } = position.coords;
+              
+              try {
+                // Reverse geocode to get city/location name
+                const geoResponse = await fetch(
+                  `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+                );
+                const geoData = await geoResponse.json();
+                
+                // Format location string
+                const city = geoData.city || geoData.locality || '';
+                const region = geoData.principalSubdivision || geoData.countryName || '';
+                const locationName = city && region ? `${city}, ${region}` : city || region || 'Your Area';
+                
+                setLocation(locationName);
+                localStorage.setItem('selectedLocation', locationName);
+              } catch (geoError) {
+                console.error('Geocoding error:', geoError);
+                setLocation('Your Area');
+              } finally {
+                setLocationLoading(false);
+              }
+            },
+            (error) => {
+              console.error('Location error:', error);
+              setLocation('Your Area');
+              setLocationLoading(false);
+            },
+            { timeout: 5000, enableHighAccuracy: false }
+          );
+        } else {
+          setLocation('Your Area');
+          setLocationLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching location:', error);
+        setLocation('Your Area');
+        setLocationLoading(false);
+      }
+    };
+
+    fetchLocation();
+  }, []);
+
+  // Handle click outside location selector
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (locationSelectorRef.current && !locationSelectorRef.current.contains(event.target)) {
+        setShowLocationSelector(false);
+        setSearchQuery('');
+        setSuggestions([]);
+      }
+    };
+
+    if (showLocationSelector) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [showLocationSelector]);
+
+  // Search for locations
+  const handleLocationSearch = async (query) => {
+    setSearchQuery(query);
+    
+    if (query.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+
+    try {
+      // Using a geocoding API to search for locations
+      const response = await fetch(
+        `https://api.bigdatacloud.net/data/forward-geocode-client?query=${encodeURIComponent(query)}&limit=5&localityLanguage=en`
+      );
+      const data = await response.json();
+      
+      if (data && Array.isArray(data)) {
+        const locationSuggestions = data.map((item) => {
+          const city = item.city || item.locality || '';
+          const region = item.principalSubdivision || item.countryName || '';
+          return city && region ? `${city}, ${region}` : city || region || item.displayName;
+        }).filter((loc, index, self) => self.indexOf(loc) === index); // Remove duplicates
+        
+        setSuggestions(locationSuggestions.slice(0, 5));
+      }
+    } catch (error) {
+      console.error('Error searching locations:', error);
+      setSuggestions([]);
+    }
+  };
+
+  const handleSelectLocation = (selectedLocation) => {
+    setLocation(selectedLocation);
+    localStorage.setItem('selectedLocation', selectedLocation);
+    setShowLocationSelector(false);
+    setSearchQuery('');
+    setSuggestions([]);
+  };
+
+  const handleClearLocation = () => {
+    setLocation(null);
+    localStorage.removeItem('selectedLocation');
+    setShowLocationSelector(true);
+  };
 
   const onScrollNext = () => {
     window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
@@ -72,6 +210,96 @@ export default function Hero() {
             className={styles.heroContent}
             style={{ transform: `translateY(${scrollY * 0.2}px)` }}
           >
+            {/* Location Selector */}
+            <div className={styles.locationWrapper} ref={locationSelectorRef}>
+              <button
+                className={styles.locationButton}
+                onClick={() => setShowLocationSelector(!showLocationSelector)}
+                aria-label="Select location">
+                <MapPin className={styles.locationIcon} />
+                {locationLoading ? (
+                  <span className={styles.locationText}>Detecting location...</span>
+                ) : (
+                  <span className={styles.locationText}>{location || 'Select Location'}</span>
+                )}
+                <ChevronDown className={`${styles.locationChevron} ${showLocationSelector ? styles.chevronOpen : ''}`} />
+              </button>
+
+              {/* Location Selector Dropdown */}
+              {showLocationSelector && (
+                <div className={styles.locationDropdown}>
+                  <div className={styles.locationDropdownHeader}>
+                    <h3 className={styles.locationDropdownTitle}>Select Your Location</h3>
+                    <button
+                      className={styles.closeButton}
+                      onClick={() => {
+                        setShowLocationSelector(false);
+                        setSearchQuery('');
+                        setSuggestions([]);
+                      }}
+                      aria-label="Close">
+                      <X size={18} />
+                    </button>
+                  </div>
+                  
+                  <div className={styles.locationSearchWrapper}>
+                    <Search className={styles.searchIcon} />
+                    <input
+                      type="text"
+                      className={styles.locationSearchInput}
+                      placeholder="Search for city or area..."
+                      value={searchQuery}
+                      onChange={(e) => handleLocationSearch(e.target.value)}
+                      autoFocus
+                    />
+                  </div>
+
+                  {suggestions.length > 0 && (
+                    <div className={styles.locationSuggestions}>
+                      {suggestions.map((suggestion, index) => (
+                        <button
+                          key={index}
+                          className={styles.locationSuggestionItem}
+                          onClick={() => handleSelectLocation(suggestion)}>
+                          <MapPin size={16} />
+                          <span>{suggestion}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {searchQuery.length >= 2 && suggestions.length === 0 && (
+                    <div className={styles.locationNoResults}>
+                      <p>No locations found. Try a different search.</p>
+                    </div>
+                  )}
+
+                  {searchQuery.length < 2 && (
+                    <div className={styles.locationCurrent}>
+                      <p className={styles.locationCurrentLabel}>Current Location:</p>
+                      <button
+                        className={styles.locationCurrentButton}
+                        onClick={() => {
+                          if (location) {
+                            handleSelectLocation(location);
+                          }
+                        }}>
+                        <MapPin size={16} />
+                        <span>{location || 'Not set'}</span>
+                      </button>
+                      {location && (
+                        <button
+                          className={styles.locationClearButton}
+                          onClick={handleClearLocation}>
+                          Change Location
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
             {/* Premium Badge */}
             <div className={styles.premiumBadge}>
               <Star className={styles.starIcon} />

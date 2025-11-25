@@ -178,6 +178,7 @@ class AdminDashboard extends Component {
           orderCount: 534,
           preparationTime: 25,
           tags: ["bestseller", "creamy"],
+          isVeg: true,
         },
         {
           id: 2,
@@ -192,6 +193,7 @@ class AdminDashboard extends Component {
           orderCount: 456,
           preparationTime: 20,
           tags: ["bestseller", "protein-rich"],
+          isVeg: true,
         },
         {
           id: 3,
@@ -207,6 +209,7 @@ class AdminDashboard extends Component {
           orderCount: 698,
           preparationTime: 18,
           tags: ["bestseller", "crispy"],
+          isVeg: true,
         },
         {
           id: 4,
@@ -221,6 +224,7 @@ class AdminDashboard extends Component {
           orderCount: 542,
           preparationTime: 15,
           tags: ["healthy", "light"],
+          isVeg: true,
         },
         {
           id: 5,
@@ -235,6 +239,7 @@ class AdminDashboard extends Component {
           orderCount: 423,
           preparationTime: 30,
           tags: ["complete-meal", "bestseller"],
+          isVeg: true,
         },
         {
           id: 6,
@@ -249,6 +254,7 @@ class AdminDashboard extends Component {
           orderCount: 312,
           preparationTime: 12,
           tags: ["healthy", "steamed"],
+          isVeg: true,
         },
         {
           id: 7,
@@ -263,6 +269,7 @@ class AdminDashboard extends Component {
           orderCount: 387,
           preparationTime: 35,
           tags: ["traditional", "wholesome"],
+          isVeg: true,
         },
         {
           id: 8,
@@ -277,6 +284,7 @@ class AdminDashboard extends Component {
           orderCount: 478,
           preparationTime: 20,
           tags: ["spicy", "protein-rich"],
+          isVeg: true,
         },
         {
           id: 9,
@@ -291,6 +299,7 @@ class AdminDashboard extends Component {
           orderCount: 234,
           preparationTime: 25,
           tags: ["sweet", "traditional"],
+          isVeg: true,
         },
         {
           id: 10,
@@ -305,6 +314,7 @@ class AdminDashboard extends Component {
           orderCount: 198,
           preparationTime: 22,
           tags: ["mild", "traditional"],
+          isVeg: true,
         },
       ],
       orders: [],

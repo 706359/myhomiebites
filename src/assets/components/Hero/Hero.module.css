@@ -63,6 +63,309 @@
   }
 }
 
+/* Location Selector */
+.locationWrapper {
+  position: relative;
+  align-self: flex-start;
+  margin-bottom: 1rem;
+  z-index: 20;
+}
+
+.locationButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(245, 117, 6, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-family: 'Nunito', 'Roboto', sans-serif;
+  animation: slideDown 0.8s ease-out;
+  max-width: 100%;
+}
+
+.locationButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 117, 6, 0.2);
+  border-color: var(--brand-orange);
+  background-color: white;
+}
+
+.locationIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--brand-orange);
+  flex-shrink: 0;
+}
+
+.locationText {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+@media (min-width: 640px) {
+  .locationText {
+    max-width: 300px;
+    font-size: 0.9375rem;
+  }
+}
+
+.locationChevron {
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* Location Dropdown */
+.locationDropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  min-width: 320px;
+  max-width: 400px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(245, 117, 6, 0.1);
+  padding: 1.25rem;
+  z-index: 100;
+  animation: slideDown 0.3s ease-out;
+  max-height: 500px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 117, 6, 0.3) transparent;
+}
+
+.locationDropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.locationDropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.locationDropdown::-webkit-scrollbar-thumb {
+  background: rgba(245, 117, 6, 0.3);
+  border-radius: 3px;
+}
+
+.locationDropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 117, 6, 0.5);
+}
+
+@media (max-width: 640px) {
+  .locationDropdown {
+    left: -1rem;
+    right: -1rem;
+    min-width: auto;
+    max-width: none;
+  }
+}
+
+.locationDropdownHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.locationDropdownTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--ink);
+  font-family: 'Overpass', 'Nunito', sans-serif;
+  margin: 0;
+}
+
+.closeButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--muted);
+}
+
+.closeButton:hover {
+  background: rgba(245, 117, 6, 0.1);
+  color: var(--brand-orange);
+  transform: scale(1.1);
+}
+
+/* Location Search */
+.locationSearchWrapper {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.locationSearchInput {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  font-family: 'Nunito', 'Roboto', sans-serif;
+  color: var(--ink);
+  background: #f9fafb;
+  transition: all 0.3s ease;
+}
+
+.locationSearchInput:focus {
+  outline: none;
+  border-color: var(--brand-orange);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(245, 117, 6, 0.1);
+}
+
+.locationSearchInput::placeholder {
+  color: var(--muted);
+}
+
+/* Location Suggestions */
+.locationSuggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.locationSuggestionItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: #f9fafb;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-family: 'Nunito', 'Roboto', sans-serif;
+  font-size: 0.9375rem;
+  color: var(--ink);
+}
+
+.locationSuggestionItem:hover {
+  background: rgba(245, 117, 6, 0.08);
+  border-color: var(--brand-orange);
+  transform: translateX(4px);
+}
+
+.locationSuggestionItem svg {
+  color: var(--brand-orange);
+  flex-shrink: 0;
+}
+
+/* No Results */
+.locationNoResults {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--muted);
+  font-family: 'Nunito', 'Roboto', sans-serif;
+  font-size: 0.875rem;
+}
+
+/* Current Location */
+.locationCurrent {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.locationCurrentLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+  font-family: 'Overpass', 'Nunito', sans-serif;
+}
+
+.locationCurrentButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: linear-gradient(135deg, rgba(245, 117, 6, 0.08), rgba(213, 86, 35, 0.08));
+  border: 2px solid rgba(245, 117, 6, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-family: 'Nunito', 'Roboto', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--brand-deep);
+  margin-bottom: 0.75rem;
+}
+
+.locationCurrentButton:hover {
+  background: linear-gradient(135deg, rgba(245, 117, 6, 0.12), rgba(213, 86, 35, 0.12));
+  border-color: var(--brand-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 117, 6, 0.15);
+}
+
+.locationCurrentButton svg {
+  color: var(--brand-orange);
+  flex-shrink: 0;
+}
+
+.locationClearButton {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  background: transparent;
+  border: 1px solid rgba(245, 117, 6, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Nunito', 'Roboto', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--brand-orange);
+}
+
+.locationClearButton:hover {
+  background: rgba(245, 117, 6, 0.08);
+  border-color: var(--brand-orange);
+}
+
 /* Premium Badge */
 .premiumBadge {
   display: inline-flex;

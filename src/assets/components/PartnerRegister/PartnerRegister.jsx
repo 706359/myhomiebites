@@ -1,7 +1,3 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import api from "../../../utils/api";
 import {
   faArrowLeft,
   faArrowRight,
@@ -26,6 +22,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../../../utils/api';
 import styles from './PartnerRegister.module.css';
 
 /**
@@ -264,14 +261,14 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
 
     setFormData((prev) => {
       const updated = { ...prev, [name]: newValue };
-      
+
       // Auto-split fullName into firstName and lastName
-      if (name === "fullName" && value) {
-        const parts = value.trim().split(" ");
-        updated.firstName = parts[0] || "";
-        updated.lastName = parts.slice(1).join(" ") || "";
+      if (name === 'fullName' && value) {
+        const parts = value.trim().split(' ');
+        updated.firstName = parts[0] || '';
+        updated.lastName = parts.slice(1).join(' ') || '';
       }
-      
+
       return updated;
     });
 
@@ -416,8 +413,9 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
         }
 
         // Get API base URL from api instance
-        const apiBaseURL = api.defaults.baseURL || (import.meta.env.VITE_API_URL || 'http://localhost:5050/api');
-        
+        const apiBaseURL =
+          api.defaults.baseURL || import.meta.env.VITE_API_URL || 'http://localhost:5050/api';
+
         // Call backend OTP API
         const response = await fetch(`${apiBaseURL}/otp/send-otp`, {
           method: 'POST',
@@ -430,10 +428,10 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.message || "Failed to send OTP");
+          throw new Error(data.message || 'Failed to send OTP');
         }
 
-        if (type === "mobile") {
+        if (type === 'mobile') {
           setMobileOtpSent(true);
           setMobileOtpLoading(false);
           setMobileCountdown(30); // 30 second countdown
@@ -471,13 +469,11 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
       const value = type === 'mobile' ? formData.mobile : formData.email;
 
       if (!otpString || otpString.length !== 6) {
-        if (type === 'mobile') {
-          showError('Please enter all 6 digits');
-          setMobileOtpError('Enter complete OTP');
-        } else {
-          showError('Please enter all 6 digits');
-          setEmailOtpError('Enter complete OTP');
-        }
+        showError('Please enter all 6 digits');
+
+        if (type === 'mobile') setMobileOtpError('Enter complete OTP');
+        else setEmailOtpError('Enter complete OTP');
+
         return;
       }
 
@@ -485,67 +481,61 @@ export default function PartnerRegister({ onRegisterSuccess, setIsLoggedIn }) {
         if (type === 'mobile') {
           setMobileOtpLoading(true);
           setMobileOtpError('');
-          showInfo('Verifying OTP...');
         } else {
           setEmailOtpLoading(true);
           setEmailOtpError('');
-          showInfo('Verifying OTP...');
         }
 
-        // Get API base URL from api instance
-        const apiBaseURL = api.defaults.baseURL || (import.meta.env.VITE_API_URL || 'http://localhost:5050/api');
-        
-        // Call backend OTP verification API
+        showInfo('Verifying OTP...');
+
+        // API Base URL
+        const apiBaseURL =
+          api.defaults.baseURL || import.meta.env.VITE_API_URL || 'http://localhost:5050/api';
+
+        // Call backend API
         const response = await fetch(`${apiBaseURL}/otp/verify-otp`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ type, value, otp: otpString }),
         });
 
         const data = await response.json();
 
-        if (!response.ok || !data.message || data.message !== "OTP verified successfully") {
-          throw new Error(data.message || "Invalid or expired OTP");
+        if (!response.ok || data.message !== 'OTP verified successfully') {
+          throw new Error(data.message || 'Invalid or expired OTP');
         }
 
-        if (type === "mobile") {
+        // Success handle
+        if (type === 'mobile') {
           setMobileVerified(true);
-          setMobileOtpError("");
-          showSuccess("🎉 Mobile number verified successfully!");
+          setMobileOtpError('');
+          showSuccess('🎉 Mobile number verified successfully!');
         } else {
           setEmailVerified(true);
-          setEmailOtpError("");
-          showSuccess("🎉 Email address verified successfully!");
+          setEmailOtpError('');
+          showSuccess('🎉 Email address verified successfully!');
+        }
+
+        // OPTIONAL: Static OTP fallback check
         const FIXED_OTP = '123456';
 
-        if (otpString === FIXED_OTP) {
-          if (type === 'mobile') {
-            setMobileVerified(true);
-            setMobileOtpError('');
-            showSuccess('🎉 Mobile number verified successfully!');
-          } else {
-            setEmailVerified(true);
-            setEmailOtpError('');
-            showSuccess('🎉 Email address verified successfully!');
-          }
-        } else {
+        if (otpString !== FIXED_OTP) {
           throw new Error('Incorrect OTP. Use: 123456');
         }
       } catch (err) {
         const errorMsg = err.message || 'OTP verification failed';
+
         if (type === 'mobile') {
           setMobileOtpError(errorMsg);
           setMobileOtp(['', '', '', '', '', '']);
           setTimeout(() => mobileOtpRefs.current[0]?.focus(), 100);
-          showError(errorMsg);
         } else {
           setEmailOtpError(errorMsg);
           setEmailOtp(['', '', '', '', '', '']);
           setTimeout(() => emailOtpRefs.current[0]?.focus(), 100);
-          showError(errorMsg);
         }
+
+        showError(errorMsg);
       } finally {
         if (type === 'mobile') setMobileOtpLoading(false);
         else setEmailOtpLoading(false);

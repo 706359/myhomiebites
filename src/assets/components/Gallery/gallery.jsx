@@ -1,71 +1,89 @@
-import React, { useState, useRef, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Sparkles, ChefHat, Heart, MapPin } from "lucide-react";
-import { fetchMenuItems, fetchKitchens } from "../../../utils/api";
-import styles from "./Gallery.module.css";
+import {
+  ChefHat,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Heart,
+  MapPin,
+  Sparkles,
+  Star,
+  Tag,
+  TrendingUp,
+} from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { fetchKitchens, fetchMenuItems, fetchOffers } from '../../../utils/api';
+import styles from './Gallery.module.css';
 
-// Fallback images if API doesn't return images
+// Fallback images if API doesn't return images - All Pure Veg
 const fallbackImages = [
-  { src: "images/FullTiffin.jpg", alt: "Full Tiffin Meal", caption: "Full Tiffin Meal" },
-  { src: "images/RotiSabji.png", alt: "Roti with Sabzi", caption: "Roti with Sabzi" },
-  { src: "images/DeliciousAaluParatha.jpg", alt: "Stuffed Parathas", caption: "Stuffed Parathas" },
-  { src: "images/AalooPuri.jpg", alt: "Aloo Matar with Puri", caption: "Aloo Matar with Puri" },
-  { src: "images/Curd.jpg", alt: "Homemade Pure Curd", caption: "Homemade Pure Curd" },
-  { src: "images/MoondDalKhichdi.jpg", alt: "Khichdi", caption: "Khichdi" },
-];
-
-const specials = [
-  { src: "images/Amritsarichhole.png", alt: "Amritsari Chhole" },
-  { src: "images/lobhiya.jpg", alt: "Lobhiya Curry" },
-  { src: "images/lokikofte.jpg", alt: "Lauki Kofte" },
-  { src: "images/kadhipakora.jpg", alt: "Kadhi Pakora" },
-  { src: "images/rajma.jpg", alt: "Rajma Curry" },
-  { src: "images/kalachana.jpg", alt: "Kala Chana Curry" },
+  {
+    src: 'images/FullTiffin.jpg',
+    alt: 'Full Tiffin Meal',
+    caption: 'Full Tiffin Meal',
+    isVeg: true,
+  },
+  { src: 'images/RotiSabji.png', alt: 'Roti with Sabzi', caption: 'Roti with Sabzi', isVeg: true },
+  {
+    src: 'images/DeliciousAaluParatha.jpg',
+    alt: 'Stuffed Parathas',
+    caption: 'Stuffed Parathas',
+    isVeg: true,
+  },
+  {
+    src: 'images/AalooPuri.jpg',
+    alt: 'Aloo Matar with Puri',
+    caption: 'Aloo Matar with Puri',
+    isVeg: true,
+  },
+  { src: 'images/Curd.jpg', alt: 'Homemade Pure Curd', caption: 'Homemade Pure Curd', isVeg: true },
+  { src: 'images/MoondDalKhichdi.jpg', alt: 'Khichdi', caption: 'Khichdi', isVeg: true },
 ];
 
 // Fallback kitchen images if API doesn't return images
 const fallbackKitchenImages = [
   {
-    src: "images/kitchen.png",
-    alt: "Home chef kneading dough",
-    caption: "Handmade Rotis, Daily",
+    src: 'images/kitchen.png',
+    alt: 'Home chef kneading dough',
+    caption: 'Handmade Rotis, Daily',
   },
   {
-    src: "images/kitchen1.png",
-    alt: "Chef mixing spices",
-    caption: "Traditional Spice Blends",
+    src: 'images/kitchen1.png',
+    alt: 'Chef mixing spices',
+    caption: 'Traditional Spice Blends',
   },
   {
-    src: "images/kitchen2.png",
-    alt: "Freshly cut vegetables",
-    caption: "Fresh Local Produce",
+    src: 'images/kitchen2.png',
+    alt: 'Freshly cut vegetables',
+    caption: 'Fresh Local Produce',
   },
 ];
 
 export default function Gallery() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [specialHovered, setSpecialHovered] = useState(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [galleryItems, setGalleryItems] = useState([]);
   const [kitchens, setKitchens] = useState([]);
+  const [offers, setOffers] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [kitchensLoading, setKitchensLoading] = useState(true);
+  const [offersLoading, setOffersLoading] = useState(true);
+  const [canScrollOffersLeft, setCanScrollOffersLeft] = useState(false);
+  const [canScrollOffersRight, setCanScrollOffersRight] = useState(true);
   const galleryScrollRef = useRef(null);
-  const specialsScrollRef = useRef(null);
+  const offersScrollRef = useRef(null);
 
   // Fetch menu items from API
   useEffect(() => {
     const loadMenuItems = async () => {
       try {
         setLoading(true);
-        // Fetch menu items with images - limit to items with images
         const items = await fetchMenuItems({});
-        
-        // Transform menu items to gallery format
+
         const transformedItems = items
-          .filter(item => item.image) // Only items with images
-          .slice(0, 12) // Limit to 12 items
+          .filter((item) => item.image)
+          .slice(0, 9)
           .map((item) => ({
             id: item._id,
             src: item.image,
@@ -73,18 +91,16 @@ export default function Gallery() {
             caption: item.name,
             description: item.description,
             price: item.price,
-            kitchen: item.kitchen?.name || "Raavito Kitchen",
+            kitchen: item.kitchen?.name || 'Raavito Kitchen',
           }));
-        
-        // If we have items from API, use them; otherwise use fallback
+
         if (transformedItems.length > 0) {
           setGalleryItems(transformedItems);
         } else {
           setGalleryItems(fallbackImages);
         }
       } catch (error) {
-        console.error("Error loading menu items:", error);
-        // Use fallback images on error
+        console.error('Error loading menu items:', error);
         setGalleryItems(fallbackImages);
       } finally {
         setLoading(false);
@@ -99,42 +115,37 @@ export default function Gallery() {
     const loadKitchens = async () => {
       try {
         setKitchensLoading(true);
-        
-        // Get user location
+
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
             async (position) => {
               const { latitude, longitude } = position.coords;
-              
-              // Reverse geocode to get city/location name
               try {
-                // Using a free reverse geocoding service (you can replace with your preferred service)
                 const geoResponse = await fetch(
                   `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
                 );
                 const geoData = await geoResponse.json();
-                const locationName = geoData.city || geoData.locality || geoData.principalSubdivision || "Your Area";
+                const locationName =
+                  geoData.city || geoData.locality || geoData.principalSubdivision || 'Your Area';
                 setUserLocation(locationName);
               } catch (geoError) {
-                console.error("Geocoding error:", geoError);
-                setUserLocation("Your Area");
+                console.error('Geocoding error:', geoError);
+                setUserLocation('Your Area');
               }
             },
             (error) => {
-              console.error("Location error:", error);
+              console.error('Location error:', error);
               setUserLocation(null);
             },
             { timeout: 5000, enableHighAccuracy: false }
           );
         }
 
-        // Fetch kitchens (top-rated and active)
         const kitchensData = await fetchKitchens({ topRated: true });
-        
-        // Transform kitchens to gallery format
+
         const transformedKitchens = kitchensData
-          .filter(kitchen => kitchen.image && kitchen.isActive && kitchen.isVerified)
-          .slice(0, 6) // Limit to 6 kitchens
+          .filter((kitchen) => kitchen.image && kitchen.isActive && kitchen.isVerified)
+          .slice(0, 6)
           .map((kitchen) => ({
             id: kitchen._id,
             src: kitchen.image,
@@ -143,33 +154,67 @@ export default function Gallery() {
             description: kitchen.description,
             location: kitchen.location || kitchen.address,
             rating: kitchen.rating || kitchen.averageRating || 0,
-            deliveryTime: kitchen.deliveryTime || "30 mins",
+            deliveryTime: kitchen.deliveryTime || '30 mins',
             cuisineType: kitchen.cuisineType,
             discount: kitchen.discount,
           }));
-        
+
         if (transformedKitchens.length > 0) {
           setKitchens(transformedKitchens);
         } else {
-          // Use fallback images if no kitchens found
-          setKitchens(fallbackKitchenImages.map((img, i) => ({
-            id: `fallback-${i}`,
-            ...img,
-          })));
+          setKitchens(
+            fallbackKitchenImages.map((img, i) => ({
+              id: `fallback-${i}`,
+              ...img,
+            }))
+          );
         }
       } catch (error) {
-        console.error("Error loading kitchens:", error);
-        // Use fallback images on error
-        setKitchens(fallbackKitchenImages.map((img, i) => ({
-          id: `fallback-${i}`,
-          ...img,
-        })));
+        console.error('Error loading kitchens:', error);
+        setKitchens(
+          fallbackKitchenImages.map((img, i) => ({
+            id: `fallback-${i}`,
+            ...img,
+          }))
+        );
       } finally {
         setKitchensLoading(false);
       }
     };
 
     loadKitchens();
+  }, []);
+
+  // Fetch offers from API
+  useEffect(() => {
+    const loadOffers = async () => {
+      try {
+        setOffersLoading(true);
+        const offersData = await fetchOffers();
+
+        const transformedOffers = offersData.map((offer) => ({
+          id: offer._id,
+          title: offer.title,
+          description: offer.description || '',
+          icon: offer.icon || 'pricetag',
+          colors: offer.colors || ['#f57506', '#d55623'],
+          code: offer.code,
+          discountType: offer.discountType,
+          discountValue: offer.discountValue,
+          minOrderAmount: offer.minOrderAmount,
+          image: offer.image,
+        }));
+
+        setOffers(transformedOffers);
+      } catch (error) {
+        console.error('Error loading offers:', error);
+        setOffers([]);
+      } finally {
+        setOffersLoading(false);
+      }
+    };
+
+    loadOffers();
   }, []);
 
   const handleScroll = (ref, setLeft, setRight) => {
@@ -184,61 +229,182 @@ export default function Gallery() {
     const scrollAmount = 400;
     const currentScroll = galleryScrollRef.current.scrollLeft;
     galleryScrollRef.current.scrollTo({
-      left: currentScroll + (direction === "right" ? scrollAmount : -scrollAmount),
-      behavior: "smooth",
+      left: currentScroll + (direction === 'right' ? scrollAmount : -scrollAmount),
+      behavior: 'smooth',
     });
   };
 
-  const scrollSpecials = (direction) => {
-    if (!specialsScrollRef.current) return;
+  const scrollOffers = (direction) => {
+    if (!offersScrollRef.current) return;
     const scrollAmount = 300;
-    const currentScroll = specialsScrollRef.current.scrollLeft;
-    specialsScrollRef.current.scrollTo({
-      left: currentScroll + (direction === "right" ? scrollAmount : -scrollAmount),
-      behavior: "smooth",
+    const currentScroll = offersScrollRef.current.scrollLeft;
+    offersScrollRef.current.scrollTo({
+      left: currentScroll + (direction === 'right' ? scrollAmount : -scrollAmount),
+      behavior: 'smooth',
     });
+  };
+
+  const getIcon = (iconName) => {
+    const iconMap = {
+      pricetag: Tag,
+      tag: Tag,
+      gift: Tag,
+      flash: Tag,
+    };
+    return iconMap[iconName?.toLowerCase()] || Tag;
   };
 
   return (
     <section id='gallery' className={styles.gallerySection}>
+      {/* Background Decorations */}
+      <div className={styles.bgDecorations}>
+        <div className={styles.bgCircle1}></div>
+        <div className={styles.bgCircle2}></div>
+        <div className={styles.bgCircle3}></div>
+      </div>
+
       <div className={styles.container}>
+        {/* Header */}
         <header className={styles.header}>
-          <div className={styles.badge}>
-            <Sparkles className={styles.badgeIcon} />
-            <p className={styles.badgeText}>Food Gallery</p>
+          <div className={styles.kicker}>
+            <Sparkles className={styles.kickerIcon} />
+            <span>Food Gallery</span>
           </div>
-
-          <h2 className={styles.title}>Homely Meals • Real Kitchens</h2>
-
+          <h2 className={styles.title}>
+            <span className={styles.titleGradient}>Homely Meals </span>
+            <span className={styles.titleNormal}> from Real Kitchens</span>
+          </h2>
           <p className={styles.subtitle}>
-            Discover the heart of Raavito — fresh, home-cooked meals crafted every day by trusted
-            local chefs in their own kitchens.
+            Discover authentic home-cooked meals crafted daily by trusted local chefs. Fresh
+            ingredients, traditional recipes, and delivered with care.
           </p>
         </header>
 
-        {/* Main Gallery - Horizontal Scroll */}
-        <div className={styles.gallerySectionWrapper}>
+        {/* Offers Section - Premium Cards */}
+        {offers.length > 0 && (
+          <div className={styles.offersSection}>
+            <div className={styles.sectionHeader}>
+              <div>
+                <div className={styles.sectionBadge}>
+                  <TrendingUp size={14} />
+                  <span>Exclusive Offers</span>
+                </div>
+                <h3 className={styles.sectionTitle}>Today's Special Deals</h3>
+                <p className={styles.sectionSubtitle}>Limited time offers you can't miss</p>
+              </div>
+              {offers.length > 3 && (
+                <div className={styles.scrollControls}>
+                  <button
+                    className={`${styles.scrollButton} ${!canScrollOffersLeft ? styles.scrollButtonDisabled : ''}`}
+                    onClick={() => scrollOffers('left')}
+                    disabled={!canScrollOffersLeft}
+                    aria-label='Scroll left'
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    className={`${styles.scrollButton} ${!canScrollOffersRight ? styles.scrollButtonDisabled : ''}`}
+                    onClick={() => scrollOffers('right')}
+                    disabled={!canScrollOffersRight}
+                    aria-label='Scroll right'
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {offersLoading ? (
+              <div className={styles.loadingState}>
+                <div className={styles.loader}></div>
+                <p>Loading offers...</p>
+              </div>
+            ) : (
+              <div
+                ref={offersScrollRef}
+                className={styles.offersScroll}
+                onScroll={() =>
+                  handleScroll(offersScrollRef, setCanScrollOffersLeft, setCanScrollOffersRight)
+                }
+              >
+                <div className={styles.offersGrid}>
+                  {offers.map((offer, index) => {
+                    const IconComponent = getIcon(offer.icon);
+                    const gradientStyle = {
+                      background: `linear-gradient(135deg, ${offer.colors[0]}, ${offer.colors[1] || offer.colors[0]})`,
+                    };
+
+                    return (
+                      <div
+                        key={offer.id}
+                        className={styles.offerCard}
+                        style={{ ...gradientStyle, animationDelay: `${index * 100}ms` }}
+                      >
+                        <div className={styles.offerCardInner}>
+                          <div className={styles.offerIconWrapper}>
+                            <IconComponent size={28} color='white' strokeWidth={2.5} />
+                          </div>
+                          <div className={styles.offerContent}>
+                            <h4 className={styles.offerTitle}>{offer.title}</h4>
+                            <p className={styles.offerDescription}>
+                              {offer.description ||
+                                (offer.discountType === 'percentage'
+                                  ? `${offer.discountValue}% OFF`
+                                  : `₹${offer.discountValue} OFF`)}
+                            </p>
+                            {offer.code && (
+                              <div className={styles.offerCodeBadge}>
+                                <span className={styles.codeText}>{offer.code}</span>
+                              </div>
+                            )}
+                            {offer.minOrderAmount > 0 && (
+                              <div className={styles.offerMinOrder}>
+                                Min. ₹{offer.minOrderAmount}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className={styles.offerShine}></div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Featured Meals - Premium Grid */}
+        <div className={styles.featuredSection}>
           <div className={styles.sectionHeader}>
             <div>
-              <h3 className={styles.sectionTitle}>Featured Meals</h3>
-              <p className={styles.sectionSubtitle}>Our most popular dishes</p>
+              <div className={styles.sectionBadge}>
+                <ChefHat size={14} />
+                <span>Featured</span>
+              </div>
+              <h3 className={styles.sectionTitle}>Our Signature Dishes</h3>
+              <p className={styles.sectionSubtitle}>Most loved meals from our kitchens</p>
             </div>
-            <div className={styles.scrollControls}>
-              <button
-                className={`${styles.scrollButton} ${!canScrollLeft ? styles.scrollButtonDisabled : ""}`}
-                onClick={() => scrollGallery("left")}
-                disabled={!canScrollLeft}
-                aria-label="Scroll left">
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                className={`${styles.scrollButton} ${!canScrollRight ? styles.scrollButtonDisabled : ""}`}
-                onClick={() => scrollGallery("right")}
-                disabled={!canScrollRight}
-                aria-label="Scroll right">
-                <ChevronRight size={18} />
-              </button>
-            </div>
+            {galleryItems.length > 6 && (
+              <div className={styles.scrollControls}>
+                <button
+                  className={`${styles.scrollButton} ${!canScrollLeft ? styles.scrollButtonDisabled : ''}`}
+                  onClick={() => scrollGallery('left')}
+                  disabled={!canScrollLeft}
+                  aria-label='Scroll left'
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button
+                  className={`${styles.scrollButton} ${!canScrollRight ? styles.scrollButtonDisabled : ''}`}
+                  onClick={() => scrollGallery('right')}
+                  disabled={!canScrollRight}
+                  aria-label='Scroll right'
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+            )}
           </div>
 
           {loading ? (
@@ -250,30 +416,53 @@ export default function Gallery() {
             <div
               ref={galleryScrollRef}
               className={styles.galleryScroll}
-              onScroll={() => handleScroll(galleryScrollRef, setCanScrollLeft, setCanScrollRight)}>
-              <div className={styles.galleryScrollContent}>
+              onScroll={() => handleScroll(galleryScrollRef, setCanScrollLeft, setCanScrollRight)}
+            >
+              <div className={styles.galleryGrid}>
                 {galleryItems.map((item, i) => (
                   <div
                     key={item.id || i}
-                    className={`${styles.galleryCard} ${hoveredIndex === i ? styles.galleryCardHovered : ""}`}
+                    className={styles.featuredCard}
                     onMouseEnter={() => setHoveredIndex(i)}
-                    onMouseLeave={() => setHoveredIndex(null)}>
-                    <div className={styles.galleryCardImage}>
-                      <img src={item.src} alt={item.alt} loading='lazy' onError={(e) => {
-                        // Fallback to a default image if the image fails to load
-                        e.target.src = "images/food.jpeg";
-                      }} />
-                      <div className={styles.galleryGradient}></div>
-                    </div>
-                    <div className={styles.galleryCardInfo}>
-                      <Heart
-                        className={`${styles.heartIcon} ${hoveredIndex === i ? styles.heartActive : ""}`}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                    style={{ animationDelay: `${i * 50}ms` }}
+                  >
+                    <div className={styles.cardImageWrapper}>
+                      <img
+                        src={item.src}
+                        alt={item.alt}
+                        loading='lazy'
+                        className={styles.cardImage}
+                        onError={(e) => {
+                          e.target.src = 'images/food.jpeg';
+                        }}
                       />
-                      <div className={styles.galleryCardText}>
-                        <span className={styles.galleryCaption}>{item.caption}</span>
-                        {item.price && (
-                          <span className={styles.galleryPrice}>₹{item.price}</span>
-                        )}
+                      <div className={styles.cardOverlay}></div>
+                      <div className={styles.cardGradient}></div>
+                      <button className={styles.favoriteButton}>
+                        <Heart
+                          size={18}
+                          className={`${styles.heartIcon} ${hoveredIndex === i ? styles.heartActive : ''}`}
+                          fill={hoveredIndex === i ? '#ef4444' : 'none'}
+                        />
+                      </button>
+                      {item.price && (
+                        <div className={styles.priceBadge}>
+                          <span className={styles.priceSymbol}>₹</span>
+                          <span className={styles.priceValue}>{item.price}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className={styles.cardContent}>
+                      <h4 className={styles.cardTitle}>{item.caption}</h4>
+                      {item.description && (
+                        <p className={styles.cardDescription}>{item.description}</p>
+                      )}
+                      <div className={styles.cardFooter}>
+                        <div className={styles.kitchenBadge}>
+                          <ChefHat size={12} />
+                          <span>{item.kitchen}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -283,48 +472,21 @@ export default function Gallery() {
           )}
         </div>
 
-        {/* Specials Section - Horizontal Scroll */}
-        <div className={styles.specialsSection}>
-          <div className={styles.specialsHeader}>
-            <div className={styles.badge}>
-              <ChefHat className={styles.badgeIcon} />
-              <span className={styles.badgeText}>Chef's Selection</span>
+        {/* Local Kitchens - Premium Showcase */}
+        <div className={styles.kitchensSection}>
+          <div className={styles.sectionHeader}>
+            <div>
+              <div className={styles.sectionBadge}>
+                <MapPin size={14} />
+                <span>Local Kitchens</span>
+              </div>
+              <h3 className={styles.sectionTitle}>
+                {userLocation ? `Top Kitchens Near ${userLocation}` : 'Our Partner Kitchens'}
+              </h3>
+              <p className={styles.sectionSubtitle}>
+                Where authentic home-cooked meals are prepared with love and tradition
+              </p>
             </div>
-            <h3 className={styles.specialsTitle}>Our Specials</h3>
-            <p className={styles.specialsSubtitle}>6-Curry Showcase • Rotating Weekly Menus</p>
-          </div>
-
-          <div
-            ref={specialsScrollRef}
-            className={styles.specialsScroll}
-            onScroll={() => handleScroll(specialsScrollRef, setCanScrollLeft, setCanScrollRight)}>
-            <div className={styles.specialsScrollContent}>
-              {specials.map((sp, i) => (
-                <div
-                  key={i}
-                  className={`${styles.specialCard} ${specialHovered === i ? styles.specialCardHovered : ""}`}
-                  onMouseEnter={() => setSpecialHovered(i)}
-                  onMouseLeave={() => setSpecialHovered(null)}>
-                  <div className={styles.specialImage}>
-                    <img src={sp.src} alt={sp.alt} loading='lazy' />
-                    <div className={styles.specialOverlay}></div>
-                  </div>
-                  <div className={styles.specialLabel}>{sp.alt}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Kitchen Moments - Grid */}
-        <div className={styles.kitchenSection}>
-          <div className={styles.kitchenHeader}>
-            <h3 className={styles.kitchenTitle}>From Local Kitchens</h3>
-            <p className={styles.kitchenSubtitle}>
-              {userLocation 
-                ? `Top-rated kitchens near ${userLocation} — where our partner chefs cook with warmth, tradition, and care.`
-                : "Every meal begins in a real home — where our partner chefs cook with warmth, tradition, and care."}
-            </p>
           </div>
 
           {kitchensLoading ? (
@@ -333,45 +495,59 @@ export default function Gallery() {
               <p>Discovering local kitchens...</p>
             </div>
           ) : (
-            <div className={styles.kitchenGrid}>
-              {kitchens.map((kitchen) => (
-                <div key={kitchen.id} className={styles.kitchenCard}>
-                  <div className={styles.kitchenImage}>
-                    <img 
-                      src={kitchen.src} 
-                      alt={kitchen.alt} 
+            <div className={styles.kitchensGrid}>
+              {kitchens.map((kitchen, index) => (
+                <div
+                  key={kitchen.id}
+                  className={styles.kitchenCard}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className={styles.kitchenImageWrapper}>
+                    <img
+                      src={kitchen.src}
+                      alt={kitchen.alt}
                       loading='lazy'
+                      className={styles.kitchenImage}
                       onError={(e) => {
-                        // Fallback to a default image if the image fails to load
-                        e.target.src = "images/food.jpeg";
+                        e.target.src = 'images/food.jpeg';
                       }}
                     />
+                    <div className={styles.kitchenOverlay}></div>
                     <div className={styles.kitchenGradient}></div>
+
                     {kitchen.rating > 0 && (
                       <div className={styles.ratingBadge}>
-                        <span className={styles.ratingIcon}>⭐</span>
-                        <span className={styles.ratingValue}>{kitchen.rating.toFixed(1)}</span>
+                        <Star size={14} fill='#fbbf24' color='#fbbf24' />
+                        <span>{kitchen.rating.toFixed(1)}</span>
                       </div>
                     )}
+
                     {kitchen.discount && (
                       <div className={styles.discountBadge}>
-                        {kitchen.discount}
+                        <span>{kitchen.discount}</span>
                       </div>
                     )}
                   </div>
-                  <div className={styles.kitchenCaption}>
-                    <p className={styles.kitchenName}>{kitchen.caption}</p>
+
+                  <div className={styles.kitchenContent}>
+                    <h4 className={styles.kitchenName}>{kitchen.caption}</h4>
                     {kitchen.location && (
                       <div className={styles.kitchenLocation}>
                         <MapPin size={14} />
                         <span>{kitchen.location}</span>
                       </div>
                     )}
-                    {kitchen.cuisineType && (
-                      <div className={styles.kitchenCuisine}>
-                        {kitchen.cuisineType}
-                      </div>
-                    )}
+                    <div className={styles.kitchenMeta}>
+                      {kitchen.cuisineType && (
+                        <div className={styles.cuisineTag}>{kitchen.cuisineType}</div>
+                      )}
+                      {kitchen.deliveryTime && (
+                        <div className={styles.deliveryTime}>
+                          <Clock size={12} />
+                          <span>{kitchen.deliveryTime}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
