@@ -32,7 +32,12 @@ export default function Hero() {
   const [showLocationSelector, setShowLocationSelector] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [pincode, setPincode] = useState('');
+  const [pincodeLoading, setPincodeLoading] = useState(false);
+  const [pincodeError, setPincodeError] = useState('');
+  const [pincodeLocations, setPincodeLocations] = useState([]);
   const locationSelectorRef = useRef(null);
+  const pincodeDebounceTimer = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -70,21 +75,29 @@ export default function Hero() {
           return;
         }
 
-        // Request geolocation
+        // Request geolocation with improved error handling
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
             async (position) => {
               const { latitude, longitude } = position.coords;
               
               try {
-                // Reverse geocode to get city/location name
+                // Reverse geocode to get city/location name with timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000);
+                
                 const geoResponse = await fetch(
-                  `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+                  `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`,
+                  { signal: controller.signal }
                 );
+                clearTimeout(timeoutId);
+                
+                if (!geoResponse.ok) throw new Error('Geocoding API error');
+                
                 const geoData = await geoResponse.json();
                 
                 // Format location string
-                const city = geoData.city || geoData.locality || '';
+                const city = geoData.city || geoData.locality || geoData.principalSubdivision || '';
                 const region = geoData.principalSubdivision || geoData.countryName || '';
                 const locationName = city && region ? `${city}, ${region}` : city || region || 'Your Area';
                 
@@ -92,21 +105,59 @@ export default function Hero() {
                 localStorage.setItem('selectedLocation', locationName);
               } catch (geoError) {
                 console.error('Geocoding error:', geoError);
-                setLocation('Your Area');
+                // Fallback: try to get approximate location from IP
+                try {
+                  const ipResponse = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(5000) });
+                  if (ipResponse.ok) {
+                    const ipData = await ipResponse.json();
+                    const fallbackLocation = ipData.city && ipData.region ? `${ipData.city}, ${ipData.region}` : ipData.city || 'Your Area';
+                    setLocation(fallbackLocation);
+                    localStorage.setItem('selectedLocation', fallbackLocation);
+                  } else {
+                    setLocation('Your Area');
+                  }
+                } catch (ipError) {
+                  console.error('IP geolocation error:', ipError);
+                  setLocation('Your Area');
+                }
               } finally {
                 setLocationLoading(false);
               }
             },
             (error) => {
               console.error('Location error:', error);
-              setLocation('Your Area');
-              setLocationLoading(false);
+              // Try IP-based location as fallback
+              fetch('https://ipapi.co/json/')
+                .then(res => res.json())
+                .then(ipData => {
+                  const fallbackLocation = ipData.city && ipData.region ? `${ipData.city}, ${ipData.region}` : ipData.city || 'Your Area';
+                  setLocation(fallbackLocation);
+                  localStorage.setItem('selectedLocation', fallbackLocation);
+                })
+                .catch(() => {
+                  setLocation('Your Area');
+                })
+                .finally(() => {
+                  setLocationLoading(false);
+                });
             },
-            { timeout: 5000, enableHighAccuracy: false }
+            { timeout: 8000, enableHighAccuracy: false, maximumAge: 300000 } // Cache for 5 minutes
           );
         } else {
-          setLocation('Your Area');
-          setLocationLoading(false);
+          // Fallback to IP-based location
+          fetch('https://ipapi.co/json/')
+            .then(res => res.json())
+            .then(ipData => {
+              const fallbackLocation = ipData.city && ipData.region ? `${ipData.city}, ${ipData.region}` : ipData.city || 'Your Area';
+              setLocation(fallbackLocation);
+              localStorage.setItem('selectedLocation', fallbackLocation);
+            })
+            .catch(() => {
+              setLocation('Your Area');
+            })
+            .finally(() => {
+              setLocationLoading(false);
+            });
         }
       } catch (error) {
         console.error('Error fetching location:', error);
@@ -125,6 +176,9 @@ export default function Hero() {
         setShowLocationSelector(false);
         setSearchQuery('');
         setSuggestions([]);
+        setPincode('');
+        setPincodeLocations([]);
+        setPincodeError('');
       }
     };
 
@@ -134,9 +188,71 @@ export default function Hero() {
     }
   }, [showLocationSelector]);
 
-  // Search for locations
+  // Debounced pincode fetch
+  useEffect(() => {
+    if (pincodeDebounceTimer.current) {
+      clearTimeout(pincodeDebounceTimer.current);
+    }
+
+    const pin = pincode?.trim();
+    if (pin && pin.length === 6 && /^\d{6}$/.test(pin)) {
+      pincodeDebounceTimer.current = setTimeout(() => {
+        fetchLocationsByPincode(pin);
+      }, 500);
+    } else {
+      setPincodeLocations([]);
+      setPincodeError('');
+      setPincodeLoading(false);
+    }
+
+    return () => {
+      if (pincodeDebounceTimer.current) {
+        clearTimeout(pincodeDebounceTimer.current);
+      }
+    };
+  }, [pincode]);
+
+  // Fetch locations by pincode
+  const fetchLocationsByPincode = async (pincodeValue) => {
+    setPincodeLoading(true);
+    setPincodeError('');
+    setPincodeLocations([]);
+    setSuggestions([]);
+
+    try {
+      const response = await fetch(`https://api.postalpincode.in/pincode/${pincodeValue}`);
+      if (!response.ok) throw new Error('Failed to fetch pincode data');
+
+      const json = await response.json();
+      if (!Array.isArray(json) || json.length === 0) throw new Error('No data for pincode');
+
+      const first = json[0];
+      if (first.Status !== 'Success' || !Array.isArray(first.PostOffice) || first.PostOffice.length === 0) {
+        throw new Error('No locations found for this pincode');
+      }
+
+      const locationNames = first.PostOffice.map((p) => {
+        const city = first.District || first.State || '';
+        return `${p.Name}, ${city}`;
+      });
+      
+      setPincodeLocations(locationNames);
+      setSuggestions(locationNames);
+    } catch (error) {
+      console.error('Pincode fetch error:', error);
+      setPincodeError(error.message || 'Unable to load locations');
+      setPincodeLocations([]);
+    } finally {
+      setPincodeLoading(false);
+    }
+  };
+
+  // Search for locations by city/area name
   const handleLocationSearch = async (query) => {
     setSearchQuery(query);
+    setPincode('');
+    setPincodeLocations([]);
+    setPincodeError('');
     
     if (query.length < 2) {
       setSuggestions([]);
@@ -165,18 +281,33 @@ export default function Hero() {
     }
   };
 
+  // Handle pincode input
+  const handlePincodeChange = (value) => {
+    // Only allow digits and max 6 characters
+    const numericValue = value.replace(/\D/g, '').slice(0, 6);
+    setPincode(numericValue);
+    setSearchQuery('');
+    setSuggestions([]);
+  };
+
   const handleSelectLocation = (selectedLocation) => {
     setLocation(selectedLocation);
     localStorage.setItem('selectedLocation', selectedLocation);
     setShowLocationSelector(false);
     setSearchQuery('');
     setSuggestions([]);
+    setPincode('');
+    setPincodeLocations([]);
+    setPincodeError('');
   };
 
   const handleClearLocation = () => {
     setLocation(null);
     localStorage.removeItem('selectedLocation');
     setShowLocationSelector(true);
+    setPincode('');
+    setPincodeLocations([]);
+    setPincodeError('');
   };
 
   const onScrollNext = () => {
@@ -236,23 +367,72 @@ export default function Hero() {
                         setShowLocationSelector(false);
                         setSearchQuery('');
                         setSuggestions([]);
+                        setPincode('');
+                        setPincodeLocations([]);
+                        setPincodeError('');
                       }}
                       aria-label="Close">
                       <X size={18} />
                     </button>
                   </div>
                   
-                  <div className={styles.locationSearchWrapper}>
-                    <Search className={styles.searchIcon} />
-                    <input
-                      type="text"
-                      className={styles.locationSearchInput}
-                      placeholder="Search for city or area..."
-                      value={searchQuery}
-                      onChange={(e) => handleLocationSearch(e.target.value)}
-                      autoFocus
-                    />
+                  <div className={styles.locationTabs}>
+                    <button
+                      className={`${styles.locationTab} ${!pincode ? styles.activeTab : ''}`}
+                      onClick={() => {
+                        setPincode('');
+                        setPincodeLocations([]);
+                        setPincodeError('');
+                        setSuggestions([]);
+                      }}>
+                      Search by City
+                    </button>
+                    <button
+                      className={`${styles.locationTab} ${pincode ? styles.activeTab : ''}`}
+                      onClick={() => {
+                        setSearchQuery('');
+                        setSuggestions([]);
+                      }}>
+                      Search by Pincode
+                    </button>
                   </div>
+
+                  {!pincode ? (
+                    <div className={styles.locationSearchWrapper}>
+                      <Search className={styles.searchIcon} />
+                      <input
+                        type="text"
+                        className={styles.locationSearchInput}
+                        placeholder="Search for city or area..."
+                        value={searchQuery}
+                        onChange={(e) => handleLocationSearch(e.target.value)}
+                        autoFocus
+                      />
+                    </div>
+                  ) : (
+                    <div className={styles.locationSearchWrapper}>
+                      <MapPin className={styles.searchIcon} />
+                      <input
+                        type="text"
+                        className={styles.locationSearchInput}
+                        placeholder="Enter 6-digit pincode..."
+                        value={pincode}
+                        onChange={(e) => handlePincodeChange(e.target.value)}
+                        maxLength={6}
+                        pattern="[0-9]{6}"
+                        autoFocus
+                      />
+                      {pincodeLoading && (
+                        <span className={styles.pincodeLoading}>Loading...</span>
+                      )}
+                    </div>
+                  )}
+
+                  {pincodeError && (
+                    <div className={styles.pincodeError}>
+                      <p>{pincodeError}</p>
+                    </div>
+                  )}
 
                   {suggestions.length > 0 && (
                     <div className={styles.locationSuggestions}>
@@ -268,13 +448,13 @@ export default function Hero() {
                     </div>
                   )}
 
-                  {searchQuery.length >= 2 && suggestions.length === 0 && (
+                  {((searchQuery.length >= 2 && !pincode) || (pincode.length === 6 && !pincodeLoading)) && suggestions.length === 0 && !pincodeError && (
                     <div className={styles.locationNoResults}>
                       <p>No locations found. Try a different search.</p>
                     </div>
                   )}
 
-                  {searchQuery.length < 2 && (
+                  {(searchQuery.length < 2 && !pincode) && (
                     <div className={styles.locationCurrent}>
                       <p className={styles.locationCurrentLabel}>Current Location:</p>
                       <button

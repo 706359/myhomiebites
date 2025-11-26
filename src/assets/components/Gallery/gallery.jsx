@@ -74,16 +74,15 @@ export default function Gallery() {
   const galleryScrollRef = useRef(null);
   const offersScrollRef = useRef(null);
 
-  // Fetch menu items from API - Only Pure Vegetarian items
+  // Fetch menu items from API
   useEffect(() => {
     const loadMenuItems = async () => {
       try {
         setLoading(true);
-        // Explicitly request only vegetarian items - Raavito is pure veg
         const items = await fetchMenuItems({ isVeg: true });
 
         const transformedItems = items
-          .filter((item) => item.image && item.isVeg !== false) // Double check for veg items
+          .filter((item) => item.image)
           .slice(0, 9)
           .map((item) => ({
             id: item._id,
@@ -93,7 +92,6 @@ export default function Gallery() {
             description: item.description,
             price: item.price,
             kitchen: item.kitchen?.name || 'Raavito Kitchen',
-            isVeg: true, // Ensure all items are marked as veg
           }));
 
         if (transformedItems.length > 0) {

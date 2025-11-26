@@ -1,30 +1,30 @@
 import axios from 'axios';
 
 // Get base URL from environment or use default
-// The app uses http://192.168.1.13:5050/api/, so we should match that
-// or use localhost if running locally
+// Priority: Environment variable > Local development > Production
 const getApiBaseURL = () => {
-  // Check if we have an environment variable
+  // Priority 1: Check for environment variable (for production builds)
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
   
-  // Try to detect the current host and use port 5050
+  // Priority 2: Check if running in development mode
   const hostname = window.location.hostname;
+  const isDevelopment = hostname === 'localhost' || hostname === '127.0.0.1' || /^192\.168\./.test(hostname);
   
-  // If localhost, use localhost
-  if (hostname === 'localhost' || hostname === '127.0.0.1') {
-    return 'http://localhost:5050/api';
+  if (isDevelopment) {
+    // For local development, use port 5050
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return 'http://localhost:5050/api';
+    }
+    // If accessing via local IP, use that IP with port 5050
+    if (/^\d+\.\d+\.\d+\.\d+$/.test(hostname)) {
+      return `http://${hostname}:5050/api`;
+    }
   }
   
-  // If accessing via IP (like 192.168.x.x), use that IP
-  // This matches the app's configuration
-  if (/^\d+\.\d+\.\d+\.\d+$/.test(hostname)) {
-    return `http://${hostname}:5050/api`;
-  }
-  
-  // Otherwise, try to use the same hostname with port 5050
-  return `http://${hostname}:5050/api`;
+  // Priority 3: Default to production API
+  return 'https://api.raavito.in/api';
 };
 
 const API_BASE_URL = getApiBaseURL();
@@ -33,6 +33,7 @@ console.log('🌐 API Base URL configured:', API_BASE_URL);
 // Create axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
+  timeout: 10000, // 10 second timeout
   headers: {
     'Content-Type': 'application/json',
   },
@@ -56,11 +57,24 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Log error for debugging
+    if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
+      console.error('⏱️ API request timeout:', error.config?.url);
+    } else if (error.code === 'ERR_NETWORK' || !error.response) {
+      console.error('🌐 Network error - unable to reach API:', API_BASE_URL);
+      console.error('Error details:', error.message);
+    } else {
+      console.error('❌ API Error:', error.response?.status, error.config?.url, error.response?.data);
+    }
+    
     if (error.response?.status === 401) {
       // Unauthorized - clear token and redirect to login
       localStorage.removeItem('adminToken');
       localStorage.removeItem('adminUser');
-      window.location.href = '/#/admin/login';
+      // Only redirect if we're on an admin page
+      if (window.location.hash.includes('/admin/')) {
+        window.location.href = '/#/admin/login';
+      }
     }
     return Promise.reject(error);
   }
